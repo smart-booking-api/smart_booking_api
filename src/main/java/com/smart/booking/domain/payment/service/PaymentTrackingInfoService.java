@@ -1,6 +1,14 @@
 package com.smart.booking.domain.payment.service;
 
 public interface PaymentTrackingInfoService {
+
+    /**
+     * 결제 트랙킹 정보 조회
+     * request :
+     * tracking id
+     * */
+    Object getTrackingInfo(String trackingInfo);
+
     /**
      * 결제 트랙킹 정보 저장
      * request :
@@ -9,5 +17,12 @@ public interface PaymentTrackingInfoService {
      * timeTable id
      * */
     void saveTrackingInfo(Object trackingInfo);
-    void updateTrackingInfo(Object trackingInfo);
+
+    /**
+     * 결제 매칭 업데이트
+     * request :
+     * tracking id
+     * payment id
+     * */
+    void matchPaymentAndTrackingInfo(String trackingId, String paymentId);
 }

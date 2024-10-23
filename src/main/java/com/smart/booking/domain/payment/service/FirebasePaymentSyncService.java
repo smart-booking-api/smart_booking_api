@@ -9,5 +9,11 @@ public interface FirebasePaymentSyncService {
      * timeTable id,
      * firebase 상태
      * */
-    void syncPaymentResult(Object result);
+    void syncPaymentResultStatus(Object result);
+
+
+    /**
+     * firebase 결제 결과 삭제
+     * */
+    void removePaymentResultStatus(Object result);
 }
