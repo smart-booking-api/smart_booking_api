@@ -1,5 +1,6 @@
 package com.smart.booking.domain.payment.entity;
 
+import com.smart.booking.domain.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -9,7 +10,7 @@ import java.math.BigDecimal;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class PaymentPartnerShare {
+public class PaymentPartnerShare extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")

@@ -1,5 +1,7 @@
 package com.smart.booking.domain.payment.service;
 
+import com.smart.booking.common.exception.CommonException;
+
 public interface PaymentTrackingInfoService {
 
     /**
@@ -24,5 +26,5 @@ public interface PaymentTrackingInfoService {
      * tracking id
      * payment id
      * */
-    void matchPaymentAndTrackingInfo(String trackingId, String paymentId);
+    void matchPaymentAndTrackingInfo(String trackingId, String paymentId) throws CommonException;
 }

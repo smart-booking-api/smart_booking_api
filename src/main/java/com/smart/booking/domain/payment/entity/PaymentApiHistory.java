@@ -1,5 +1,6 @@
 package com.smart.booking.domain.payment.entity;
 
+import com.smart.booking.domain.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
-public class PaymentApiHistory {
+public class PaymentApiHistory extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

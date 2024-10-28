@@ -1,5 +1,6 @@
 package com.smart.booking.domain.payment.entity;
 
+import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -12,10 +13,19 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.math.BigDecimal;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
-public class Payment {
+public class Payment extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")

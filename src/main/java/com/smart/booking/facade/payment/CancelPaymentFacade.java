@@ -4,8 +4,6 @@ import com.smart.booking.common.util.TransactionEventManager;
 import com.smart.booking.domain.common.facade.Facade;
 import com.smart.booking.domain.payment.service.FirebasePaymentSyncService;
 import com.smart.booking.domain.payment.service.PaymentInfoService;
-import com.smart.booking.domain.payment.service.PaymentLogService;
-import com.smart.booking.domain.payment.service.PaymentTrackingInfoService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

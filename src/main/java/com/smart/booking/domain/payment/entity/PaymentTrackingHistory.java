@@ -1,5 +1,6 @@
 package com.smart.booking.domain.payment.entity;
 
+import com.smart.booking.domain.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class PaymentTrackingHistory {
+public class PaymentTrackingHistory extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -32,5 +33,9 @@ public class PaymentTrackingHistory {
     // 결제 상태
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
+
+    public void matchPaymentId(String paymentId) {
+        this.paymentId  = paymentId;
+    }
 
 }

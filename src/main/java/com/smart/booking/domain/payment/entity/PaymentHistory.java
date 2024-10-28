@@ -1,5 +1,6 @@
 package com.smart.booking.domain.payment.entity;
 
+import com.smart.booking.domain.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -8,10 +9,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
-public class PaymentHistory {
+public class PaymentHistory extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")

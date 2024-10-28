@@ -1,6 +1,8 @@
 package com.smart.booking.domain.payment.service;
 
-public interface PaymentLogService {
+import com.smart.booking.domain.payment.dto.SavePaymentHistoryDto;
+
+public interface PaymentHistoryService {
     /**
      * 결제 요청 로그 저장
      * request :
@@ -9,7 +11,7 @@ public interface PaymentLogService {
      * timeTable id
      * 결제정보
      * */
-    void savePaymentRequestLog(Object requestLog);
+    void savePaymentCompleteRequestLog(SavePaymentHistoryDto historyDto);
 
     /**
      * 결제 취소 로그 저장

@@ -1,5 +1,8 @@
 package com.smart.booking.domain.payment.service;
 
+import com.smart.booking.domain.payment.dto.SavePaymentDto;
+import com.smart.booking.domain.payment.entity.Payment;
+
 public interface PaymentInfoService {
     /**
      * 결제 정보 조회
@@ -16,7 +19,7 @@ public interface PaymentInfoService {
      * timeTable id
      * response :payment id
      * */
-    Object savePaymentCompleteInfo(String trackingId, String teeBoxId, String timeTableId);
+    Payment savePaymentCompleteInfo(SavePaymentDto request);
 
     /**
      * 결제 취소 저장
