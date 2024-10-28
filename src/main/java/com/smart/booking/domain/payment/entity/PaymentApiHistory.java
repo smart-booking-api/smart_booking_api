@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 
@@ -16,6 +17,10 @@ public class PaymentApiHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+
     // API 요청의 상태 (성공, 실패 등)
     @Enumerated(EnumType.STRING)
     private ApiResultStatus apiResultStatus;
@@ -23,9 +28,6 @@ public class PaymentApiHistory {
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-
-    @ManyToOne
-    private Payment payment;
 
     private LocalDate apiCallDate;
     private String apiEndpoint;

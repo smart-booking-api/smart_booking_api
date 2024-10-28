@@ -7,6 +7,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.math.BigDecimal;
@@ -19,9 +20,10 @@ public class Payment {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private String id;
+    private String paymentId;
 
     @OneToOne
+    @JoinColumn(name = "tee_box_id", referencedColumnName = "id")
     private TeeBox teeBox;
 
     // 총액 (부가세 포함)
@@ -36,6 +38,9 @@ public class Payment {
 
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
     private List<PaymentPartnerShare> partnerShares;
+
+    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
+    private List<PaymentHistory> paymentHistories;
 
     // 결제 API 통신 이력
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)

@@ -1,10 +1,13 @@
 package com.smart.booking.domain.settlement.entity;
 
 import com.smart.booking.domain.partner.entity.Partner;
+import com.smart.booking.domain.tee_box.entity.TeeBox;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,6 +26,10 @@ public class DailySettlement {
     private LocalDate startDate;
     @ManyToOne
     private Partner partner;
+
+    @OneToOne
+    @JoinColumn(name = "tee_box_id", referencedColumnName = "id")
+    private TeeBox teeBox;
 
     private BigDecimal totalAmount; // 총액 (부가세 포함)
     private BigDecimal supplyAmount; // 공급가액 (부가세 제외)
