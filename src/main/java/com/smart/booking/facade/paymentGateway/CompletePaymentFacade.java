@@ -44,7 +44,7 @@ public class CompletePaymentFacade implements Facade<CompletePaymentRequestDto, 
         paymentTrackingInfoService.matchPaymentAndTrackingInfo(payment.getPaymentId(), dto.trackingId());
 
         //3. 결제 완료 로그 저장
-        var historyDto = new SavePaymentHistoryDto(payment,payment.getTotalAmount(), payment.getPaymentStatus());
+        var historyDto = new SavePaymentHistoryDto(payment, payment.getTotalAmount(), payment.getPaymentStatus());
         paymentLogService.savePaymentCompleteRequestLog(historyDto);
 
         //4. 예약 생성 요청

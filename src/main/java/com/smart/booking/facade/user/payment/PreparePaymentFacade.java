@@ -1,5 +1,6 @@
 package com.smart.booking.facade.user.payment;
 
+import com.smart.booking.domain.payment.dto.SavePaymentTrackingHistoryDto;
 import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
 import com.smart.booking.domain.common.facade.Facade;
 import com.smart.booking.domain.payment.dto.SavePaymentDto;
@@ -9,6 +10,7 @@ import com.smart.booking.domain.payment.service.PaymentHistoryService;
 import com.smart.booking.domain.payment.service.PaymentInfoService;
 import com.smart.booking.domain.payment.service.PaymentTrackingHistoryService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
+import com.smart.booking.facade.dto.payment.SavePaymentTrackingHistoryRequestDto;
 import com.smart.booking.facade.eventPublisher.ReservationSaveEventPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,39 +18,33 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class PreparePaymentFacade implements Facade<CompletePaymentRequestDto, Void> {
+public class PreparePaymentFacade implements Facade<SavePaymentTrackingHistoryRequestDto, Void> {
 
-    private final PaymentInfoService paymentInfoService;
-    private final PaymentTrackingHistoryService paymentTrackingInfoService;
-    private final PaymentHistoryService paymentLogService;
-    private final ReservationSaveEventPublisher applicationEventPublisher;
-
+    private final PaymentTrackingHistoryService paymentTrackingHistoryService;
 
     /**
-     * 결제 완료 프로세스
+     * 결제 요청 프로세스
      *
      * @return
      */
 
     @Override
     @Transactional
-    public Void exceuete(CompletePaymentRequestDto dto) throws Exception {
-        //1. 결제 완료 정보 저장
-        //TODO teeBox service에 id로 조회 요청
-        TeeBox teeBox = null;
+    public Void exceuete(SavePaymentTrackingHistoryRequestDto dto) throws Exception {
+        // tee box 유효성 검사?
+        //TODO teeBox 유효성 검사
+        //TODO time table 유효성 검사
 
-        var savePaymentDto = new SavePaymentDto(dto.amount(), PaymentStatus.COMPLETE, teeBox);
-        var payment = paymentInfoService.savePaymentCompleteInfo(savePaymentDto);
-
-        //2. 결제-트랙킹 정보 업데이트
-        paymentTrackingInfoService.matchPaymentAndTrackingInfo(payment.getPaymentId(), dto.trackingId());
-
-        //3. 결제 완료 로그 저장
-        var historyDto = new SavePaymentHistoryDto(payment,payment.getTotalAmount(), payment.getPaymentStatus());
-        paymentLogService.savePaymentCompleteRequestLog(historyDto);
-
-        //4. 예약 생성 요청
-        applicationEventPublisher.publish(payment.getPaymentId());
+        //1. 결제 대기 중 tracking save
+        paymentTrackingHistoryService.saveTrackingHistory(
+            SavePaymentTrackingHistoryDto.builder()
+                .trackingId(dto.trackingId())
+                .teeBoxId(dto.teeBoxId())
+                .timeTableId(dto.timeTableId())
+                .totalAmount(dto.amount())
+                .paymentStatus(PaymentStatus.PENDING)
+                .build()
+        );
         return null;
     }
 }
