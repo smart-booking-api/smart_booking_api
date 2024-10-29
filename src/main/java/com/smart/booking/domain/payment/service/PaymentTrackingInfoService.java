@@ -26,5 +26,5 @@ public interface PaymentTrackingInfoService {
      * tracking id
      * payment id
      * */
-    void matchPaymentAndTrackingInfo(String trackingId, String paymentId) throws CommonException;
+    void matchPaymentAndTrackingInfo(String trackingId, String paymentId) throws Exception;
 }

@@ -21,7 +21,7 @@ public class PaymentController {
      * 결제 승인 처리
      */
     @PostMapping(PaymentEndPoint.PAYMENT_COMPLETE_URL)
-    public void completePayment(@Validated @RequestBody CompletePaymentRequestDto request) throws CommonException {
+    public void completePayment(@Validated @RequestBody CompletePaymentRequestDto request) throws Exception {
         completePaymentFacade.exceuete(request);
     }
 

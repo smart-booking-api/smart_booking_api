@@ -26,7 +26,7 @@ public class PaymentTrackingInfoServiceImpl implements PaymentTrackingInfoServic
     }
 
     @Override
-    public void matchPaymentAndTrackingInfo(@NonNull String trackingId, @NonNull String paymentId) throws CommonException {
+    public void matchPaymentAndTrackingInfo(@NonNull String trackingId, @NonNull String paymentId) throws Exception {
         var trackingHistory = findById(trackingId);
         trackingHistory.matchPaymentId(paymentId);
     }
