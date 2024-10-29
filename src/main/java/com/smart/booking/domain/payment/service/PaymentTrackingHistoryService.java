@@ -1,8 +1,8 @@
 package com.smart.booking.domain.payment.service;
 
-import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.domain.payment.dto.SavePaymentTrackingHistoryDto;
 
-public interface PaymentTrackingInfoService {
+public interface PaymentTrackingHistoryService {
 
     /**
      * 결제 트랙킹 정보 조회
@@ -18,7 +18,7 @@ public interface PaymentTrackingInfoService {
      * tBox Id
      * timeTable id
      * */
-    void saveTrackingInfo(Object trackingInfo);
+    void saveTrackingHistory(SavePaymentTrackingHistoryDto trackingHistoryDto);
 
     /**
      * 결제 매칭 업데이트

@@ -1,4 +1,4 @@
-package com.smart.booking.facade.payment;
+package com.smart.booking.facade.user.payment;
 
 import com.smart.booking.domain.common.facade.Facade;
 import com.smart.booking.domain.payment.service.PaymentInfoService;
