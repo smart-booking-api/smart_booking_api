@@ -74,4 +74,7 @@ public class PartnerCompany extends BaseEntity {
     })
     private CompanyManager manager;
 
+    private String memo;
+    
+
 }

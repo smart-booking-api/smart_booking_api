@@ -12,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
@@ -19,14 +20,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.NonNull;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 @Builder
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE partner SET deleted_at = current_timestamp WHERE id = ?")
@@ -52,10 +52,8 @@ public class Partner extends BaseEntity {
     private String code;
 
     private String email;
-    
-    private String phoneNumber;
 
-    private String memo;
+    private String phoneNumber;
 
     @Embedded
     @AttributeOverrides({
@@ -65,4 +63,16 @@ public class Partner extends BaseEntity {
     private BusinessRegistration businessRegistration;
 
 
+    @OneToOne
+    private PartnerCompany company;
+
+
+    public void updateCompany(@NonNull PartnerCompany company) {
+        company.setPartner(this);
+        this.company = company;
+    }
+
+    public void changePhoneNumber(@NonNull String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
