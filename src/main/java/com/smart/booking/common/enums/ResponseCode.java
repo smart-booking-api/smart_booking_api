@@ -5,6 +5,7 @@ import lombok.NonNull;
 
 public enum ResponseCode implements EnumModel {
     COMMON_OK(0, "OK"),
+    NOT_FOUND_ELEMENT(101, "유효한 데이터가 없습니다."),
     ;
 
     private final int code;
