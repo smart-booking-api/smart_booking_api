@@ -4,7 +4,7 @@ import com.smart.booking.domain.reservation.dto.ReservationDateHistory;
 import com.smart.booking.domain.reservation.dto.ReservationSimpleResponse;
 import java.util.List;
 
-public interface ReservationService {
+public interface UserReservationService {
 
     /**
      * 홈 내 예약현황 요약 조회

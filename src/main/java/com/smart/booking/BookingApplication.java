@@ -3,11 +3,13 @@ package com.smart.booking;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @EnableAspectJAutoProxy
 @ConfigurationPropertiesScan
 @SpringBootApplication
+@EnableCaching
 public class BookingApplication {
 
 	public static void main(String[] args) {
