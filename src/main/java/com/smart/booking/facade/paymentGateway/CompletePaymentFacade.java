@@ -33,21 +33,23 @@ public class CompletePaymentFacade implements Facade<CompletePaymentRequestDto, 
     @Override
     @Transactional
     public Void exceuete(CompletePaymentRequestDto dto) throws Exception {
-        //1. 결제 완료 정보 저장
         //TODO teeBox service에 id로 조회 요청
         TeeBox teeBox = null;
 
+        //1. 결제 완료 정보 저장
         var savePaymentDto = new SavePaymentDto(dto.amount(), PaymentStatus.COMPLETE, teeBox);
         var payment = paymentInfoService.savePaymentCompleteInfo(savePaymentDto);
 
-        //2. 결제-트랙킹 정보 업데이트
+        //TODO 2. 파트너별 payment 저장
+
+        //3. 결제-트랙킹 정보 업데이트
         paymentTrackingInfoService.matchPaymentAndTrackingInfo(payment.getPaymentId(), dto.trackingId());
 
-        //3. 결제 완료 로그 저장
+        //4. 결제 완료 로그 저장
         var historyDto = new SavePaymentHistoryDto(payment, payment.getTotalAmount(), payment.getPaymentStatus());
         paymentLogService.savePaymentCompleteRequestLog(historyDto);
 
-        //4. 예약 생성 요청
+        //5. 예약 생성 요청
         applicationEventPublisher.publish(payment.getPaymentId());
         return null;
     }
