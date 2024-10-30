@@ -1,0 +1,56 @@
+package com.smart.booking.domain.common.enums;
+
+
+import com.smart.booking.common.enums.EnumModel;
+import java.util.Arrays;
+import lombok.NonNull;
+
+public enum Region implements EnumModel {
+    SEOUL("서울"),
+    BUSAN("부산"),
+    DAEGU("대구"),
+    INCHEON("인천"),
+    GWANGJU("광주"), /// 광주 광역시
+    DAEJEON("대전"),
+    ULSAN("울산"),
+    SEJONG("세종"), /// 세종특별자치시
+    GYEONGGI("경기"),
+    GANGWON("강원"), /// 강원특별자치도
+    CHUNGBUK("충북"),
+    CHUNGNAM("충남"),
+    JEONBUK("전북"), /// 전북특별자치도
+    JEONNAM("전남"),
+    GYEONGBUK("경북"),
+    GYEONGNAM("경남"),
+    JEJU("제주도"), /// 제주특별자치도
+    ;
+
+    private final @NonNull String value;
+
+    Region(@NonNull String value) {
+        this.value = value;
+    }
+
+    static public Region fromFullValue(@NonNull String value) {
+        return switch (value) {
+            case "광주 광역시" -> GWANGJU;
+            case "강원특별자치도" -> GANGWON;
+            case "전북특별자치도" -> JEONBUK;
+            case "제주특별자치도" -> JEJU;
+            default -> Arrays.stream(Region.values())
+                .filter(region -> region.getValue().equals(value))
+                .findFirst()
+                .orElseThrow();
+        };
+    }
+
+    @Override
+    public @NonNull String getKey() {
+        return name();
+    }
+
+    @Override
+    public @NonNull String getValue() {
+        return value;
+    }
+}
