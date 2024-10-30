@@ -6,3 +6,5 @@ import lombok.NonNull;
 public interface Facade<Dto,Result> {
      Result exceuete(Dto dto) throws Exception;
 }
+
+

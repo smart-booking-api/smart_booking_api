@@ -1,15 +1,18 @@
 spring:
   application:
     name: smart-booking-api
+
   data:
     redis:
       host: 127.0.0.1
       port: 6379
+
   datasource:
     driver-class-name: org.h2.Driver
     url: 'jdbc:h2:mem:test'
     username: sa
     password: password
+
   h2:
     console:
       enabled: true
@@ -26,5 +29,8 @@ spring:
         show_sql: true
   jwt:
     secret: smartbookingsystem2024smartbookingsystem2024
+
 server:
   port: 8000
+
+kakao-rest-api-key: '18aba9ac1f406cb303b93d2a03a5bbd3'

@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -62,7 +63,20 @@ public class Store extends BaseEntity {
     @OneToOne
     private StoreOperationInfo operationInfo;
 
-    private String memo;
-
     private OffsetDateTime deletedAt;
+
+    public void update(
+        @NonNull String name,
+        @NonNull Region region,
+        @NonNull String address,
+        @NonNull BusinessRegistration businessRegistration,
+        @NonNull StoreOperationInfo operationInfo
+    ) {
+        this.name = name;
+        this.region = region;
+        this.address = address;
+        this.businessRegistration = businessRegistration;
+        this.operationInfo = operationInfo;
+    }
+
 }

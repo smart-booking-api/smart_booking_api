@@ -6,14 +6,14 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-@EnableAspectJAutoProxy
-@ConfigurationPropertiesScan
 @SpringBootApplication
+@ConfigurationPropertiesScan
+@EnableAspectJAutoProxy
 @EnableCaching
 public class BookingApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BookingApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BookingApplication.class, args);
+    }
 
 }
