@@ -29,7 +29,7 @@ import org.hibernate.annotations.SQLRestriction;
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE \"user\" SET deleted_at = current_timestamp, email = null, phone = null WHERE id = ?")
 @SQLRestriction(value = "deleted_at is NULL")
-@Table(name = "\"user\"")
+@Table(name = "\"USER\"")
 public class User extends BaseEntity {
 
     @Id
@@ -51,6 +51,13 @@ public class User extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
+
+    private String role;
+    private String name;
+
+    private String password;
+
+    private String refreshToken;
 
     private OffsetDateTime accessedAt;
 
