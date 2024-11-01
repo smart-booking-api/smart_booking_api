@@ -1,7 +1,7 @@
 package com.smart.booking.common.security.controller;
 
 import com.smart.booking.common.security.service.JwtService;
-import com.smart.booking.domain.user.entity.User;
+import com.smart.booking.domain.auth.entity.RefreshToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,8 +20,8 @@ public class RefreshController {
             return "Refresh token is expired";
         }
 
-        User user = jwtService.findByRefreshToken(refreshToken);
+        RefreshToken findToken = jwtService.findByRefreshToken(refreshToken);
 
-        return jwtService.createAccessToken(user.getEmail(), user.getRole(), 60*60*10L);
+        return jwtService.createAccessToken(findToken.getMember().getId(), findToken.getMember().getType().getKey(), 60*60*10L);
     }
 }

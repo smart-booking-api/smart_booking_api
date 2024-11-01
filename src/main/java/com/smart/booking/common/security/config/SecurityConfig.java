@@ -1,9 +1,10 @@
 package com.smart.booking.common.security.config;
 
-import com.smart.booking.common.security.service.JwtService;
 import com.smart.booking.common.security.filter.JwtFilter;
 import com.smart.booking.common.security.filter.LoginFilter;
-import com.smart.booking.domain.user.repository.UserRepository;
+import com.smart.booking.common.security.service.JwtService;
+import com.smart.booking.domain.partner.service.PartnerService;
+import com.smart.booking.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +25,8 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final AuthenticationConfiguration authenticationConfiguration;
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final PartnerService partnerService;
     private final JwtService jwtService;
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
@@ -50,13 +52,14 @@ public class SecurityConfig {
                     frameOptionsConfig.disable())
             ).authorizeHttpRequests((auth) ->
                 auth.requestMatchers(PathRequest.toH2Console()).permitAll()
-                .requestMatchers("/", "/join", "/login").permitAll()
-                .requestMatchers("/admin").hasAnyRole("ADMIN")
+                .requestMatchers("/", "/join", "/login", "/user").permitAll()
+                .requestMatchers("/partner").hasAnyRole("PARTNER")
+                .requestMatchers("/user").hasAnyRole("USER")
                 .anyRequest().authenticated()
             );
 
         // login filter 적용 전에 jwtFilter 적용
-        http.addFilterBefore(new JwtFilter(jwtService, userRepository), LoginFilter.class);
+        http.addFilterBefore(new JwtFilter(jwtService, userService, partnerService), LoginFilter.class);
 
         // UsernamePasswordAuthenticationFilter 필터 적용시 LoginFilter 를 대신 적용
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtService), UsernamePasswordAuthenticationFilter.class);

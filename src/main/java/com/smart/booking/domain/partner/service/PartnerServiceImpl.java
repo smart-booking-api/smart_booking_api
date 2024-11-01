@@ -11,6 +11,7 @@ import com.smart.booking.domain.partner.dto.UpdatePartnerDto;
 import com.smart.booking.domain.partner.entity.Partner;
 import com.smart.booking.domain.partner.mapper.PartnerMapper;
 import com.smart.booking.domain.partner.repository.PartnerRepository;
+import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,10 @@ class PartnerServiceImpl implements PartnerService {
     @Override
     public @NonNull CursorResult<Partner> getPartners(@NonNull GetPartnersDto getPartnersDto) {
         return null;
+    }
+
+    @Override
+    public @NonNull Optional<Partner> getPartnerByLoginId(@NonNull String loginId) {
+        return Optional.empty();
     }
 }

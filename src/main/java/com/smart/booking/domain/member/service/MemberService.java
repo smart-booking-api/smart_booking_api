@@ -6,4 +6,5 @@ import lombok.NonNull;
 
 public interface MemberService {
     @NonNull Member createMember(@NonNull CreateMemberDto createMemberDto);
+    Member getMember(@NonNull String memberId);
 }

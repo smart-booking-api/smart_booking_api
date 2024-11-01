@@ -7,6 +7,7 @@ import com.smart.booking.domain.partner.dto.GetPartnersDto;
 import com.smart.booking.domain.partner.dto.InitializePartnerDto;
 import com.smart.booking.domain.partner.dto.UpdatePartnerDto;
 import com.smart.booking.domain.partner.entity.Partner;
+import java.util.Optional;
 import lombok.NonNull;
 
 public interface PartnerService {
@@ -21,5 +22,5 @@ public interface PartnerService {
 
     @NonNull CursorResult<Partner> getPartners(@NonNull GetPartnersDto getPartnersDto);
 
-
+    @NonNull Optional<Partner> getPartnerByLoginId(@NonNull String loginId);
 }
