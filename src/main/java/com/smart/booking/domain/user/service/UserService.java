@@ -1,6 +1,7 @@
 package com.smart.booking.domain.user.service;
 
 import com.smart.booking.domain.user.entity.User;
+import java.util.Optional;
 import lombok.NonNull;
 
 public interface UserService {
@@ -19,5 +20,5 @@ public interface UserService {
 
     boolean updateSmsAgreement(@NonNull String userId, boolean isAgree);
 
-
+    Optional<User> getUserByEmailId(@NonNull String email);
 }

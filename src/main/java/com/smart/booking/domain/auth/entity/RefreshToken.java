@@ -53,4 +53,8 @@ public class RefreshToken extends BaseEntity {
     public boolean checkValid() {
         return this.valid && this.expiredAt.isAfter(LocalDateTime.now());
     }
+
+    public void updateToken(String token) {
+        this.token = token;
+    }
 }

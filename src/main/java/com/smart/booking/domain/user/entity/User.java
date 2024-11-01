@@ -2,6 +2,7 @@ package com.smart.booking.domain.user.entity;
 
 import com.smart.booking.common.annotations.TsidGenerator;
 import com.smart.booking.domain.common.entity.BaseEntity;
+import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.store.entity.Store;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import lombok.AccessLevel;
@@ -29,7 +31,7 @@ import org.hibernate.annotations.SQLRestriction;
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE \"user\" SET deleted_at = current_timestamp, email = null, phone = null WHERE id = ?")
 @SQLRestriction(value = "deleted_at is NULL")
-@Table(name = "\"USER\"")
+@Table(name = "\"user\"")
 public class User extends BaseEntity {
 
     @Id
@@ -52,12 +54,13 @@ public class User extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    private String role;
     private String name;
 
     private String password;
 
-    private String refreshToken;
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     private OffsetDateTime accessedAt;
 

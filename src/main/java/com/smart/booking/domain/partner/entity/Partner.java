@@ -3,6 +3,7 @@ package com.smart.booking.domain.partner.entity;
 import com.smart.booking.common.annotations.TsidGenerator;
 import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.common.entity.BusinessRegistration;
+import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.partner.enums.PartnerType;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -12,9 +13,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import java.time.OffsetDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -55,6 +58,10 @@ public class Partner extends BaseEntity {
 
     private String phoneNumber;
 
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "number", column = @Column(name = "business_registration_number")),
@@ -66,6 +73,7 @@ public class Partner extends BaseEntity {
     @OneToOne
     private PartnerCompany company;
 
+    private OffsetDateTime deletedAt;
 
     public void updateCompany(@NonNull PartnerCompany company) {
         company.setPartner(this);

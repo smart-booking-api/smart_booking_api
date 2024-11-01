@@ -1,16 +1,19 @@
 package com.smart.booking.common.security.value_object;
 
-import com.smart.booking.domain.user.entity.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {
-    private final User user;
+    private final String userId;
+    private final String role;
+    private final String password;
 
-    public CustomUserDetails(User user) {
-        this.user = user;
+    public CustomUserDetails(String userId, String role, String password) {
+        this.userId = userId;
+        this.role = role;
+        this.password = password;
     }
 
     @Override
@@ -20,7 +23,7 @@ public class CustomUserDetails implements UserDetails {
         collection.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return user.getRole();
+                return role;
             }
         });
 
@@ -29,12 +32,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return userId;
     }
 
     @Override

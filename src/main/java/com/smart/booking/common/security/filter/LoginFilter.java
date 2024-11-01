@@ -40,7 +40,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        String email = customUserDetails.getUsername();
+        String userId = customUserDetails.getUsername();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
@@ -48,10 +48,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String role = auth.getAuthority();
 
-        String accessToken = jwtService.createAccessToken(email, role, 60*60*10L);
-        String refreshToken = jwtService.createRefreshToken(email);
+        String accessToken = jwtService.createAccessToken(userId, role, 60*60*10L);
+        String refreshToken = jwtService.createRefreshToken(userId);
 
-        jwtService.setRefreshToken(email, refreshToken);
+        jwtService.createRefreshToken(userId, refreshToken);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh-Token", "Bearer " + refreshToken);

@@ -2,6 +2,7 @@ package com.smart.booking.domain.user.service;
 
 import com.smart.booking.domain.user.entity.User;
 import com.smart.booking.domain.user.repository.UserRepository;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean updateSmsAgreement(@NonNull String userId, boolean isAgree) {
         return false;
+    }
+
+    @Override
+    public Optional<User> getUserByEmailId(@NonNull String email) {
+        return userRepository.findByEmail(email);
     }
 }
