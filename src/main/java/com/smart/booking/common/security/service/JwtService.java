@@ -19,6 +19,7 @@ public class JwtService {
     private SecretKey secretKey;
     private final MemberService memberService;
     private final AuthService authService;
+    private static final long EXPIRATION_TIME_MS = 60 * 60 * 10 * 1000L;
 
     public JwtService(@Value("${spring.jwt.secret}") String secret, MemberService memberService, AuthService authService) {
         this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), SIG.HS256.key().build().getAlgorithm());
@@ -61,11 +62,12 @@ public class JwtService {
     }
 
     public String createAccessToken(String userId, String role, Long expiredMs) {
+        Date now = new Date();
         return Jwts.builder()
             .claim("userId", userId)
             .claim("role", role)
-            .issuedAt(new Date(System.currentTimeMillis()))
-            .expiration(new Date(System.currentTimeMillis() + expiredMs))
+            .issuedAt(now)
+            .expiration(new Date(now.getTime() + EXPIRATION_TIME_MS))
             .signWith(secretKey)
             .compact();
     }
