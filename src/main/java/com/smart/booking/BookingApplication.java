@@ -9,7 +9,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @SpringBootApplication
 @ConfigurationPropertiesScan
 @EnableAspectJAutoProxy
-@EnableCaching
 public class BookingApplication {
 
     public static void main(String[] args) {

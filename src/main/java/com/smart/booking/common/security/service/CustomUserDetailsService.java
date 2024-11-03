@@ -26,12 +26,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         User user = userService.getUserByEmailId(userId).orElse(null);
         if (isValidUser(user)) {
-            return new CustomUserDetails(user.getMember().getId(), user.getMember().getType().getKey(), user.getPassword());
+            return new CustomUserDetails(user.getMember().getId(), "ROLE_USER", user.getPassword());
         }
 
         Partner partner = partnerService.getPartnerByLoginId(userId).orElse(null);
         if (isValidPartner(partner)) {
-            return new CustomUserDetails(partner.getMember().getId(), partner.getMember().getType().getKey(), partner.getPassword());
+            return new CustomUserDetails(partner.getMember().getId(), "ROLE_PARTNER", partner.getPassword());
         }
 
         return null;

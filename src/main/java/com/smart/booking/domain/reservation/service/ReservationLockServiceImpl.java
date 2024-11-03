@@ -1,24 +1,29 @@
 package com.smart.booking.domain.reservation.service;
 
+import com.smart.booking.domain.reservation.dto.ReservationLockDto;
+import com.smart.booking.domain.reservation.entity.ReservationLock;
 import com.smart.booking.domain.reservation.repository.ReservationLockRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReservationLockServiceImpl implements ReservationLockService {
     private final ReservationLockRepository reservationLockRepository;
 
     /**
      * 선점락 생성
-     * @param storeId
-     * @param timeTableId
+     * @param createDto
      */
     @Override
-    @CachePut(cacheNames = "reservation", key = "#storeId + '-' + #timeTableId")
-    public String createReservationLock(String storeId, String timeTableId) {
-//        SecurityContextHolder.getContext().getAuthentication()
-        return "kyj616";
+    public void createReservationLock(ReservationLockDto.Create createDto) {
+        ReservationLock reservationLock = ReservationLock.builder()
+            .key(createDto.getStoreId() + "-" + createDto.getTimeId())
+            .memberId(createDto.getMemberId())
+            .build();
+
+        reservationLockRepository.save(reservationLock);
     }
 }

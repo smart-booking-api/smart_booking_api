@@ -52,9 +52,9 @@ public class SecurityConfig {
                     frameOptionsConfig.disable())
             ).authorizeHttpRequests((auth) ->
                 auth.requestMatchers(PathRequest.toH2Console()).permitAll()
-                .requestMatchers("/", "/join", "/login", "/user").permitAll()
+                .requestMatchers("/", "/join", "/login").permitAll()
                 .requestMatchers("/partner").hasAnyRole("PARTNER")
-                .requestMatchers("/user").hasAnyRole("USER")
+                .requestMatchers("/user/**").hasAnyRole("USER")
                 .anyRequest().authenticated()
             );
 
