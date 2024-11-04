@@ -1,5 +1,6 @@
 package com.smart.booking.domain.reservation.service;
 
+import com.smart.booking.common.dto.MemberContext;
 import com.smart.booking.domain.reservation.dto.ReservationLockDto;
 import com.smart.booking.domain.reservation.entity.ReservationLock;
 import com.smart.booking.domain.reservation.repository.ReservationLockRepository;
@@ -18,12 +19,26 @@ public class ReservationLockServiceImpl implements ReservationLockService {
      * @param createDto
      */
     @Override
-    public void createReservationLock(ReservationLockDto.Create createDto) {
+    public void createReservationLock(ReservationLockDto.Create createDto, MemberContext memberContext) {
         ReservationLock reservationLock = ReservationLock.builder()
             .key(createDto.getStoreId() + "-" + createDto.getTimeId())
-            .memberId(createDto.getMemberId())
+            .memberId(memberContext.getMemberId())
             .build();
 
         reservationLockRepository.save(reservationLock);
+    }
+
+    @Override
+    public void deleteReservationLock(ReservationLockDto.Delete deleteDto) {
+        ReservationLock reservationLock = ReservationLock.builder()
+            .key(deleteDto.getStoreId() + "-" + deleteDto.getTimeId())
+            .build();
+        reservationLockRepository.delete(reservationLock);
+    }
+
+    @Override
+    public ReservationLock getReservationLock(ReservationLockDto.Get getDto) {
+        log.info("key::" + getDto.getKey());
+        return reservationLockRepository.findById(getDto.getKey()).orElse(null);
     }
 }
