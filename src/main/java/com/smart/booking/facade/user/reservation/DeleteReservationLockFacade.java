@@ -1,6 +1,5 @@
 package com.smart.booking.facade.user.reservation;
 
-import com.smart.booking.common.dto.MemberContext;
 import com.smart.booking.domain.reservation.dto.ReservationLockDto;
 import com.smart.booking.domain.reservation.service.ReservationLockService;
 import lombok.NonNull;
@@ -9,10 +8,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CreateReservationLockFacade {
+public class DeleteReservationLockFacade {
     private final ReservationLockService reservationLockService;
 
-    public void execute(@NonNull ReservationLockDto.Create createDto, MemberContext memberContext) {
-        reservationLockService.createReservationLock(createDto, memberContext);
+    public void execute(@NonNull ReservationLockDto.Delete deleteDto) {
+        reservationLockService.deleteReservationLock(deleteDto);
     }
 }

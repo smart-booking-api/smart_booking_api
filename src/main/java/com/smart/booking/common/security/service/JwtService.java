@@ -51,12 +51,12 @@ public class JwtService {
     }
 
     public void createRefreshToken(String userId, String refreshToken) {
-        Member member = memberService.getMember(userId);
+        Member member = memberService.getMemberById(userId);
         authService.createRefreshToken(member, refreshToken);
     }
 
     public void updateRefreshToken(String userId, String refreshToken) {
-        Member member = memberService.getMember(userId);
+        Member member = memberService.getMemberById(userId);
         RefreshToken oldToken = authService.getRefreshTokenByMember(member);
         oldToken.updateToken(refreshToken);
     }
