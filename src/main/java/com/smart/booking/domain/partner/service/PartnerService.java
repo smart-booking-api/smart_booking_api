@@ -2,6 +2,7 @@ package com.smart.booking.domain.partner.service;
 
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.common.model.CursorResult;
+import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.partner.dto.CreatePartnerDto;
 import com.smart.booking.domain.partner.dto.GetPartnersDto;
 import com.smart.booking.domain.partner.dto.InitializePartnerDto;
@@ -23,4 +24,6 @@ public interface PartnerService {
     @NonNull CursorResult<Partner> getPartners(@NonNull GetPartnersDto getPartnersDto);
 
     @NonNull Optional<Partner> getPartnerByLoginId(@NonNull String loginId);
+
+    @NonNull Optional<Partner> getPartnerByMember(@NonNull Member member);
 }

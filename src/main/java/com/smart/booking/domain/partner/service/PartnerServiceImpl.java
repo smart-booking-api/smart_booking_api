@@ -4,6 +4,7 @@ import static com.smart.booking.common.enums.ResponseCode.NOT_FOUND_PARTNER;
 
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.common.model.CursorResult;
+import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.partner.dto.CreatePartnerDto;
 import com.smart.booking.domain.partner.dto.GetPartnersDto;
 import com.smart.booking.domain.partner.dto.InitializePartnerDto;
@@ -57,6 +58,11 @@ class PartnerServiceImpl implements PartnerService {
 
     @Override
     public @NonNull Optional<Partner> getPartnerByLoginId(@NonNull String loginId) {
-        return Optional.empty();
+        return partnerRepository.findByLoginId(loginId);
+    }
+
+    @Override
+    public @NonNull Optional<Partner> getPartnerByMember(@NonNull Member member) {
+        return partnerRepository.findByMember(member);
     }
 }
