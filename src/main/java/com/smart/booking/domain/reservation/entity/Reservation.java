@@ -43,5 +43,6 @@ public class Reservation extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
     @Embedded
-    private ReservationUser reservationUser;
+    private ReservationMember reservationMember;
+    private String trackingId;
 }

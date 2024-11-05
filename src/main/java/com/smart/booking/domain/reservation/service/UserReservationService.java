@@ -1,5 +1,6 @@
 package com.smart.booking.domain.reservation.service;
 
+import com.smart.booking.domain.reservation.dto.CreateReservationDto;
 import com.smart.booking.domain.reservation.dto.ReservationDateHistory;
 import com.smart.booking.domain.reservation.dto.ReservationSimpleResponse;
 import java.util.List;
@@ -41,13 +42,9 @@ public interface UserReservationService {
 
     /**
      * 예약하기
-     * @param storeId
-     * @param reserveDate
-     * @param teeBoxId
-     * @param startTimeCodeId
-     * @param endTimeCodeId
+     * @param createReservationDto
      */
-    void createReservation(String storeId, String reserveDate, String teeBoxId, String startTimeCodeId, String endTimeCodeId);
+    void createReservation(CreateReservationDto createReservationDto);
 
     /**
      * 월별 내 예약이력
