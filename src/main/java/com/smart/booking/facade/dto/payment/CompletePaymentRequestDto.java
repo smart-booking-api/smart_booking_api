@@ -8,7 +8,9 @@ public record CompletePaymentRequestDto(
     @NonNull String trackingId,
     @NonNull String teeBoxId,
     @NonNull String timeTableId,
-    @NonNull Integer amount
+    @NonNull Integer amount,
+    @NonNull String reservationUserName,
+    @NonNull String reservationUserPhoneNum
 ) {
 
 }

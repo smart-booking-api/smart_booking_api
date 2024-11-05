@@ -1,10 +1,13 @@
 package com.smart.booking.domain.reservation.service;
 
+import com.smart.booking.domain.reservation.dto.CreateReservationDto;
 import com.smart.booking.domain.reservation.dto.ReservationDateHistory;
 import com.smart.booking.domain.reservation.dto.ReservationSimpleResponse;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
-public class UserReservationServiceImpl implements UserReservationService {
+@Service
+public class UserReservationServiceImpl extends CommonReservationService implements UserReservationService {
 
     @Override
     public List<ReservationSimpleResponse> getMyReservations(String userId, String startDate) {
@@ -27,7 +30,7 @@ public class UserReservationServiceImpl implements UserReservationService {
     }
 
     @Override
-    public void createReservation(String storeId, String reserveDate, String teeBoxId, String startTimeCodeId, String endTimeCodeId) {
+    public void createReservation(CreateReservationDto createReservationDto) {
 
     }
 
@@ -39,5 +42,15 @@ public class UserReservationServiceImpl implements UserReservationService {
     @Override
     public void startReservationStatus(String reservationId) {
 
+    }
+
+    @Override
+    protected boolean validateCancelPermission(String reservationId) {
+        return false;
+    }
+
+    @Override
+    protected boolean validateSearchPermission(String reservationId) {
+        return false;
     }
 }
