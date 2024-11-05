@@ -1,5 +1,6 @@
 package com.smart.booking.domain.user.service;
 
+import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.user.entity.User;
 import com.smart.booking.domain.user.repository.UserRepository;
 import java.util.Optional;
@@ -46,6 +47,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean updateSmsAgreement(@NonNull String userId, boolean isAgree) {
         return false;
+    }
+
+    @Override
+    public Optional<User> getUserByMember(@NonNull Member member) {
+        return userRepository.findByMember(member);
     }
 
     @Override

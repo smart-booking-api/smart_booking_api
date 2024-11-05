@@ -2,10 +2,11 @@ package com.smart.booking.common.security.filter;
 
 import com.smart.booking.common.security.service.JwtService;
 import com.smart.booking.common.security.value_object.CustomUserDetails;
+import com.smart.booking.domain.member.entity.Member;
+import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.partner.entity.Partner;
 import com.smart.booking.domain.partner.service.PartnerService;
 import com.smart.booking.domain.user.entity.User;
-import com.smart.booking.domain.user.repository.UserRepository;
 import com.smart.booking.domain.user.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,6 +24,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter  {
     private final JwtService jwtService;
+    private final MemberService memberService;
     private final UserService userService;
     private final PartnerService partnerService;
 
@@ -75,8 +77,9 @@ public class JwtFilter extends OncePerRequestFilter  {
     }
 
     private String getPasswordByRole(String userId, String role) {
+        Member member = memberService.getMemberById(userId);
         return "USER".equals(role)
-            ? userService.getUserByEmailId(userId).map(User::getPassword).orElse(null)
-            : partnerService.getPartnerByLoginId(userId).map(Partner::getPassword).orElse(null);
+            ? userService.getUserByMember(member).map(User::getPassword).orElse(null)
+            : partnerService.getPartnerByMember(member).map(Partner::getPassword).orElse(null);
     }
 }
