@@ -12,7 +12,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-abstract class StoreCommonServiceImpl implements StoreCommonService {
+class StoreCommonServiceImpl implements StoreCommonService {
 
     private final StoreRepository storeRepository;
 
