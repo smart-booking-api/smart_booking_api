@@ -8,6 +8,8 @@ public enum ResponseCode implements EnumModel {
     NOT_FOUND_ELEMENT(101, "유효한 데이터가 없습니다."),
     NOT_FOUND_STORE(300, "매장이 존재하지 않습니다"),
     NOT_FOUND_PARTNER(400, "파트너가 존재하지 않습니다"),
+    ALREADY_INITIALIZED_PARTNER(401, "이미 초기화된 파트너입니다."),
+    NOT_INITIALIZED_PARTNER(402, "초기화 되지 않은 파트너입니다."),
     ;
 
     private final int code;

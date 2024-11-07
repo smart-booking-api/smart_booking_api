@@ -2,6 +2,7 @@ package com.smart.booking.domain.partner.entity;
 
 import com.smart.booking.common.annotations.TsidGenerator;
 import com.smart.booking.domain.common.entity.BaseEntity;
+import com.smart.booking.domain.partner.dto.UpsertPartnerCompanyDto;
 import com.smart.booking.domain.partner.value_object.BankAccount;
 import com.smart.booking.domain.partner.value_object.CompanyManager;
 import com.smart.booking.domain.partner.value_object.CompanyRepresentative;
@@ -19,12 +20,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.NonNull;
 
 @Builder
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "partner_company")
@@ -75,6 +75,23 @@ public class PartnerCompany extends BaseEntity {
     private CompanyManager manager;
 
     private String memo;
-    
 
+
+    public void update(@NonNull UpsertPartnerCompanyDto upsertPartnerCompanyDto) {
+        this.name = upsertPartnerCompanyDto.name();
+        this.address = upsertPartnerCompanyDto.address();
+        this.fax = upsertPartnerCompanyDto.fax();
+        this.businessType = upsertPartnerCompanyDto.businessType();
+        this.businessCategory = upsertPartnerCompanyDto.businessCategory();
+        this.etaxEmail = upsertPartnerCompanyDto.etaxEmail();
+        this.bankAccount = upsertPartnerCompanyDto.bankAccount();
+        this.representative = upsertPartnerCompanyDto.representative();
+        this.manager = upsertPartnerCompanyDto.manager();
+        this.memo = upsertPartnerCompanyDto.memo();
+    }
+
+
+    public void changePartner(Partner partner) {
+        this.partner = partner;
+    }
 }

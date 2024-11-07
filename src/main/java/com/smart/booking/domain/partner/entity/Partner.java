@@ -7,6 +7,7 @@ import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.partner.enums.PartnerType;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -70,17 +71,34 @@ public class Partner extends BaseEntity {
     private BusinessRegistration businessRegistration;
 
 
-    @OneToOne
+    @OneToOne(
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
     private PartnerCompany company;
 
     private OffsetDateTime deletedAt;
 
-    public void updateCompany(@NonNull PartnerCompany company) {
-        company.setPartner(this);
+    public void initialize(@NonNull PartnerCompany company) {
+        company.changePartner(this);
         this.company = company;
     }
 
     public void changePhoneNumber(@NonNull String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public boolean isInitialized() {
+        return company != null;
+    }
+
+    public void withdraw() {
+        this.loginId = null;
+        this.password = null;
+        this.code = null;
+        this.company.changePartner(null);
+        this.company = null;
+        this.deletedAt = OffsetDateTime.now();
+    }
+
 }

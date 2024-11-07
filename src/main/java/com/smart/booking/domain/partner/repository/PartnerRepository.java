@@ -6,7 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface PartnerRepository extends JpaRepository<Partner, String> {
+public interface PartnerRepository extends JpaRepository<Partner, String>, PartnerRepositoryCustom {
+
     Optional<Partner> findByLoginId(String loginId);
     Optional<Partner> findByMember(Member member);
 }

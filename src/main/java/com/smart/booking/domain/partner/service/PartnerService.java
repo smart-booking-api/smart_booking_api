@@ -26,4 +26,6 @@ public interface PartnerService {
     @NonNull Optional<Partner> getPartnerByLoginId(@NonNull String loginId);
 
     @NonNull Optional<Partner> getPartnerByMember(@NonNull Member member);
+
+    void withdrawPartner(@NonNull String id) throws CommonException;
 }
