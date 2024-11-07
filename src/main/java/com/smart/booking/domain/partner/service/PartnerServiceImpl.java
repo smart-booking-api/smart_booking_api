@@ -1,6 +1,8 @@
 package com.smart.booking.domain.partner.service;
 
+import static com.smart.booking.common.enums.ResponseCode.ALREADY_INITIALIZED_PARTNER;
 import static com.smart.booking.common.enums.ResponseCode.NOT_FOUND_PARTNER;
+import static com.smart.booking.common.enums.ResponseCode.NOT_INITIALIZED_PARTNER;
 
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.common.model.CursorResult;
@@ -29,9 +31,14 @@ class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
-    public @NonNull Partner initializePartner(InitializePartnerDto initializePartnerDto) throws CommonException {
+    public @NonNull Partner initializePartner(@NonNull InitializePartnerDto initializePartnerDto) throws CommonException {
         final Partner partner = getPartner(initializePartnerDto.partnerId());
-        partner.updateCompany(PartnerMapper.toPartnerCompany(initializePartnerDto.upsertPartnerCompanyDto()));
+
+        if (partner.isInitialized()) {
+            throw new CommonException(ALREADY_INITIALIZED_PARTNER);
+        }
+
+        partner.initialize(PartnerMapper.toPartnerCompany(initializePartnerDto.upsertPartnerCompanyDto()));
 
         return partnerRepository.save(partner);
     }
@@ -39,8 +46,13 @@ class PartnerServiceImpl implements PartnerService {
     @Override
     public @NonNull Partner updatePartner(@NonNull UpdatePartnerDto updatePartnerDto) throws CommonException {
         final Partner partner = getPartner(updatePartnerDto.partnerId());
+
+        if (!partner.isInitialized()) {
+            throw new CommonException(NOT_INITIALIZED_PARTNER);
+        }
+
         partner.changePhoneNumber(updatePartnerDto.phoneNumber());
-        partner.updateCompany(PartnerMapper.toPartnerCompany(updatePartnerDto.upsertPartnerCompanyDto()));
+        partner.getCompany().update(updatePartnerDto.upsertPartnerCompanyDto());
 
         return partnerRepository.save(partner);
     }
@@ -53,7 +65,12 @@ class PartnerServiceImpl implements PartnerService {
 
     @Override
     public @NonNull CursorResult<Partner> getPartners(@NonNull GetPartnersDto getPartnersDto) {
-        return null;
+        return partnerRepository.findByTypeAndCompanyNameWithCursor(
+            getPartnersDto.type(),
+            getPartnersDto.companyName(),
+            getPartnersDto.cursor(),
+            getPartnersDto.pageSize()
+        );
     }
 
     @Override
@@ -64,5 +81,12 @@ class PartnerServiceImpl implements PartnerService {
     @Override
     public @NonNull Optional<Partner> getPartnerByMember(@NonNull Member member) {
         return partnerRepository.findByMember(member);
+    }
+
+    @Override
+    public void withdrawPartner(@NonNull String id) throws CommonException {
+        final Partner partner = getPartner(id);
+        partner.withdraw();
+        partnerRepository.save(partner);
     }
 }
