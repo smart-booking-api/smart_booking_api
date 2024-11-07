@@ -6,8 +6,7 @@ import com.smart.booking.domain.member.enums.MemberType;
 import com.smart.booking.domain.partner.entity.Partner;
 import com.smart.booking.domain.partner.service.PartnerService;
 import com.smart.booking.domain.user.entity.User;
-import com.smart.booking.domain.user.repository.UserRepository;
-import com.smart.booking.domain.user.service.UserService;
+import com.smart.booking.domain.user.service.UserUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,15 +17,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserService userService;
+
+    private final UserUserService userUserService;
     private final PartnerService partnerService;
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        User user = userService.getUserByEmailId(userId).orElse(null);
+        User user = userUserService.getUserByEmailId(userId).orElse(null);
+
         if (isValidUser(user)) {
-            return new CustomUserDetails(user.getMember().getId(), "ROLE_USER", user.getPassword());
+            /// TODO: Fix this
+//            return new CustomUserDetails(user.getMember().getId(), "ROLE_USER", user.getPassword());
         }
 
         Partner partner = partnerService.getPartnerByLoginId(userId).orElse(null);

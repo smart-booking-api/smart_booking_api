@@ -6,8 +6,7 @@ import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.partner.entity.Partner;
 import com.smart.booking.domain.partner.service.PartnerService;
-import com.smart.booking.domain.user.entity.User;
-import com.smart.booking.domain.user.service.UserService;
+import com.smart.booking.domain.user.service.UserCommonService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,10 +21,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JwtFilter extends OncePerRequestFilter  {
+public class JwtFilter extends OncePerRequestFilter {
+
     private final JwtService jwtService;
     private final MemberService memberService;
-    private final UserService userService;
+    private final UserCommonService userCommonService;
     private final PartnerService partnerService;
 
     @Override
@@ -79,7 +79,9 @@ public class JwtFilter extends OncePerRequestFilter  {
     private String getPasswordByRole(String userId, String role) {
         Member member = memberService.getMemberById(userId);
         return "USER".equals(role)
-            ? userService.getUserByMember(member).map(User::getPassword).orElse(null)
+            ? ""
+/// TODO: Fix this
+//            userCommonService.getUserByMember(member).map(User::getPassword).orElse(null)
             : partnerService.getPartnerByMember(member).map(Partner::getPassword).orElse(null);
     }
 }

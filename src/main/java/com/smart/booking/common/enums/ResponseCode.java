@@ -10,6 +10,8 @@ public enum ResponseCode implements EnumModel {
     NOT_FOUND_PARTNER(400, "파트너가 존재하지 않습니다"),
     ALREADY_INITIALIZED_PARTNER(401, "이미 초기화된 파트너입니다."),
     NOT_INITIALIZED_PARTNER(402, "초기화 되지 않은 파트너입니다."),
+    NOT_FOUND_USER(500, "유저가 존재하지 않습니다"),
+    NOT_FOUND_THIRD_PARTY_ACCOUNT(501, "존재하지 않는 소셜 계정입니다."),
     ;
 
     private final int code;
