@@ -5,7 +5,7 @@ import com.smart.booking.common.security.filter.LoginFilter;
 import com.smart.booking.common.security.service.JwtService;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.partner.service.PartnerService;
-import com.smart.booking.domain.user.service.UserCommonService;
+import com.smart.booking.domain.user.service.UserUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +28,7 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final MemberService memberService;
-    private final UserCommonService userCommonService;
+    private final UserUserService userUserService;
     private final PartnerService partnerService;
     private final JwtService jwtService;
 
@@ -63,7 +63,7 @@ public class SecurityConfig {
             );
 
         // login filter 적용 전에 jwtFilter 적용
-        http.addFilterBefore(new JwtFilter(jwtService, memberService, userCommonService, partnerService), LoginFilter.class);
+        http.addFilterBefore(new JwtFilter(jwtService, memberService, userUserService, partnerService), LoginFilter.class);
 
         // UsernamePasswordAuthenticationFilter 필터 적용시 LoginFilter 를 대신 적용
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtService), UsernamePasswordAuthenticationFilter.class);

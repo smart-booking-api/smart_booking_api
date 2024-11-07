@@ -7,7 +7,7 @@ import com.smart.booking.domain.user.value_object.UserPolicyAgreement;
 import java.util.Optional;
 import lombok.NonNull;
 
-public interface UserUserService {
+public interface UserUserService extends UserCommonService {
 
     @NonNull User getUserByThirdPartyAccountId(@NonNull String thirdPartyAccountId) throws CommonException;
 
@@ -23,6 +23,6 @@ public interface UserUserService {
     @NonNull Optional<User> getUserByEmailId(@NonNull String email);
 
     void login(@NonNull String userId) throws CommonException;
-    
+
 
 }

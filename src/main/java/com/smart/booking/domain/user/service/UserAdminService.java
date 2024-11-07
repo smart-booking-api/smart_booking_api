@@ -5,7 +5,7 @@ import com.smart.booking.domain.user.dto.GetUsersDto;
 import com.smart.booking.domain.user.entity.User;
 import lombok.NonNull;
 
-public interface UserAdminService {
+public interface UserAdminService extends UserCommonService {
 
     @NonNull CursorResult<User> getUsers(@NonNull GetUsersDto getUsersDto);
 }
