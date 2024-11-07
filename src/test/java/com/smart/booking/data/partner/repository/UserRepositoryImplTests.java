@@ -46,6 +46,7 @@ public class UserRepositoryImplTests {
         }
 
         @Test
+        @DisplayName("파트너 목록 조회")
         void getPartners() {
 
             final var partners = partnerRepository.findByTypeAndCompanyNameWithCursor(
@@ -58,6 +59,7 @@ public class UserRepositoryImplTests {
 
 
         @Test
+        @DisplayName("파트너 목록 조회 - 커서")
         void getPartnersWithCursor() {
 
             final var partner = partnerRepository.findByTypeAndCompanyNameWithCursor(
