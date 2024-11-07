@@ -1,19 +1,16 @@
 package com.smart.booking.data.store.repository;
 
-import static com.smart.booking.domain.store.entity.QStore.store;
 
-import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.smart.booking.domain.common.enums.Region;
 import com.smart.booking.domain.common.model.CursorResult;
+import com.smart.booking.domain.store.entity.QStore;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.store.repository.StoreRepositoryCustom;
 import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -21,6 +18,8 @@ import org.springframework.stereotype.Repository;
 public class StoreRepositoryImpl implements StoreRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
+
+    private final QStore qStore = QStore.store;
 
     @Override
     public @NonNull CursorResult<Store> findByNameAndRegionWithCursor(
@@ -30,43 +29,37 @@ public class StoreRepositoryImpl implements StoreRepositoryCustom {
         String cursor
     ) {
 
-        final BooleanBuilder whereClause = new BooleanBuilder();
-
-        if (cursor != null) {
-            whereClause.and(store.id.lt(cursor));
-        }
-
-        if (name != null) {
-            whereClause.and(store.name.containsIgnoreCase(name));
-        }
-
-        if (region != null) {
-            whereClause.and(store.region.eq(region));
-        }
-
-        final List<Store> stores = jpaQueryFactory.selectFrom(store)
-            .where(whereClause)
-            .orderBy(store.id.desc())
+        final List<Store> stores = jpaQueryFactory.selectFrom(qStore)
+            .where(idLessThan(cursor), nameContains(name), regionEq(region))
+            .orderBy(qStore.id.desc())
             .limit(pageSize + 1)
             .fetch();
 
-        final int totalCount = jpaQueryFactory.selectFrom(store)
-            .where(whereClause)
+        final int totalCount = jpaQueryFactory.selectFrom(qStore)
+            .where(nameContains(name), regionEq(region))
             .fetch()
             .size();
 
-        final Pageable pageable = PageRequest.of(
-            0,
-            pageSize,
-            Sort.by(Sort.Order.desc("id"))
-        );
+        final boolean hasNext = stores.size() > pageSize;
 
         return new CursorResult<>(
-            stores.subList(0, pageSize),
-            stores.size() > pageSize,
+            hasNext ? stores.subList(0, pageSize) : stores,
+            hasNext,
             totalCount
         );
 
+    }
+
+    BooleanExpression idLessThan(String cursor) {
+        return cursor == null ? null : qStore.id.lt(cursor);
+    }
+
+    BooleanExpression nameContains(String name) {
+        return name == null ? null : qStore.name.containsIgnoreCase(name);
+    }
+
+    BooleanExpression regionEq(Region region) {
+        return region == null ? null : qStore.region.eq(region);
     }
 
 

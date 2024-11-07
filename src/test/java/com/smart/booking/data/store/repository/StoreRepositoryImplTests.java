@@ -1,4 +1,4 @@
-package com.smart.booking.data.store.data_source;
+package com.smart.booking.data.store.repository;
 
 
 import com.smart.booking.domain.common.enums.Region;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class StoreRepositoryImplTest {
+class StoreRepositoryImplTests {
 
     @Autowired
     private StoreRepository storeRepository;
