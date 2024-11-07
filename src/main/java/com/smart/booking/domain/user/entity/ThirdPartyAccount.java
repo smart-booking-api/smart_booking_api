@@ -2,7 +2,7 @@ package com.smart.booking.domain.user.entity;
 
 import com.smart.booking.common.annotations.TsidGenerator;
 import com.smart.booking.domain.common.entity.BaseEntity;
-import com.smart.booking.domain.common.enums.ThirdPartyAccountProvider;
+import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,12 +16,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "third_party_account", uniqueConstraints = {

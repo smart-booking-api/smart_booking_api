@@ -1,17 +1,17 @@
-package com.smart.booking.domain.common.enums;
+package com.smart.booking.domain.user.enums;
 
 import com.smart.booking.common.enums.EnumModel;
 import lombok.NonNull;
 
-public enum ThirdPartyAccountProvider implements EnumModel {
-    KAKAO("카카오"),
-    NAVER("네이버"),
-    APPLE("애플"),
+public enum UserStatus implements EnumModel {
+    ACTIVE("활성"),
+    DORMANCY("휴면"),
+    WITHDRAWAL("탈퇴"),
     ;
 
-    private final @NonNull String value;
+    private final String value;
 
-    ThirdPartyAccountProvider(@NonNull String value) {
+    UserStatus(@NonNull String value) {
         this.value = value;
     }
 
