@@ -7,8 +7,8 @@ import lombok.NonNull;
 public record CreateReservationDto(
     @NonNull String storeId,
     @NonNull String teeBoxId,
-    @NonNull String startTimeCode,
-    @NonNull String endTimeCode,
+    @NonNull String startTimeTableId,
+    @NonNull String endTimeTableId,
     @NonNull String memberId,
     @NonNull String reservationUserName,
     @NonNull String reservationUserPhoneNum

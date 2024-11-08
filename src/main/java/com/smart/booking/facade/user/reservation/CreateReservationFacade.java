@@ -14,9 +14,21 @@ public class CreateReservationFacade {
     private final UserReservationService userReservationService;
 
     public void createReservation(@NonNull CompletePaymentRequestDto createReservationDto) {
-
         // 예약
-//        userReservationService.createReservation();
+        userReservationService.createReservation(getCreateReservationDto(createReservationDto));
+
         // firebase 예약완료 전송
+    }
+
+    private CreateReservationDto getCreateReservationDto(CompletePaymentRequestDto completeDto) {
+        return CreateReservationDto.builder()
+//            .storeId(completePaymentRequestDto.storeId)
+            .teeBoxId(completeDto.teeBoxId())
+            .startTimeTableId(completeDto.startTimeTableId())
+            .endTimeTableId(completeDto.endTimeTableId())
+            .memberId(completeDto.memberId())
+            .reservationUserName(completeDto.reservationUserName())
+            .reservationUserPhoneNum(completeDto.reservationUserPhoneNum())
+            .build();
     }
 }
