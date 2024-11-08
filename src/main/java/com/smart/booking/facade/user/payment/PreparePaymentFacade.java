@@ -23,7 +23,7 @@ public class PreparePaymentFacade implements Facade<SavePaymentTrackingHistoryRe
 
     @Override
     @Transactional
-    public Void exceuete(SavePaymentTrackingHistoryRequestDto dto) throws Exception {
+    public Void exceuete(SavePaymentTrackingHistoryRequestDto dto) {
         // tee box 유효성 검사?
         //TODO teeBox 유효성 검사
         //TODO time table 유효성 검사

@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class CompletePaymentFacade implements Facade<CompletePaymentRequestDto, Void> {
+public class CompletePaymentFacade {
 
     private final PaymentInfoService paymentInfoService;
     private final PaymentTrackingHistoryService paymentTrackingInfoService;
@@ -31,9 +31,8 @@ public class CompletePaymentFacade implements Facade<CompletePaymentRequestDto, 
      * @return
      */
 
-    @Override
     @Transactional
-    public Void exceuete(CompletePaymentRequestDto dto) throws Exception {
+    public void exceuete(CompletePaymentRequestDto dto) {
         //TODO teeBox service에 id로 조회 요청
         TeeBox teeBox = null;
 
@@ -65,6 +64,5 @@ public class CompletePaymentFacade implements Facade<CompletePaymentRequestDto, 
                 .reservationUserPhoneNum(dto.reservationUserPhoneNum())
                 .build()
         );
-        return null;
     }
 }

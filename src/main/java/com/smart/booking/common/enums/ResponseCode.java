@@ -7,6 +7,7 @@ public enum ResponseCode implements EnumModel {
     COMMON_OK(0, "OK"),
     COMMON_UNKNOWN(101, "COMMON_UNKNOWN"),
     NOT_FOUND_ELEMENT(102, "유효한 데이터가 없습니다."),
+    COMMON_BAD_REQUEST(102, "잘못된 요청 입니다."),
 
     NOT_FOUND_STORE(300, "매장이 존재하지 않습니다"),
     NOT_FOUND_PARTNER(400, "파트너가 존재하지 않습니다"),

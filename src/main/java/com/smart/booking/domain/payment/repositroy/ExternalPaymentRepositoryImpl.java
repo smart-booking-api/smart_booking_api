@@ -16,13 +16,13 @@ public class ExternalPaymentRepositoryImpl implements ExternalPaymentRepository 
     private final PortOneClient portOneClient;
 
     @Override
-    public String getToken() throws Exception {
+    public String getToken() {
         var token = portOneClient.getToken();
         return token.response().accessToken();
     }
 
     @Override
-    public ExternalPaymentInfoResponseDto searchPaymentInfo(SearchPaymentInfoRequestDto request) throws Exception {
+    public ExternalPaymentInfoResponseDto searchPaymentInfo(SearchPaymentInfoRequestDto request) {
         var token = getToken();
         return portOneClient.searchPayment(token, request);
     }

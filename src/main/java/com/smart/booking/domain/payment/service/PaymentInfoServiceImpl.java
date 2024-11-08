@@ -26,7 +26,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
     }
 
     @Override
-    public ExternalCustomDataDto getExternalPaymentInfo(String merchantUid) throws Exception {
+    public ExternalCustomDataDto getExternalPaymentInfo(String merchantUid) {
         var request = new SearchPaymentInfoRequestDto(merchantUid, "-started");
         var paymentInfo = externalPaymentRepository.searchPaymentInfo(request).response();
         return JsonUtil.convertToObject(paymentInfo.customData(), ExternalCustomDataDto.class);

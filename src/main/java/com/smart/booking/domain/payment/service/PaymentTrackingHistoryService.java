@@ -8,7 +8,7 @@ public interface PaymentTrackingHistoryService {
      * 결제 트랙킹 정보 조회
      * request :
      * tracking id
-     * */
+     */
     Object getTrackingInfo(String trackingInfo);
 
     /**
@@ -17,7 +17,7 @@ public interface PaymentTrackingHistoryService {
      * tracking id
      * tBox Id
      * timeTable id
-     * */
+     */
     void saveTrackingHistory(SavePaymentTrackingHistoryDto trackingHistoryDto);
 
     /**
@@ -25,6 +25,6 @@ public interface PaymentTrackingHistoryService {
      * request :
      * tracking id
      * payment id
-     * */
-    void matchPaymentAndTrackingInfo(String trackingId, String paymentId) throws Exception;
+     */
+    void matchPaymentAndTrackingInfo(String trackingId, String paymentId);
 }

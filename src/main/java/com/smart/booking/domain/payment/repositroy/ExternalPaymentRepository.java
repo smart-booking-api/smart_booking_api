@@ -7,5 +7,5 @@ public interface ExternalPaymentRepository {
 
     String getToken() throws Exception;
 
-    ExternalPaymentInfoResponseDto searchPaymentInfo(SearchPaymentInfoRequestDto request) throws Exception;
+    ExternalPaymentInfoResponseDto searchPaymentInfo(SearchPaymentInfoRequestDto request);
 }
