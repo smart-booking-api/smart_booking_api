@@ -1,6 +1,7 @@
 package com.smart.booking.facade.user.reservation;
 
 import com.smart.booking.domain.reservation.service.UserReservationService;
+import com.smart.booking.domain.user.service.UserService;
 import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
 import com.smart.booking.facade.event.dto.CompletePaymentEventDto;
 import lombok.NonNull;
