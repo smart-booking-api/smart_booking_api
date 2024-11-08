@@ -1,4 +1,4 @@
-package com.smart.booking.facade.eventHandler;
+package com.smart.booking.facade.event.Listener;
 
 import com.smart.booking.domain.payment.service.PaymentInfoService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +17,7 @@ public class CustomEventListener {
 
     //TODO 예약 서비스에 예약 완료 요청 이벤트 전송로직 추가
     private final PaymentInfoService paymentInfoService;
+
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handler(String paymentId) {

@@ -1,4 +1,4 @@
-package com.smart.booking.facade.paymentGateway;
+package com.smart.booking.facade.pg;
 
 import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
 import com.smart.booking.domain.common.facade.Facade;
@@ -9,7 +9,7 @@ import com.smart.booking.domain.payment.service.PaymentInfoService;
 import com.smart.booking.domain.payment.service.PaymentHistoryService;
 import com.smart.booking.domain.payment.service.PaymentTrackingHistoryService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
-import com.smart.booking.facade.eventPublisher.ReservationSaveEventPublisher;
+import com.smart.booking.facade.event.publisher.CompletePaymentEventPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ public class CompletePaymentFacade implements Facade<CompletePaymentRequestDto, 
     private final PaymentInfoService paymentInfoService;
     private final PaymentTrackingHistoryService paymentTrackingInfoService;
     private final PaymentHistoryService paymentLogService;
-    private final ReservationSaveEventPublisher applicationEventPublisher;
+    private final CompletePaymentEventPublisher reservationSaveEventPublisher;
 
 
     /**
@@ -50,7 +50,7 @@ public class CompletePaymentFacade implements Facade<CompletePaymentRequestDto, 
         paymentLogService.savePaymentCompleteRequestLog(historyDto);
 
         //5. 예약 생성 요청
-        applicationEventPublisher.publish(payment.getPaymentId());
+        reservationSaveEventPublisher.publish(dto);
         return null;
     }
 }

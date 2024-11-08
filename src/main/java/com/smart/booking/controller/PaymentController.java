@@ -3,7 +3,7 @@ package com.smart.booking.controller;
 import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
 import com.smart.booking.controller.endPoint.PaymentEndPoint;
 import com.smart.booking.facade.dto.payment.SavePaymentTrackingHistoryRequestDto;
-import com.smart.booking.facade.paymentGateway.CompletePaymentFacade;
+import com.smart.booking.facade.pg.CompletePaymentFacade;
 import com.smart.booking.facade.user.payment.PreparePaymentFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
