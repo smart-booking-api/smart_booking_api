@@ -8,9 +8,9 @@ import lombok.NonNull;
 
 public record SavePaymentHistoryDto(
     @NonNull Payment payment,
-    @NonNull BigDecimal totalAmount,
+    @NonNull Integer totalAmount,
 
     @NonNull PaymentStatus paymentStatus
-    ){
+) {
 
 }

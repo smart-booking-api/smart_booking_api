@@ -1,15 +1,25 @@
 package com.smart.booking.domain.payment.service;
 
+import com.smart.booking.domain.external.dto.ExternalCustomDataDto;
+import com.smart.booking.domain.external.dto.ExternalPaymentInfoResponseDto;
 import com.smart.booking.domain.payment.dto.SavePaymentDto;
 import com.smart.booking.domain.payment.entity.Payment;
 
 public interface PaymentInfoService {
+
     /**
      * 결제 정보 조회
      * request : paymentId
      * response : 예약수수료 (주중/주말)
-     * */
-    Object getPaymentInfo(String paymentId);
+     */
+    Object getPaymentInfo(String paymentId) throws Exception;
+
+    /**
+     * 결제 정보 조회
+     * request : merchantUid
+     * response : ExternalPaymentInfoResponseDto
+     */
+    ExternalCustomDataDto getExternalPaymentInfo(String impUid) throws Exception;
 
     /**
      * 결제 완료 저장
@@ -18,13 +28,13 @@ public interface PaymentInfoService {
      * teeBox id
      * timeTable id
      * response :payment id
-     * */
+     */
     Payment savePaymentCompleteInfo(SavePaymentDto request);
 
     /**
      * 결제 취소 저장
      * request : payment id
-     * */
+     */
     void savePaymentCancelInfo(String paymentId);
 
 }
