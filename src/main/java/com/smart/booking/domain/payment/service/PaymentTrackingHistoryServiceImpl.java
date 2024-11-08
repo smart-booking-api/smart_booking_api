@@ -35,12 +35,12 @@ public class PaymentTrackingHistoryServiceImpl implements PaymentTrackingHistory
     }
 
     @Override
-    public void matchPaymentAndTrackingInfo(@NonNull String trackingId, @NonNull String paymentId) throws Exception {
+    public void matchPaymentAndTrackingInfo(@NonNull String trackingId, @NonNull String paymentId) {
         var trackingHistory = findById(trackingId);
         trackingHistory.matchPaymentId(paymentId);
     }
 
-    private PaymentTrackingHistory findById(@NonNull String trackingId) throws CommonException {
-       return paymentTrackingHistoryRepository.findById(trackingId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_ELEMENT));
+    private PaymentTrackingHistory findById(@NonNull String trackingId) {
+        return paymentTrackingHistoryRepository.findById(trackingId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_ELEMENT));
     }
 }

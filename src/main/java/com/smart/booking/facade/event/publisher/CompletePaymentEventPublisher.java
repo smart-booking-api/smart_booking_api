@@ -12,7 +12,7 @@ public class CompletePaymentEventPublisher {
 
     private final ApplicationEventPublisher publisher;
 
-    public void publish(CompletePaymentEventDto completePaymentEventDto) throws Exception {
+    public void publish(CompletePaymentEventDto completePaymentEventDto) {
         publisher.publishEvent(completePaymentEventDto);
     }
 }

@@ -32,7 +32,7 @@ public class PaymentController {
      * 결제창 접근
      */
     @PostMapping(PaymentEndPoint.PAYMENT_PREPARE_URL)
-    public void preparePayment(@Validated @RequestBody SavePaymentTrackingHistoryRequestDto request) throws Exception {
+    public void preparePayment(@Validated @RequestBody SavePaymentTrackingHistoryRequestDto request) {
         preparePaymentFacade.exceuete(request);
     }
 

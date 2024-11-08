@@ -3,12 +3,12 @@ package com.smart.booking.domain.external.client;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smart.booking.common.client.ExternalWebClient;
+import com.smart.booking.common.enums.ResponseCode;
+import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.external.dto.ExternalPaymentInfoResponseDto;
 import com.smart.booking.domain.external.dto.ExternalTokenResponseDto;
 import com.smart.booking.domain.external.dto.SearchPaymentInfoRequestDto;
-import com.smart.booking.domain.payment.entity.Payment;
 import com.smart.booking.domain.payment.entity.PaymentStatus;
-import io.netty.util.internal.StringUtil;
 import java.util.Collections;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class PortOneClient {
     /**
      * 토큰 발급
      */
-    public ExternalTokenResponseDto getToken() throws Exception {
+    public ExternalTokenResponseDto getToken() {
         var responseOptional = webClient.post(
             ExternalTokenResponseDto.class,
             "api.iamport.kr/users/getToken",
@@ -44,7 +44,7 @@ public class PortOneClient {
         ).orElse(ExternalTokenResponseDto.builder().build());
 
         if (responseOptional.message() != null) {
-            throw new Exception(responseOptional.message());
+            throw new CommonException(ResponseCode.COMMON_BAD_REQUEST, responseOptional.message());
         }
 
         log.info("# [PortOntClient] getToken response : {}", responseOptional);
@@ -55,7 +55,7 @@ public class PortOneClient {
     /**
      * 결제 내역 단건 조회
      */
-    public ExternalPaymentInfoResponseDto searchPayment(String token, SearchPaymentInfoRequestDto request) throws Exception {
+    public ExternalPaymentInfoResponseDto searchPayment(String token, SearchPaymentInfoRequestDto request) {
 
         var responseOptional = webClient.get(
             ExternalPaymentInfoResponseDto.class,
@@ -70,7 +70,7 @@ public class PortOneClient {
         ).orElse(ExternalPaymentInfoResponseDto.builder().build());
 
         if (responseOptional.message() != null) {
-            throw new Exception(responseOptional.message());
+            throw new CommonException(ResponseCode.COMMON_BAD_REQUEST, responseOptional.message());
         }
 
         log.info("# [PortOntClient] searches response : {}", responseOptional);

@@ -19,7 +19,7 @@ public interface PaymentInfoService {
      * request : merchantUid
      * response : ExternalPaymentInfoResponseDto
      */
-    ExternalCustomDataDto getExternalPaymentInfo(String impUid) throws Exception;
+    ExternalCustomDataDto getExternalPaymentInfo(String impUid);
 
     /**
      * 결제 완료 저장
