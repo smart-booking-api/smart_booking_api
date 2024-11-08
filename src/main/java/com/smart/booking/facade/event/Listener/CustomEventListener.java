@@ -20,7 +20,7 @@ public class CustomEventListener {
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void handler(String paymentId) {
+    public void handler(String paymentId) throws Exception {
         var test = paymentInfoService.getPaymentInfo(paymentId);
         log.info(paymentId + "::: event 실행 테스트");
     }

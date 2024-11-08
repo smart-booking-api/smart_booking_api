@@ -1,14 +1,18 @@
 package com.smart.booking.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonUtil {
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * 객체를 문자로 변환
+     *
      * @param obj
+     *
      * @return
      */
     public static String convertToString(Object obj) {
@@ -21,10 +25,12 @@ public class JsonUtil {
 
     /**
      * 문자를 객체로 변환
+     *
      * @param json
      * @param object
-     * @return
      * @param <T>
+     *
+     * @return
      */
     public static <T> T convertToObject(String json, Class<T> object) {
         try {

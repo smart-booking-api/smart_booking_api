@@ -12,7 +12,7 @@ public class GetPaymentInfoFacade implements Facade<String, Object> {
     private PaymentInfoService paymentInfoService;
 
     @Override
-    public Object exceuete(String paymentId) {
+    public Object exceuete(String paymentId) throws Exception {
         return paymentInfoService.getPaymentInfo(paymentId);
     }
 }

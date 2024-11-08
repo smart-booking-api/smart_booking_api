@@ -19,10 +19,10 @@ public class CancelPaymentFacade implements Facade<Object, Object> {
 
     /**
      * 결제 취소 프로세스
-     * */
+     */
     @Override
     @Transactional
-    public Object exceuete(Object dto) {
+    public Object exceuete(Object dto) throws Exception {
         //1. 결제 정보 조회
         String paymentId = "";
         String teeBoxId = "";
