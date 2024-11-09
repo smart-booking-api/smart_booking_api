@@ -1,7 +1,7 @@
-package com.smart.booking.common.security.filter;
+package com.smart.booking.presentation.security.filter;
 
-import com.smart.booking.common.security.service.JwtService;
-import com.smart.booking.common.security.value_object.CustomUserDetails;
+import com.smart.booking.domain.auth.service.AuthService;
+import com.smart.booking.presentation.security.value_object.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
+    private final AuthService authService;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -48,10 +48,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String role = auth.getAuthority();
 
-        String accessToken = jwtService.createAccessToken(userId, role, 60*60*10L);
-        String refreshToken = jwtService.createRefreshToken(userId);
+        String accessToken = authService.createAccessToken(userId, role);
+        String refreshToken = authService.createRefreshToken(userId);
 
-        jwtService.createRefreshToken(userId, refreshToken);
+        authService.createRefreshTokenByUserId(userId, refreshToken);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh-Token", "Bearer " + refreshToken);

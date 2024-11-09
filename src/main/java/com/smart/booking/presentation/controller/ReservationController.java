@@ -1,4 +1,4 @@
-package com.smart.booking.controller;
+package com.smart.booking.presentation.controller;
 
 import com.smart.booking.common.dto.MemberContext;
 import com.smart.booking.domain.reservation.dto.ReservationLockDto;

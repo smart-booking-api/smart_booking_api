@@ -18,17 +18,34 @@ public interface AuthService {
 
     void signOutPartner();
 
+    // todo 제거
     @NonNull Token reissueToken(@NonNull String refreshToken);
 
+    // todo 제거
     @NonNull Token createToken(@NonNull String memberId);
 
     void withdrawUser(@NonNull String userId);
 
     void withdrawPartner(@NonNull String partnerId);
 
-    RefreshToken getRefreshTokenByMember(@NonNull Member member);
+    //RefreshToken getRefreshTokenByMember(@NonNull Member member);
 
-    RefreshToken createRefreshToken(@NonNull Member member, String token);
+    // todo 제거
+    // RefreshToken getRefreshTokenByRefreshToken(String refreshToken);
 
-    RefreshToken getRefreshTokenByRefreshToken(String refreshToken);
+    String getUserIdFromToken(String token);
+
+    Boolean isExpiredToken(String token);
+
+    Boolean isExpiredRefreshToken(String token);
+
+    RefreshToken createRefreshTokenByUserId(String userId, String refreshToken);
+
+    void updateRefreshToken(String userId, String refreshToken);
+
+    String createAccessToken(String userId, String role);
+
+    String createRefreshToken(String userId);
+
+    RefreshToken findByRefreshToken(String refreshToken);
 }

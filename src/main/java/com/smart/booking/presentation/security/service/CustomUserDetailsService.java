@@ -1,6 +1,6 @@
-package com.smart.booking.common.security.service;
+package com.smart.booking.presentation.security.service;
 
-import com.smart.booking.common.security.value_object.CustomUserDetails;
+import com.smart.booking.presentation.security.value_object.CustomUserDetails;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.enums.MemberType;
 import com.smart.booking.domain.partner.entity.Partner;
@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserUserService userUserService;
     private final PartnerService partnerService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -27,8 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userUserService.getUserByEmailId(userId).orElse(null);
 
         if (isValidUser(user)) {
-            /// TODO: Fix this
-//            return new CustomUserDetails(user.getMember().getId(), "ROLE_USER", user.getPassword());
+            return new CustomUserDetails(user.getMember().getId(), "ROLE_USER", "");
         }
 
         Partner partner = partnerService.getPartnerByLoginId(userId).orElse(null);
