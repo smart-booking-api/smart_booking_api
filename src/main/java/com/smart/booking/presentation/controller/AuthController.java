@@ -1,7 +1,7 @@
-package com.smart.booking.common.security.controller;
+package com.smart.booking.presentation.controller;
 
-import com.smart.booking.common.security.service.JwtService;
 import com.smart.booking.domain.auth.entity.RefreshToken;
+import com.smart.booking.domain.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public class RefreshController {
-    private final JwtService jwtService;
+public class AuthController {
+    private final AuthService authService;
 
     @PostMapping("/refresh")
     public String refreshToken(@RequestBody String refreshToken) {
-        if (jwtService.isRefreshExpired(refreshToken)) {
+        if (authService.isExpiredRefreshToken(refreshToken)) {
             return "Refresh token is expired";
         }
 
-        RefreshToken findToken = jwtService.findByRefreshToken(refreshToken);
+        RefreshToken findToken = authService.findByRefreshToken(refreshToken);
 
-        return jwtService.createAccessToken(findToken.getMember().getId(), findToken.getMember().getType().getKey(), 60*60*10L);
+        return authService.createAccessToken(findToken.getMember().getId(), findToken.getMember().getType().getKey());
     }
 }

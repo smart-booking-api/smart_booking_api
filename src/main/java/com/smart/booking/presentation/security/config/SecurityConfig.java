@@ -1,11 +1,11 @@
-package com.smart.booking.common.security.config;
+package com.smart.booking.presentation.security.config;
 
-import com.smart.booking.common.security.filter.JwtFilter;
-import com.smart.booking.common.security.filter.LoginFilter;
-import com.smart.booking.common.security.service.JwtService;
+import com.smart.booking.domain.auth.service.AuthService;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.partner.service.PartnerService;
 import com.smart.booking.domain.user.service.UserUserService;
+import com.smart.booking.presentation.security.filter.JwtFilter;
+import com.smart.booking.presentation.security.filter.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +30,7 @@ public class SecurityConfig {
     private final MemberService memberService;
     private final UserUserService userUserService;
     private final PartnerService partnerService;
-    private final JwtService jwtService;
+    private final AuthService authService;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -63,10 +63,10 @@ public class SecurityConfig {
             );
 
         // login filter 적용 전에 jwtFilter 적용
-        http.addFilterBefore(new JwtFilter(jwtService, memberService, userUserService, partnerService), LoginFilter.class);
+        http.addFilterBefore(new JwtFilter(authService, memberService, userUserService, partnerService), LoginFilter.class);
 
         // UsernamePasswordAuthenticationFilter 필터 적용시 LoginFilter 를 대신 적용
-        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), authService), UsernamePasswordAuthenticationFilter.class);
 
         // jwt 인증인가를 위한 세션 설정
         http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
