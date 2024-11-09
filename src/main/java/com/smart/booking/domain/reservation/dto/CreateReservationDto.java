@@ -11,6 +11,6 @@ public record CreateReservationDto(
     @NonNull String endTimeTableId,
     @NonNull String memberId,
     @NonNull String reservationUserName,
-    @NonNull String reservationUserPhoneNum
+    @NonNull String reservationUserPhoneNumber
 ) {
 }
