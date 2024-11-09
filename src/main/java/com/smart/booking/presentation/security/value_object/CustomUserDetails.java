@@ -1,4 +1,4 @@
-package com.smart.booking.common.security.value_object;
+package com.smart.booking.presentation.security.value_object;
 
 import java.util.ArrayList;
 import java.util.Collection;
