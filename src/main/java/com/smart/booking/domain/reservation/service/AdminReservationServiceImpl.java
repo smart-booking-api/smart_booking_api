@@ -1,10 +1,15 @@
 package com.smart.booking.domain.reservation.service;
 
-import com.smart.booking.domain.reservation.dto.ReservationSimpleResponse;
+import com.smart.booking.domain.reservation.repository.ReservationRepository;
+import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
 import com.smart.booking.domain.reservation.enums.SearchDateType;
 import java.util.List;
 
-public class AdminReservationServiceImpl extends CommonReservationService implements AdminReservationService{
+public class AdminReservationServiceImpl extends CommonReservationServiceImpl implements AdminReservationService {
+
+    public AdminReservationServiceImpl(ReservationRepository reservationRepository) {
+        super(reservationRepository);
+    }
 
     @Override
     public int getReservationCount(String storeId, String startDate, String endDate) {
@@ -27,12 +32,12 @@ public class AdminReservationServiceImpl extends CommonReservationService implem
     }
 
     @Override
-    protected boolean validateCancelPermission(String reservationId) {
+    boolean validateCancelPermission(String reservationId) {
         return false;
     }
 
     @Override
-    protected boolean validateSearchPermission(String reservationId) {
+    boolean validateSearchPermission(String reservationId) {
         return false;
     }
 }

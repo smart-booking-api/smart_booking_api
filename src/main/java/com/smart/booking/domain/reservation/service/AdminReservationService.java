@@ -1,6 +1,6 @@
 package com.smart.booking.domain.reservation.service;
 
-import com.smart.booking.domain.reservation.dto.ReservationSimpleResponse;
+import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
 import com.smart.booking.domain.reservation.enums.SearchDateType;
 import java.util.List;
 
