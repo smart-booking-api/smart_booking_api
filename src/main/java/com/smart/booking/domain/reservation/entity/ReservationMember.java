@@ -4,9 +4,14 @@ import com.smart.booking.domain.member.entity.Member;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
 @Embeddable
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReservationMember {
     @Comment("예약자 id")
     @OneToOne

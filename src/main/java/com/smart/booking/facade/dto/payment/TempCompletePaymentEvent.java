@@ -1,14 +1,15 @@
 package com.smart.booking.facade.dto.payment;
 
-import lombok.Builder;
+import java.time.LocalDate;
 import lombok.NonNull;
 
-@Builder
-public record CompletePaymentRequestDto(
+public record TempCompletePaymentEvent(
     @NonNull String memberId,
     @NonNull String merchantUid,
     @NonNull String trackingId,
+    @NonNull String storeId,
     @NonNull String teeBoxId,
+    @NonNull LocalDate reservationDate,
     @NonNull String startTimeTableId,
     @NonNull String endTimeTableId,
     @NonNull Integer amount,

@@ -1,44 +1,21 @@
 package com.smart.booking.domain.reservation.service;
 
+import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.reservation.dto.CreateReservationDto;
 import com.smart.booking.domain.reservation.dto.ReservationDateHistory;
-import com.smart.booking.domain.reservation.dto.ReservationSimpleResponse;
+import com.smart.booking.domain.reservation.entity.Reservation;
+import com.smart.booking.domain.store.entity.Store;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface UserReservationService {
 
     /**
      * 홈 내 예약현황 요약 조회
-     * @param userId
+     * @param member
      * @param startDate
      */
-    List<ReservationSimpleResponse> getMyReservations(String userId, String startDate);
-
-    /**
-     * 예약 가능 타석 조회
-     * @param storeId
-     * @param reserveDate
-     */
-    void getEnableTeeBoxes(String storeId, String reserveDate);
-
-    /**
-     * 타석에 대한 예약 가능 시간 조회
-     * @param storeId
-     * @param reserveDate
-     * @param teeBoxId
-     */
-    void getEnableTimes(String storeId, String reserveDate, String teeBoxId);
-
-    /**
-     * 선점조회
-     * 시간을 클릭했을때 선점여부 조회
-     * @param storeId
-     * @param reserveDate
-     * @param teeBoxId
-     * @param timeCodeId
-     * @return
-     */
-    boolean isOccupiedReservation(String storeId, String reserveDate, String teeBoxId, String timeCodeId);
+    List<Reservation> getMyReservations(Member member, String startDate);
 
     /**
      * 예약하기
@@ -59,4 +36,6 @@ public interface UserReservationService {
      * @param reservationId
      */
     void startReservationStatus(String reservationId);
+
+    List<Reservation> getReservationByStoreAndReservationDate(Store store, LocalDate reservationDate);
 }
