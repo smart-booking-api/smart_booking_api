@@ -1,6 +1,8 @@
 package com.smart.booking.facade.event.Listener;
 
+import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
+import com.smart.booking.facade.dto.payment.TempCompletePaymentEvent;
 import com.smart.booking.facade.user.reservation.CreateReservationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,7 +17,7 @@ public class ReservationListener {
 
     @TransactionalEventListener
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void createReservation(CompletePaymentRequestDto completePaymentRequestDto) {
-        createReservationFacade.createReservation(completePaymentRequestDto);
+    public void createReservation(TempCompletePaymentEvent tempCompletePaymentEvent) throws CommonException {
+        createReservationFacade.createReservation(tempCompletePaymentEvent);
     }
 }
