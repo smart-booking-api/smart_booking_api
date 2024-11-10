@@ -38,7 +38,7 @@ public class PaymentControllerTests {
             .merchantUid("384f0559-928f-4008-a73f-c71664517f79")
             .trackingId("test")
             .teeBoxId("test")
-            .timeTableId("test")
+            .startTimeTableId("test")
             .amount(1000)
             .reservationUserName("test")
             .reservationUserPhoneNum("test")
