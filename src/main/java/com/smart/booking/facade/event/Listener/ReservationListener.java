@@ -1,6 +1,5 @@
 package com.smart.booking.facade.event.Listener;
 
-import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
 import com.smart.booking.facade.event.dto.CompletePaymentEventDto;
 import com.smart.booking.facade.user.reservation.CreateReservationFacade;
 import lombok.RequiredArgsConstructor;
