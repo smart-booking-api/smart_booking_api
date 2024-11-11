@@ -1,4 +1,4 @@
-package com.smart.booking.common.configs;
+package com.smart.booking.common.firebase;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;

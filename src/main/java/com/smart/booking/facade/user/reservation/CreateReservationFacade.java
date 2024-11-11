@@ -1,7 +1,6 @@
 package com.smart.booking.facade.user.reservation;
 
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.cloud.FirestoreClient;
+import com.smart.booking.common.firebase.FirebaseComponent;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.reservation.dto.CreateReservationDto;
@@ -23,6 +22,7 @@ public class CreateReservationFacade {
     private final UserReservationService userReservationService;
     private final StoreUserService storeUserService;
     private final MemberService memberService;
+    private final FirebaseComponent firebaseComponent;
 
     public void createReservation(@NonNull CompletePaymentEventDto eventDto) {
         // 예약
@@ -31,9 +31,7 @@ public class CreateReservationFacade {
         userReservationService.createReservation(getCreateReservationDto(store, null, member, eventDto));
 
         // firebase trackingId 삭제
-        Firestore firestore = FirestoreClient.getFirestore();
-        firestore.collection(COLLECTION_NAME).document(eventDto.trackingId()).delete();
-        log.info("Deleted tracking Id: {}", eventDto.trackingId());
+        firebaseComponent.deleteDocument(COLLECTION_NAME, eventDto.trackingId());
     }
 
     private CreateReservationDto getCreateReservationDto(Store store, TeeBox teeBox, Member member, CompletePaymentEventDto eventDto) {
