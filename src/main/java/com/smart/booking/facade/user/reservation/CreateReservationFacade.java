@@ -1,26 +1,28 @@
 package com.smart.booking.facade.user.reservation;
 
-import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.common.firebase.FirebaseComponent;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.reservation.dto.CreateReservationDto;
-import com.smart.booking.domain.reservation.enums.ReservationStatus;
 import com.smart.booking.domain.reservation.service.UserReservationService;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.store.service.StoreUserService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
-import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
 import com.smart.booking.facade.event.dto.CompletePaymentEventDto;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CreateReservationFacade {
+    private static final String COLLECTION_NAME = "booking";
     private final UserReservationService userReservationService;
     private final StoreUserService storeUserService;
     private final MemberService memberService;
+    private final FirebaseComponent firebaseComponent;
 
     public void createReservation(@NonNull CompletePaymentEventDto eventDto) {
         // 예약
@@ -28,7 +30,8 @@ public class CreateReservationFacade {
         Member member = memberService.getMemberById(eventDto.memberId());
         userReservationService.createReservation(getCreateReservationDto(store, null, member, eventDto));
 
-        // firebase 예약완료 전송
+        // firebase trackingId 삭제
+        firebaseComponent.deleteDocument(COLLECTION_NAME, eventDto.trackingId());
     }
 
     private CreateReservationDto getCreateReservationDto(Store store, TeeBox teeBox, Member member, CompletePaymentEventDto eventDto) {
