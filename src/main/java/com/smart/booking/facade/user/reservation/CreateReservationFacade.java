@@ -42,7 +42,7 @@ public class CreateReservationFacade {
             .endTimeTableId(eventDto.endTimeTableId())
             .member(member)
             .reservationUserName(eventDto.reservationUserName())
-            .reservationUserPhoneNumber(eventDto.reservationUserPhoneNum())
+            .reservationUserPhoneNumber(eventDto.reservationUserPhoneNumber())
             .trackingId(eventDto.trackingId())
             .build();
     }

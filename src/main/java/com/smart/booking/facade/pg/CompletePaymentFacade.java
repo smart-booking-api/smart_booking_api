@@ -45,7 +45,7 @@ public class CompletePaymentFacade {
         //TODO 2. 파트너별 payment 저장
 
         //3. 결제-트랙킹 정보 업데이트
-        paymentTrackingInfoService.matchPaymentAndTrackingInfo(payment.getPaymentId(), dto.trackingId());
+        paymentTrackingInfoService.matchPaymentAndTrackingInfo(payment.getPaymentId(), paymentInfo.trackingId());
 
         //4. 결제 완료 로그 저장
         var historyDto = new SavePaymentHistoryDto(payment, paymentInfo.reservationFee(), payment.getPaymentStatus());
@@ -54,15 +54,11 @@ public class CompletePaymentFacade {
         //5. 예약 생성 요청
         reservationSaveEventPublisher.publish(
             CompletePaymentEventDto.builder()
-                .memberId(dto.memberId())
-                .merchantUid(dto.merchantUid())
-                .trackingId(dto.trackingId())
-                .teeBoxId(dto.teeBoxId())
-                .startTimeTableId(dto.startTimeTableId())
-                .endTimeTableId(dto.endTimeTableId())
-                .amount(dto.amount())
-                .reservationUserName(dto.reservationUserName())
-                .reservationUserPhoneNum(dto.reservationUserPhoneNum())
+                .memberId(paymentInfo.memberId())
+                .trackingId(paymentInfo.trackingId())
+                .teeBoxId(paymentInfo.teeBoxId())
+                .timeTableId(paymentInfo.timeTableId())
+                .amount(paymentInfo.reservationFee())
                 .build()
         );
     }

@@ -7,6 +7,7 @@ import com.smart.booking.facade.pg.CompletePaymentFacade;
 import com.smart.booking.facade.user.payment.PreparePaymentFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,8 @@ public class PaymentController {
      * 결제 승인 처리
      */
     @PostMapping(PaymentEndPoint.PAYMENT_COMPLETE_URL)
-    public void completePayment(@Validated @RequestBody CompletePaymentRequestDto request) throws Exception {
+    public void completePayment(
+        @Validated @RequestBody CompletePaymentRequestDto request) throws Exception {
         completePaymentFacade.exceuete(request);
     }
 
