@@ -1,7 +1,6 @@
 package com.smart.booking.facade.pg;
 
 import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
-import com.smart.booking.domain.common.facade.Facade;
 import com.smart.booking.domain.payment.dto.SavePaymentDto;
 import com.smart.booking.domain.payment.dto.SavePaymentHistoryDto;
 import com.smart.booking.domain.payment.entity.PaymentStatus;
@@ -39,7 +38,7 @@ public class CompletePaymentFacade {
         var paymentInfo = paymentInfoService.getExternalPaymentInfo(dto.merchantUid());
 
         //1. 결제 완료 정보 저장
-        var savePaymentDto = new SavePaymentDto(paymentInfo.reservationFee(), PaymentStatus.COMPLETE, teeBox);
+        var savePaymentDto = new SavePaymentDto(dto.impUid(), dto.merchantUid(), paymentInfo.reservationFee(), PaymentStatus.COMPLETE, teeBox);
         var payment = paymentInfoService.savePaymentCompleteInfo(savePaymentDto);
 
         //TODO 2. 파트너별 payment 저장
@@ -49,7 +48,7 @@ public class CompletePaymentFacade {
 
         //4. 결제 완료 로그 저장
         var historyDto = new SavePaymentHistoryDto(payment, paymentInfo.reservationFee(), payment.getPaymentStatus());
-        paymentLogService.savePaymentCompleteRequestLog(historyDto);
+        paymentLogService.savePaymentHistoryLog(historyDto);
 
         //5. 예약 생성 요청
         reservationSaveEventPublisher.publish(

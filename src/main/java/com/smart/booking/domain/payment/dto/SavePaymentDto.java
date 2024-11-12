@@ -8,9 +8,11 @@ import lombok.NonNull;
 import org.springframework.data.relational.core.sql.In;
 
 public record SavePaymentDto(
+
+    @NonNull String impUid,
+    @NonNull String merchantUid,
     @NonNull Integer totalAmount,
     @NonNull PaymentStatus paymentStatus,
-
     @NonNull TeeBox teeBox
 ) {
 

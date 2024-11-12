@@ -25,6 +25,7 @@ public class PaymentTrackingHistoryServiceImpl implements PaymentTrackingHistory
     public void saveTrackingHistory(SavePaymentTrackingHistoryDto trackingHistoryDto) {
         paymentTrackingHistoryRepository.save(
             PaymentTrackingHistory.builder()
+                .memberId(trackingHistoryDto.memberId())
                 .trackingId(trackingHistoryDto.trackingId())
                 .teeBoxId(trackingHistoryDto.teeBoxId())
                 .timeTableId(trackingHistoryDto.timeTableId())

@@ -1,7 +1,9 @@
 package com.smart.booking.domain.payment.service;
 
+import com.smart.booking.domain.external.dto.CancelPaymentRequestDto;
 import com.smart.booking.domain.external.dto.ExternalCustomDataDto;
 import com.smart.booking.domain.external.dto.ExternalPaymentInfoResponseDto;
+import com.smart.booking.domain.external.dto.PaymentAnnotationDto;
 import com.smart.booking.domain.payment.dto.SavePaymentDto;
 import com.smart.booking.domain.payment.entity.Payment;
 
@@ -12,7 +14,7 @@ public interface PaymentInfoService {
      * request : paymentId
      * response : 예약수수료 (주중/주말)
      */
-    Object getPaymentInfo(String paymentId) throws Exception;
+    Payment getPaymentInfo(String paymentId);
 
     /**
      * 결제 정보 조회
@@ -20,6 +22,13 @@ public interface PaymentInfoService {
      * response : ExternalPaymentInfoResponseDto
      */
     ExternalCustomDataDto getExternalPaymentInfo(String impUid);
+
+
+    /**
+     * 결제 정보 조회
+     * request : CancelPaymentRequestDto
+     */
+    PaymentAnnotationDto cancelPayment(CancelPaymentRequestDto request);
 
     /**
      * 결제 완료 저장
@@ -33,8 +42,8 @@ public interface PaymentInfoService {
 
     /**
      * 결제 취소 저장
-     * request : payment id
+     * request : payment
      */
-    void savePaymentCancelInfo(String paymentId);
+    void savePaymentCancelInfo(Payment payment);
 
 }

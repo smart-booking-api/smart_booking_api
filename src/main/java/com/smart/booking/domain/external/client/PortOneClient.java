@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smart.booking.common.client.ExternalWebClient;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.domain.external.dto.CancelPaymentRequestDto;
+import com.smart.booking.domain.external.dto.ExternalCancelPaymentResponseDto;
 import com.smart.booking.domain.external.dto.ExternalPaymentInfoResponseDto;
 import com.smart.booking.domain.external.dto.ExternalTokenResponseDto;
 import com.smart.booking.domain.external.dto.SearchPaymentInfoRequestDto;
@@ -74,6 +76,30 @@ public class PortOneClient {
         }
 
         log.info("# [PortOntClient] searches response : {}", responseOptional);
+        return responseOptional;
+    }
+
+
+    /**
+     * 결제 취소
+     */
+    public ExternalCancelPaymentResponseDto cancelPayment(String token, CancelPaymentRequestDto request) {
+        headers.set("Authorization", token);
+        var responseOptional = webClient.post(
+            ExternalCancelPaymentResponseDto.class,
+            "api.iamport.kr/payments/cancel",
+            headers,
+            new LinkedMultiValueMap<>(),
+            request,
+            (Object) null
+        ).orElse(ExternalCancelPaymentResponseDto.builder().build());
+
+        if (responseOptional.message() != null) {
+            throw new CommonException(ResponseCode.COMMON_BAD_REQUEST, responseOptional.message());
+        }
+
+        log.info("# [PortOntClient] cancel payment response : {}", responseOptional);
+
         return responseOptional;
     }
 

@@ -46,6 +46,11 @@ public class Payment extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
+    //포트원 거래고유 번호
+    private String impUid;
+    //고객사 주문번호
+    private String merchantUid;
+
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
     private List<PaymentPartnerShare> partnerShares;
 
@@ -55,5 +60,9 @@ public class Payment extends BaseEntity {
     // 결제 API 통신 이력
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
     private List<PaymentApiHistory> paymentApiHistories;
+
+    public void updatePaymentStatus(PaymentStatus status) {
+        this.paymentStatus = status;
+    }
 
 }

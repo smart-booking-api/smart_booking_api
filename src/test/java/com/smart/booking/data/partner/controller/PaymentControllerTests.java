@@ -31,18 +31,7 @@ public class PaymentControllerTests {
     @Disabled
     public void paymentCompleteTest() {
 
-        String testMemberId = "0acd1e64-5fe3-47a1-8960-f1d48e2c790f";
-
-        var request = CompletePaymentRequestDto.builder()
-            .memberId(testMemberId)
-            .merchantUid("384f0559-928f-4008-a73f-c71664517f79")
-            .trackingId("test")
-            .teeBoxId("test")
-            .startTimeTableId("test")
-            .amount(1000)
-            .reservationUserName("test")
-            .reservationUserPhoneNum("test")
-            .build();
+        var request = new CompletePaymentRequestDto("test", "0acd1e64-5fe3-47a1-8960-f1d48e2c790f");
 
         completePaymentFacade.exceuete(request);
     }

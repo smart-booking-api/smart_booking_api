@@ -27,6 +27,8 @@ public class PaymentTrackingHistory extends BaseEntity {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private String id;
 
+    private String memberId;
+
     private String trackingId;
 
     private String teeBoxId;
@@ -46,7 +48,7 @@ public class PaymentTrackingHistory extends BaseEntity {
     private PaymentStatus paymentStatus;
 
     public void matchPaymentId(String paymentId) {
-        this.paymentId  = paymentId;
+        this.paymentId = paymentId;
     }
 
 }

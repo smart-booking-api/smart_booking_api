@@ -1,5 +1,6 @@
 package com.smart.booking.facade.user.payment;
 
+import com.smart.booking.common.dto.MemberContext;
 import com.smart.booking.domain.payment.dto.SavePaymentTrackingHistoryDto;
 import com.smart.booking.domain.common.facade.Facade;
 import com.smart.booking.domain.payment.entity.PaymentStatus;
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class PreparePaymentFacade implements Facade<SavePaymentTrackingHistoryRequestDto, Void> {
+public class PreparePaymentFacade {
 
     private final PaymentTrackingHistoryService paymentTrackingHistoryService;
 
@@ -21,9 +22,8 @@ public class PreparePaymentFacade implements Facade<SavePaymentTrackingHistoryRe
      * @return
      */
 
-    @Override
     @Transactional
-    public Void exceuete(SavePaymentTrackingHistoryRequestDto dto) {
+    public void exceuete(SavePaymentTrackingHistoryRequestDto dto, MemberContext memberContext) {
         // tee box 유효성 검사?
         //TODO teeBox 유효성 검사
         //TODO time table 유효성 검사
@@ -31,6 +31,7 @@ public class PreparePaymentFacade implements Facade<SavePaymentTrackingHistoryRe
         //1. 결제 대기 중 tracking save
         paymentTrackingHistoryService.saveTrackingHistory(
             SavePaymentTrackingHistoryDto.builder()
+                .memberId(memberContext.getMemberId())
                 .trackingId(dto.trackingId())
                 .teeBoxId(dto.teeBoxId())
                 .timeTableId(dto.timeTableId())
@@ -38,6 +39,5 @@ public class PreparePaymentFacade implements Facade<SavePaymentTrackingHistoryRe
                 .paymentStatus(PaymentStatus.PENDING)
                 .build()
         );
-        return null;
     }
 }

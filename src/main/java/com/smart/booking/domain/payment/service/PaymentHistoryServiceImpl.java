@@ -16,7 +16,7 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
     private final PaymentHistoryRepository paymentHistoryRepository;
 
     @Override
-    public void savePaymentCompleteRequestLog(SavePaymentHistoryDto historyDto) {
+    public void savePaymentHistoryLog(SavePaymentHistoryDto historyDto) {
         paymentHistoryRepository.save(
             PaymentHistory.builder()
                 .payment(historyDto.payment())
@@ -26,8 +26,4 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
         );
     }
 
-    @Override
-    public void savePaymentCancelRequestLog(@NonNull String paymentId) {
-
-    }
 }
