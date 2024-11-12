@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserReservationService {
 
     /**
-     * 홈 내 예약현황 요약 조회
+     * 홈 내 예약현황 요약 조회(오늘이후)
      * @param member
      * @param startDate
      */
@@ -37,5 +37,11 @@ public interface UserReservationService {
      */
     void startReservationStatus(String reservationId);
 
-    List<Reservation> getReservationByStoreAndReservationDate(Store store, LocalDate reservationDate);
+    /**
+     * 예약조회
+     * @param store
+     * @param reservationDate
+     * @return
+     */
+    List<Reservation> getStoreReservation(Store store, LocalDate reservationDate);
 }
