@@ -2,26 +2,40 @@ package com.smart.booking.domain.payment.service;
 
 import com.smart.booking.domain.external.dto.CancelPaymentRequestDto;
 import com.smart.booking.domain.external.dto.ExternalCustomDataDto;
-import com.smart.booking.domain.external.dto.ExternalPaymentInfoResponseDto;
 import com.smart.booking.domain.external.dto.PaymentAnnotationDto;
+import com.smart.booking.domain.payment.dto.PaymentResponseDto;
 import com.smart.booking.domain.payment.dto.SavePaymentDto;
 import com.smart.booking.domain.payment.entity.Payment;
 
-public interface PaymentInfoService {
+public interface PaymentService {
 
     /**
      * 결제 정보 조회
      * request : paymentId
-     * response : 예약수수료 (주중/주말)
+     * response : payment
      */
     Payment getPaymentInfo(String paymentId);
+
+    /**
+     * 결제 정보 조회
+     * request : impUid, merchantUid
+     * response : payment
+     */
+    Payment getPaymentInfo(String impUid, String merchantUid);
+
+    /**
+     * 결제 정보 조회
+     * request : paymentId
+     * response : 결제 전표 정보
+     */
+    PaymentResponseDto getPaymentResponse(String paymentId);
 
     /**
      * 결제 정보 조회
      * request : merchantUid
      * response : ExternalPaymentInfoResponseDto
      */
-    ExternalCustomDataDto getExternalPaymentInfo(String impUid);
+    ExternalCustomDataDto getExternalPaymentCustomData(String impUid);
 
 
     /**

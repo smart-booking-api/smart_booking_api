@@ -3,6 +3,7 @@ package com.smart.booking.domain.external.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import lombok.ToString;
 
 public record PaymentAnnotationDto(
     @JsonProperty("amount")

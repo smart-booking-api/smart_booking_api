@@ -33,13 +33,15 @@ public class PaymentHistory extends BaseEntity {
     private Payment payment;
 
     // 총액 (부가세 포함)
-    private BigDecimal totalAmount;
+    private Integer totalAmount;
     // 공급가액 (부가세 제외)
-    private BigDecimal supplyAmount;
+    private Integer supplyAmount;
     // 부가세
-    private BigDecimal vatAmount;
+    private Integer vatAmount;
     // 결제 상태
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
+
+    private String historyMessage;
 
 }

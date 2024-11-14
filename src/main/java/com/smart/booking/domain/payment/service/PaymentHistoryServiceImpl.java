@@ -20,8 +20,9 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
         paymentHistoryRepository.save(
             PaymentHistory.builder()
                 .payment(historyDto.payment())
-                .totalAmount(BigDecimal.valueOf(historyDto.totalAmount()))
+                .totalAmount(historyDto.totalAmount())
                 .paymentStatus(historyDto.paymentStatus())
+                .historyMessage(historyDto.historyMessage())
                 .build()
         );
     }

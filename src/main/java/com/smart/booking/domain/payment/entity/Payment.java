@@ -1,5 +1,8 @@
 package com.smart.booking.domain.payment.entity;
 
+import static com.smart.booking.common.enums.ResponseCode.NOT_REFUNDABLE_STATUS_ERROR;
+
+import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import jakarta.persistence.CascadeType;
@@ -12,6 +15,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,11 +42,11 @@ public class Payment extends BaseEntity {
     private TeeBox teeBox;
 
     // 총액 (부가세 포함)
-    private BigDecimal totalAmount;
+    private Integer totalAmount;
     // 공급가액 (부가세 제외)
-    private BigDecimal supplyAmount;
+    private Integer supplyAmount;
     // 부가세
-    private BigDecimal vatAmount;
+    private Integer vatAmount;
     // 결제 상태
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
@@ -63,6 +68,22 @@ public class Payment extends BaseEntity {
 
     public void updatePaymentStatus(PaymentStatus status) {
         this.paymentStatus = status;
+    }
+
+    public Boolean isRefundable() {
+        return PaymentStatus.COMPLETE.equals(paymentStatus);
+    }
+
+    public Integer calculateRefundableAmount(LocalDate refundRequestDate, LocalDate reservationDate) {
+        long daysUntilReservation = ChronoUnit.DAYS.between(refundRequestDate, reservationDate);
+
+        if (daysUntilReservation >= 2) {
+            return totalAmount; // 전액 환불
+        } else if (daysUntilReservation == 1) {
+            return totalAmount / 2; // 50% 환불
+        } else {
+            throw new CommonException(NOT_REFUNDABLE_STATUS_ERROR);
+        }
     }
 
 }

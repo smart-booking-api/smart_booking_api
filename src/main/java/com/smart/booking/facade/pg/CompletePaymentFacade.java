@@ -1,10 +1,12 @@
 package com.smart.booking.facade.pg;
 
+import com.smart.booking.common.enums.ResponseCode;
+import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
 import com.smart.booking.domain.payment.dto.SavePaymentDto;
 import com.smart.booking.domain.payment.dto.SavePaymentHistoryDto;
 import com.smart.booking.domain.payment.entity.PaymentStatus;
-import com.smart.booking.domain.payment.service.PaymentInfoService;
+import com.smart.booking.domain.payment.service.PaymentService;
 import com.smart.booking.domain.payment.service.PaymentHistoryService;
 import com.smart.booking.domain.payment.service.PaymentTrackingHistoryService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
@@ -18,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CompletePaymentFacade {
 
-    private final PaymentInfoService paymentInfoService;
+    private final PaymentService paymentInfoService;
     private final PaymentTrackingHistoryService paymentTrackingInfoService;
     private final PaymentHistoryService paymentLogService;
     private final CompletePaymentEventPublisher reservationSaveEventPublisher;
@@ -35,19 +37,39 @@ public class CompletePaymentFacade {
         //TODO teeBox service에 id로 조회 요청
         TeeBox teeBox = null;
 
-        var paymentInfo = paymentInfoService.getExternalPaymentInfo(dto.merchantUid());
+        //0. validation
+        var payment = paymentInfoService.getPaymentInfo(dto.impUid(), dto.merchantUid());
+        if (payment != null) {
+            throw new CommonException(ResponseCode.ALREADY_SAVED_PAYMENT_ERROR);
+        }
+
+        var paymentInfo = paymentInfoService.getExternalPaymentCustomData(dto.merchantUid());
+        var trackingInfo = paymentTrackingInfoService.getTrackingInfo(paymentInfo.trackingId());
+        if (trackingInfo == null) {
+            throw new CommonException(ResponseCode.NO_DATA_SAVED_PAYMENT_TRACKING_INFO);
+        }
 
         //1. 결제 완료 정보 저장
-        var savePaymentDto = new SavePaymentDto(dto.impUid(), dto.merchantUid(), paymentInfo.reservationFee(), PaymentStatus.COMPLETE, teeBox);
-        var payment = paymentInfoService.savePaymentCompleteInfo(savePaymentDto);
+        var savePaymentDto = new SavePaymentDto(
+            dto.impUid(),
+            dto.merchantUid(),
+            paymentInfo.reservationFee(),
+            PaymentStatus.COMPLETE, teeBox
+        );
+        var savedPayment = paymentInfoService.savePaymentCompleteInfo(savePaymentDto);
 
         //TODO 2. 파트너별 payment 저장
 
         //3. 결제-트랙킹 정보 업데이트
-        paymentTrackingInfoService.matchPaymentAndTrackingInfo(payment.getPaymentId(), paymentInfo.trackingId());
+        paymentTrackingInfoService.matchPaymentAndTrackingInfo(savedPayment.getPaymentId(), paymentInfo.trackingId());
 
         //4. 결제 완료 로그 저장
-        var historyDto = new SavePaymentHistoryDto(payment, paymentInfo.reservationFee(), payment.getPaymentStatus());
+        var historyDto = new SavePaymentHistoryDto(
+            savedPayment,
+            paymentInfo.reservationFee(),
+            savedPayment.getPaymentStatus(),
+            savedPayment.getPaymentStatus().getValue()
+        );
         paymentLogService.savePaymentHistoryLog(historyDto);
 
         //5. 예약 생성 요청

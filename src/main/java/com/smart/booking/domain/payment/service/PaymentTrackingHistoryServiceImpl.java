@@ -29,7 +29,7 @@ public class PaymentTrackingHistoryServiceImpl implements PaymentTrackingHistory
                 .trackingId(trackingHistoryDto.trackingId())
                 .teeBoxId(trackingHistoryDto.teeBoxId())
                 .timeTableId(trackingHistoryDto.timeTableId())
-                .totalAmount(BigDecimal.valueOf(trackingHistoryDto.totalAmount()))
+                .totalAmount(trackingHistoryDto.totalAmount())
                 .paymentStatus(trackingHistoryDto.paymentStatus())
                 .build()
         );

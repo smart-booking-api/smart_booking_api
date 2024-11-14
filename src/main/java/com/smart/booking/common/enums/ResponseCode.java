@@ -15,6 +15,13 @@ public enum ResponseCode implements EnumModel {
     NOT_INITIALIZED_PARTNER(402, "초기화 되지 않은 파트너입니다."),
     NOT_FOUND_USER(500, "유저가 존재하지 않습니다"),
     NOT_FOUND_THIRD_PARTY_ACCOUNT(501, "존재하지 않는 소셜 계정입니다."),
+
+    /**
+     * 600~700
+     */
+    NOT_REFUNDABLE_STATUS_ERROR(601, "환불할 수 없는 상태입니다."),
+    ALREADY_SAVED_PAYMENT_ERROR(602, "이미 결제된 정보가 있습니다."),
+    NO_DATA_SAVED_PAYMENT_TRACKING_INFO(603, "결제 요청한 데이터가 없습니다."),
     ;
 
     private final int code;

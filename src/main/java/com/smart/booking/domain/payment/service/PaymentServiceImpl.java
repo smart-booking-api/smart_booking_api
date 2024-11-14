@@ -5,9 +5,9 @@ import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.common.util.JsonUtil;
 import com.smart.booking.domain.external.dto.CancelPaymentRequestDto;
 import com.smart.booking.domain.external.dto.ExternalCustomDataDto;
-import com.smart.booking.domain.external.dto.ExternalPaymentInfoResponseDto;
 import com.smart.booking.domain.external.dto.PaymentAnnotationDto;
 import com.smart.booking.domain.external.dto.SearchPaymentInfoRequestDto;
+import com.smart.booking.domain.payment.dto.PaymentResponseDto;
 import com.smart.booking.domain.payment.dto.SavePaymentDto;
 import com.smart.booking.domain.payment.entity.Payment;
 import com.smart.booking.domain.payment.entity.PaymentStatus;
@@ -20,21 +20,39 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PaymentInfoServiceImpl implements PaymentInfoService {
+public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final ExternalPaymentRepository externalPaymentRepository;
 
+    /**
+     * TODO yeojin 예약에서 payment entity 가져오기
+     */
     @Override
     public Payment getPaymentInfo(@NonNull String paymentId) {
         return paymentRepository.findById(paymentId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_ELEMENT));
     }
 
     @Override
-    public ExternalCustomDataDto getExternalPaymentInfo(@NonNull String merchantUid) {
-        var request = new SearchPaymentInfoRequestDto(merchantUid, "-started");
-        var paymentInfo = externalPaymentRepository.searchPaymentInfo(request).response();
-        return JsonUtil.convertToObject(paymentInfo.customData(), ExternalCustomDataDto.class);
+    public Payment getPaymentInfo(@NonNull String impUid, @NonNull String merchantUid) {
+        return paymentRepository.findByImpUidAndMerchantUid(impUid, merchantUid);
+    }
+
+    /**
+     * TODO yeojin 예약에서 payment 전표 가져오기
+     */
+    @Override
+    public PaymentResponseDto getPaymentResponse(String paymentId) {
+        var payment = getPaymentInfo(paymentId);
+        var response = getExternalPaymentResponse(payment.getMerchantUid());
+        var responseToString = JsonUtil.convertToString(response);
+        return JsonUtil.convertToObject(responseToString, PaymentResponseDto.class);
+    }
+
+    @Override
+    public ExternalCustomDataDto getExternalPaymentCustomData(@NonNull String merchantUid) {
+        var response = getExternalPaymentResponse(merchantUid);
+        return JsonUtil.convertToObject(response.customData(), ExternalCustomDataDto.class);
     }
 
     @Override
@@ -50,8 +68,8 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
                 .impUid(request.impUid())
                 .merchantUid(request.merchantUid())
                 .teeBox(request.teeBox())
-                .totalAmount(BigDecimal.valueOf(request.totalAmount()))
-                .supplyAmount(BigDecimal.valueOf(request.totalAmount()))
+                .totalAmount(request.totalAmount())
+                .supplyAmount(request.totalAmount())
                 .paymentStatus(request.paymentStatus())
                 .build()
         );
@@ -60,6 +78,11 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
     @Override
     public void savePaymentCancelInfo(@NonNull Payment payment) {
         payment.updatePaymentStatus(PaymentStatus.REFUND);
+    }
+
+    private PaymentAnnotationDto getExternalPaymentResponse(@NonNull String merchantUid) {
+        var request = new SearchPaymentInfoRequestDto(merchantUid, "-started");
+        return externalPaymentRepository.searchPaymentInfo(request).response();
     }
 
 }

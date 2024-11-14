@@ -7,6 +7,7 @@ public enum PaymentStatus implements EnumModel {
     PENDING("결제 대기 중", "ready"),
     COMPLETE("결제 완료", "paid"),
     REFUND("환불", "cancelled"),
+    REFUND_FAIL("환불 실패", "cancelled_failed"),
     CANCEL("결제 실패", "failed");
 
 

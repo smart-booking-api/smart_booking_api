@@ -40,7 +40,7 @@ public class PaymentController {
     @PostMapping(PaymentEndPoint.PAYMENT_CANCEL_URL)
     public void cancelPayment(
         @Validated @RequestBody CancelPaymentRequestDto request, MemberContext memberContext) {
-        cancelPaymentFacade.exceuete(request.paymentId(), memberContext);
+        cancelPaymentFacade.exceuete(request, memberContext);
     }
 
     /**

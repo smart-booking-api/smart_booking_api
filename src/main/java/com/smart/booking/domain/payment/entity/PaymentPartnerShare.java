@@ -31,12 +31,12 @@ public class PaymentPartnerShare extends BaseEntity {
     private Payment payment;
 
     // 지분 총 금액
-    private BigDecimal calculatedShareAmount;
+    private Integer calculatedShareAmount;
 
     // 지분 공급가액
-    private BigDecimal supplyAmount;
+    private Integer supplyAmount;
     // 부가세
-    private BigDecimal vatAmount;
+    private Integer vatAmount;
 
 
 }

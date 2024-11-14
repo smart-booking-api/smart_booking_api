@@ -1,8 +1,7 @@
 package com.smart.booking.facade.user.payment;
 
-import com.smart.booking.domain.common.facade.Facade;
 import com.smart.booking.domain.payment.entity.Payment;
-import com.smart.booking.domain.payment.service.PaymentInfoService;
+import com.smart.booking.domain.payment.service.PaymentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GetPaymentInfoFacade {
 
-    private PaymentInfoService paymentInfoService;
+    private PaymentService paymentInfoService;
 
     public Payment exceuete(String paymentId) {
         return paymentInfoService.getPaymentInfo(paymentId);

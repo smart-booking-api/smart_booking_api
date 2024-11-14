@@ -1,6 +1,6 @@
 package com.smart.booking.facade.event.Listener;
 
-import com.smart.booking.domain.payment.service.PaymentInfoService;
+import com.smart.booking.domain.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class CustomEventListener {
 
     //TODO 예약 서비스에 예약 완료 요청 이벤트 전송로직 추가
-    private final PaymentInfoService paymentInfoService;
+    private final PaymentService paymentInfoService;
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
