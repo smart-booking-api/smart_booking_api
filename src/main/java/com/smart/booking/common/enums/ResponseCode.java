@@ -9,12 +9,12 @@ public enum ResponseCode implements EnumModel {
     NOT_FOUND_ELEMENT(102, "유효한 데이터가 없습니다."),
     COMMON_BAD_REQUEST(102, "잘못된 요청 입니다."),
 
-    NOT_FOUND_STORE(300, "매장이 존재하지 않습니다"),
-    NOT_FOUND_PARTNER(400, "파트너가 존재하지 않습니다"),
-    ALREADY_INITIALIZED_PARTNER(401, "이미 초기화된 파트너입니다."),
-    NOT_INITIALIZED_PARTNER(402, "초기화 되지 않은 파트너입니다."),
-    NOT_FOUND_USER(500, "유저가 존재하지 않습니다"),
-    NOT_FOUND_THIRD_PARTY_ACCOUNT(501, "존재하지 않는 소셜 계정입니다."),
+    NOT_FOUND_STORE(301, "매장이 존재하지 않습니다"),
+    NOT_FOUND_PARTNER(401, "파트너가 존재하지 않습니다"),
+    ALREADY_INITIALIZED_PARTNER(402, "이미 초기화된 파트너입니다."),
+    NOT_INITIALIZED_PARTNER(403, "초기화 되지 않은 파트너입니다."),
+    NOT_FOUND_USER(501, "유저가 존재하지 않습니다"),
+    NOT_FOUND_THIRD_PARTY_ACCOUNT(502, "존재하지 않는 소셜 계정입니다."),
 
     /**
      * 600~700
@@ -22,6 +22,9 @@ public enum ResponseCode implements EnumModel {
     NOT_REFUNDABLE_STATUS_ERROR(601, "환불할 수 없는 상태입니다."),
     ALREADY_SAVED_PAYMENT_ERROR(602, "이미 결제된 정보가 있습니다."),
     NO_DATA_SAVED_PAYMENT_TRACKING_INFO(603, "결제 요청한 데이터가 없습니다."),
+    NOT_FOUND_TEE_BOX(701, "타석이 존재하지 않습니다."),
+    DUPLICATE_TEE_BOX_SHARE_PARTNER_TYPE(702, "중복된 파트너 타입이 존재합니다."),
+    EXCEED_TEE_BOX_SHARE_SUM(703, "타석 지분 비율이 100을 초과합니다."),
     ;
 
     private final int code;

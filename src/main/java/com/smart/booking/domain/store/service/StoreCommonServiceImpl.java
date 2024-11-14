@@ -17,7 +17,7 @@ class StoreCommonServiceImpl implements StoreCommonService {
     private final StoreRepository storeRepository;
 
     @Override
-    public @NonNull Store getStoreById(String storeId) throws CommonException {
+    public @NonNull Store getStoreById(String storeId) {
         return storeRepository.findById(storeId)
             .orElseThrow(() -> new CommonException(NOT_FOUND_STORE));
     }

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class ReservationController {
+
     private final CheckReservationLockFacade checkReservationLockFacade;
     private final CreateReservationLockFacade createReservationLockFacade;
     private final DeleteReservationLockFacade deleteReservationLockFacade;

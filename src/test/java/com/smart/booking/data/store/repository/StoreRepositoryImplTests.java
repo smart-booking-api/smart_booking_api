@@ -27,7 +27,7 @@ class StoreRepositoryImplTests {
                 .build())
         ).toList();
 
-        final var cursorResult = storeRepository.findByNameAndRegionWithCursor(null, null, 20, null);
+        final var cursorResult = storeRepository.findByNameAndRegionWithCursor(null, null, null, 20);
 
         System.out.println(cursorResult.content());
         System.out.println(cursorResult.hasNext());

@@ -60,7 +60,7 @@ public class Store extends BaseEntity {
 
     @OneToOne
     private StoreOperationInfo operationInfo;
-
+    
     private OffsetDateTime deletedAt;
 
     public void update(

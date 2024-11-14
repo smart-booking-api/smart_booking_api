@@ -37,7 +37,7 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
     }
 
     @Override
-    public @NonNull Store updateStore(@NonNull UpsertStoreDto upsertStoreDto) throws CommonException {
+    public @NonNull Store updateStore(@NonNull UpsertStoreDto upsertStoreDto) {
 
         if (upsertStoreDto.id() == null) {
             throw new CommonException(ResponseCode.NOT_FOUND_STORE);
@@ -54,7 +54,7 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
             upsertStoreDto.businessRegistration(),
             StoreMapper.toStoreOperationInfo(upsertStoreDto)
         );
-        
+
         return storeRepository.save(store);
     }
 
@@ -64,12 +64,12 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
     }
 
     @Override
-    public @NonNull CursorResult<Store> getStores(@NonNull GetStoresDto getStoresDto) throws CommonException {
+    public @NonNull CursorResult<Store> getStores(@NonNull GetStoresDto getStoresDto) {
         return storeRepository.findByNameAndRegionWithCursor(
             getStoresDto.name(),
             getStoresDto.region(),
-            getStoresDto.pageSize(),
-            getStoresDto.cursor()
+            getStoresDto.cursor(),
+            getStoresDto.pageSize()
         );
     }
 
