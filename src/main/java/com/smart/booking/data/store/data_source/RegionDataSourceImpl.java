@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 class RegionDataSourceImpl implements RegionDataSource {
 
-    @Value("${kakao-rest-api-key}")
+    @Value("${external.kakao-rest-api-key}")
     private String kakaoRestApiKey;
 
     @Override

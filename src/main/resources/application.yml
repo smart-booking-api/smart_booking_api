@@ -33,4 +33,8 @@ spring:
 server:
   port: 8000
 
-kakao-rest-api-key: '18aba9ac1f406cb303b93d2a03a5bbd3'
+
+external:
+  kakao-rest-api-key: '18aba9ac1f406cb303b93d2a03a5bbd3'
+  openapi-rest-api-key: 'vFsA8BSDXJ%2FFR79%2By6MfZU9ejxyLYtruz9Ms%2F7dbjKXMuYbOFvi1Du0HsUWutw1VRgtEaSAD%2F8h9TFWANic3aw%3D%3D'
+
