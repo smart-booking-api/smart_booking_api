@@ -25,8 +25,8 @@ public class StoreRepositoryImpl implements StoreRepositoryCustom {
     public @NonNull CursorResult<Store> findByNameAndRegionWithCursor(
         String name,
         Region region,
-        int pageSize,
-        String cursor
+        String cursor,
+        int pageSize
     ) {
 
         final List<Store> stores = jpaQueryFactory.selectFrom(qStore)

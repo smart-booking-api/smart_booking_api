@@ -5,9 +5,12 @@ import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.common.enums.TeeBoxType;
 import com.smart.booking.domain.device.entity.Device;
 import com.smart.booking.domain.store.entity.Store;
+import com.smart.booking.domain.tee_box.dto.UpdateTeeBoxDto;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -22,6 +25,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -51,20 +55,44 @@ public class TeeBox extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TeeBoxType type;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "device_id")
     private Device device;
 
     private int number;
 
+    private String screenName;
+
     private OffsetDateTime deletedAt;
 
-    @OneToMany(mappedBy = "teeBox")
-    private List<TeeBoxShare> shares;
+    @Builder.Default
+    @OneToMany(
+        mappedBy = "teeBox",
+        cascade = CascadeType.ALL
+    )
+    private List<TeeBoxShare> shares = List.of();
 
     public String getName() {
         return this.type.getValue() + " #" + this.number;
     }
 
+    public void edit(@NonNull UpdateTeeBoxDto updateTeeBoxDto) {
+        this.screenName = updateTeeBoxDto.screenName();
+        this.number = updateTeeBoxDto.number();
+        this.device = updateTeeBoxDto.device();
+        this.type = updateTeeBoxDto.type();
+    }
+
+    public void updateShares(@NonNull List<TeeBoxShare> shares) {
+        for (TeeBoxShare share : this.shares) {
+            share.removeTeeBox();
+        }
+
+        for (TeeBoxShare share : shares) {
+            share.updateTeeBox(this);
+        }
+
+        this.shares = shares;
+    }
 
 }
