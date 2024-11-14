@@ -17,7 +17,7 @@ class UserCommonServiceImpl implements UserCommonService {
     private final UserRepository userRepository;
 
     @Override
-    public @NonNull User getUserById(@NonNull String userId) throws CommonException {
+    public @NonNull User getUserById(@NonNull String userId) {
         return userRepository.findById(userId)
             .orElseThrow(() -> new CommonException(NOT_FOUND_USER));
     }

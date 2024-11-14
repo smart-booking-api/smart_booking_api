@@ -10,11 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
+
     private final MemberRepository memberRepository;
 
     @Override
     public @NonNull Member createMember(@NonNull CreateMemberDto createMemberDto) {
-        return null;
+        return memberRepository.save(
+            Member.builder()
+                .type(createMemberDto.memberType())
+                .build()
+        );
     }
 
     @Override

@@ -39,6 +39,6 @@ public class ThirdPartyAccount extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ThirdPartyAccountProvider provider;
 
-    private String providerUserId;
+    private String providerAccountId;
 
 }

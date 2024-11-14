@@ -1,6 +1,5 @@
 package com.smart.booking.facade.user.reservation;
 
-import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.service.UserReservationService;
 import com.smart.booking.domain.store.entity.Store;
@@ -18,7 +17,7 @@ public class GetEnableReservationTeeBoxFacade {
     private final StoreUserService storeUserService;
 //    private final TeeBoxService teeBoxService;
 
-    public List<String> getEnableReservationTeeBox(String storeId, String reservationDate) throws CommonException {
+    public List<String> getEnableReservationTeeBox(String storeId, String reservationDate) {
         Store store = storeUserService.getStoreById(storeId);
         List<Reservation> reservations = userReservationService.getReservationByStoreAndReservationDate(store, LocalDate.parse(reservationDate));
         List<String> TeeBoxIds = reservations.stream()

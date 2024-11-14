@@ -15,4 +15,7 @@ public interface UserRepositoryCustom {
         int pageSize
     );
 
+
+    boolean existsByPhoneNumberOrEmail(@NonNull String phoneNumber, @NonNull String email);
+
 }

@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -55,7 +54,7 @@ public class User extends BaseEntity {
     private String email;
 
     @Column(unique = true)
-    private String phone;
+    private String phoneNumber;
 
     @Embedded
     private UserPolicyAgreement policyAgreement;
@@ -88,22 +87,15 @@ public class User extends BaseEntity {
     public void withdraw() {
         this.profile = null;
         this.email = null;
-        this.phone = null;
+        this.phoneNumber = null;
         this.deletedAt = OffsetDateTime.now();
+        this.status = UserStatus.WITHDRAWAL;
     }
 
-    public void changeStatus(@NonNull UserStatus userStatus) {
-        this.status = userStatus;
+
+    public void login() {
+        this.status = UserStatus.ACTIVE;
+        this.accessedAt = OffsetDateTime.now();
     }
-//    public UserStatus getUserStatus() {
-//        if (deletedAt != null) {
-//            return UserStatus.WITHDRAWAL;
-//        }
-//
-//        if (accessedAt.isBefore(OffsetDateTime.now().minusMonths(6))) {
-//            return UserStatus.DORMANCY;
-//        }
-//
-//        return UserStatus.ACTIVE;
-//    }
+
 }

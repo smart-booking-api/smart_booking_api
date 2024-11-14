@@ -31,7 +31,7 @@ class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
-    public @NonNull Partner initializePartner(@NonNull InitializePartnerDto initializePartnerDto) throws CommonException {
+    public @NonNull Partner initializePartner(@NonNull InitializePartnerDto initializePartnerDto) {
         final Partner partner = getPartner(initializePartnerDto.partnerId());
 
         if (partner.isInitialized()) {
@@ -44,7 +44,7 @@ class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
-    public @NonNull Partner updatePartner(@NonNull UpdatePartnerDto updatePartnerDto) throws CommonException {
+    public @NonNull Partner updatePartner(@NonNull UpdatePartnerDto updatePartnerDto) {
         final Partner partner = getPartner(updatePartnerDto.partnerId());
 
         if (!partner.isInitialized()) {
@@ -58,7 +58,7 @@ class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
-    public @NonNull Partner getPartner(@NonNull String id) throws CommonException {
+    public @NonNull Partner getPartner(@NonNull String id) {
         return partnerRepository.findById(id)
             .orElseThrow(() -> new CommonException(NOT_FOUND_PARTNER));
     }
@@ -84,7 +84,7 @@ class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
-    public void withdrawPartner(@NonNull String id) throws CommonException {
+    public void withdrawPartner(@NonNull String id) {
         final Partner partner = getPartner(id);
         partner.withdraw();
         partnerRepository.save(partner);

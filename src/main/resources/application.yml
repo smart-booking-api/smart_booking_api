@@ -34,3 +34,10 @@ server:
   port: 8000
 
 kakao-rest-api-key: '18aba9ac1f406cb303b93d2a03a5bbd3'
+
+
+sms:
+  from: "1544-9971"
+  key: "NCSEQVFDLTFVMSIR"
+  secret: "LD6JAHNQG4XOXYIQ3YT1IDYVODITQNGA"
+  endpoint: "https://api.coolsms.co.kr"

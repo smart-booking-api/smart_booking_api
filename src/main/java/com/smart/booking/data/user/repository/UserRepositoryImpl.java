@@ -52,6 +52,16 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         );
     }
 
+    @Override
+    public boolean existsByPhoneNumberOrEmail(@NonNull String phoneNumber, @NonNull String email) {
+        return !queryFactory.selectFrom(qUser)
+            .where(
+                qUser.phoneNumber.eq(phoneNumber)
+                    .or(qUser.email.eq(email))
+            )
+            .fetch().isEmpty();
+    }
+
     BooleanExpression idLessThan(String cursor) {
         return cursor == null ? null : qUser.id.lt(cursor);
     }
