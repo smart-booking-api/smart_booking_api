@@ -3,6 +3,7 @@ package com.smart.booking.domain.user.repository;
 import com.smart.booking.domain.common.model.CursorResult;
 import com.smart.booking.domain.user.entity.User;
 import com.smart.booking.domain.user.enums.UserStatus;
+import java.util.Optional;
 import lombok.NonNull;
 
 public interface UserRepositoryCustom {
@@ -15,4 +16,5 @@ public interface UserRepositoryCustom {
         int pageSize
     );
 
+    Optional<User> findByProviderUserId(String providerUserId);
 }

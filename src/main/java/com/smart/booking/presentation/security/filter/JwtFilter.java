@@ -50,17 +50,17 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        // 토큰에서 userId 획득
-        String userId = authService.getUserIdFromToken(token);
+        // 토큰에서 memberId 획득
+        String memberId = authService.getMemberIdFromToken(token);
 
         // refresh 3일 이내 만료일 경우 refresh Token 재발급
         if (authService.isExpiredRefreshToken(refreshToken.split(" ")[1])) {
-            refreshToken = authService.createRefreshToken(userId);
+            refreshToken = authService.createRefreshToken(memberId);
             response.setHeader("Refresh-Token", "Bearer " + refreshToken);
-            authService.updateRefreshToken(userId, refreshToken);
+            authService.updateRefreshToken(memberId, refreshToken);
         }
 
-        CustomUserDetails customUserDetails = getCustomUserDetails(userId);
+        CustomUserDetails customUserDetails = getCustomUserDetails(memberId);
 
         // 스프링 시큐리티 인증토큰 생성
         Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
@@ -71,9 +71,9 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private CustomUserDetails getCustomUserDetails(String userId) {
-        Member member = memberService.getMemberById(userId);
-        return new CustomUserDetails(userId, member.getType().getKey(), getPasswordByRole(member));
+    private CustomUserDetails getCustomUserDetails(String memberId) {
+        Member member = memberService.getMemberById(memberId);
+        return new CustomUserDetails(memberId, member.getType().getKey(), getPasswordByRole(member));
     }
 
     private String getPasswordByRole(Member member) {

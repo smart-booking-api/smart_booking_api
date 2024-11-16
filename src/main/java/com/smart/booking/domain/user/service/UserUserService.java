@@ -24,5 +24,5 @@ public interface UserUserService extends UserCommonService {
 
     void login(@NonNull String userId) throws CommonException;
 
-
+    Optional<User> getByProviderUserId(String providerUserId);
 }
