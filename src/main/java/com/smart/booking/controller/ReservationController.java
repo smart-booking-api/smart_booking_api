@@ -3,7 +3,6 @@ package com.smart.booking.controller;
 import com.smart.booking.common.dto.MemberContext;
 import com.smart.booking.controller.endPoint.ReservationEndpoint;
 import com.smart.booking.domain.reservation.dto.ReservationLockDto;
-import com.smart.booking.facade.user.reservation.GetEnableReservationTeeBoxFacade;
 import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
 import com.smart.booking.facade.common.reservation.CreateReservationLockFacade;
 import com.smart.booking.facade.common.reservation.DeleteReservationLockFacade;
@@ -27,7 +26,6 @@ public class ReservationController {
     private final CreateReservationLockFacade createReservationLockFacade;
     private final DeleteReservationLockFacade deleteReservationLockFacade;
     private final GetReservationFacade getReservationFacade;
-    private final GetEnableReservationTeeBoxFacade getEnableReservationTeeBoxFacade;
 
     // todo x
     @GetMapping(ReservationEndpoint.RESERVATION_CHECK_LOCK)
