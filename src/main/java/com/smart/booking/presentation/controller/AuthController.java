@@ -24,4 +24,9 @@ public class AuthController {
 
         return authService.createAccessToken(findToken.getMember().getId(), findToken.getMember().getType().getKey());
     }
+
+    @PostMapping("/third-party")
+    public String thirdPartyLogin(@RequestBody String providerUserId) {
+        return authService.createAccessTokenByProviderUserId(providerUserId);
+    }
 }

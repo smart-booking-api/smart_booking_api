@@ -4,12 +4,14 @@ package com.smart.booking.data.user.repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.smart.booking.domain.common.model.CursorResult;
+import com.smart.booking.domain.user.entity.QThirdPartyAccount;
 import com.smart.booking.domain.user.entity.QUser;
 import com.smart.booking.domain.user.entity.QUserProfile;
 import com.smart.booking.domain.user.entity.User;
 import com.smart.booking.domain.user.enums.UserStatus;
 import com.smart.booking.domain.user.repository.UserRepositoryCustom;
 import java.util.List;
+import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -21,6 +23,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     private final JPAQueryFactory queryFactory;
     private final QUser qUser = QUser.user;
     private final QUserProfile qUserProfile = QUserProfile.userProfile;
+    private final QThirdPartyAccount qThirdPartyAccount = QThirdPartyAccount.thirdPartyAccount;
 
     @Override
     public @NonNull CursorResult<User> findByNicknameAndStatusWithCursor(
@@ -50,6 +53,15 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             hasNext,
             totalCount
         );
+    }
+
+    @Override
+    public Optional<User> findByProviderUserId(String providerUserId) {
+        return Optional.ofNullable(queryFactory.select(qUser)
+            .from(qUser)
+            .innerJoin(qUser.thirdPartyAccount, qThirdPartyAccount)
+            .where(qThirdPartyAccount.providerUserId.eq(providerUserId))
+            .fetchFirst());
     }
 
     BooleanExpression idLessThan(String cursor) {

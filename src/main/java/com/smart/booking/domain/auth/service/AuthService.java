@@ -28,24 +28,21 @@ public interface AuthService {
 
     void withdrawPartner(@NonNull String partnerId);
 
-    //RefreshToken getRefreshTokenByMember(@NonNull Member member);
-
-    // todo 제거
-    // RefreshToken getRefreshTokenByRefreshToken(String refreshToken);
-
-    String getUserIdFromToken(String token);
+    String getMemberIdFromToken(String token);
 
     Boolean isExpiredToken(String token);
 
     Boolean isExpiredRefreshToken(String token);
 
-    RefreshToken createRefreshTokenByUserId(String userId, String refreshToken);
+    RefreshToken createRefreshTokenByUserId(String memberId, String refreshToken);
 
-    void updateRefreshToken(String userId, String refreshToken);
+    void updateRefreshToken(String memberId, String refreshToken);
 
-    String createAccessToken(String userId, String role);
+    String createAccessToken(String memberId, String role);
 
-    String createRefreshToken(String userId);
+    String createRefreshToken(String memberId);
 
     RefreshToken findByRefreshToken(String refreshToken);
+
+    String createAccessTokenByProviderUserId(String providerUserId);
 }

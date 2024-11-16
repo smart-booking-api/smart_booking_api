@@ -70,4 +70,9 @@ class UserUserServiceImpl extends UserCommonServiceImpl implements UserUserServi
 //        userRepository.save(user);
     }
 
+    @Override
+    public Optional<User> getByProviderUserId(String providerUserId) {
+        return userRepository.findByProviderUserId(providerUserId);
+    }
+
 }

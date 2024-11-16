@@ -6,12 +6,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {
-    private final String userId;
+    private final String memberId;
     private final String role;
     private final String password;
 
-    public CustomUserDetails(String userId, String role, String password) {
-        this.userId = userId;
+    public CustomUserDetails(String memberId, String role, String password) {
+        this.memberId = memberId;
         this.role = role;
         this.password = password;
     }
@@ -37,7 +37,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userId;
+        return memberId;
     }
 
     @Override

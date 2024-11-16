@@ -1,11 +1,15 @@
 package com.smart.booking.domain.auth.service;
 
+import com.smart.booking.common.enums.ResponseCode;
+import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.auth.entity.RefreshToken;
 import com.smart.booking.domain.auth.repository.RefreshTokenRepository;
 import com.smart.booking.domain.auth.value_object.Token;
 import com.smart.booking.domain.auth.value_object.UserSignInDto;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
+import com.smart.booking.domain.user.entity.User;
+import com.smart.booking.domain.user.service.UserUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Jwts.SIG;
 import jakarta.annotation.PostConstruct;
@@ -28,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private String secretString;
     private final RefreshTokenRepository refreshTokenRepository;
     private final MemberService memberService;
+    private final UserUserService userService;
     private static final long EXPIRATION_TIME_MS = 60 * 60 * 10 * 1000L;
 
     @PostConstruct
@@ -81,8 +86,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String getUserIdFromToken(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("userId", String.class);
+    public String getMemberIdFromToken(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("memberId", String.class);
     }
 
     @Override
@@ -103,8 +108,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public RefreshToken createRefreshTokenByUserId(String userId, String token) {
-        Member member = memberService.getMemberById(userId);
+    public RefreshToken createRefreshTokenByUserId(String memberId, String token) {
+        Member member = memberService.getMemberById(memberId);
 
         RefreshToken refreshToken = RefreshToken.builder()
             .member(member)
@@ -115,17 +120,17 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void updateRefreshToken(String userId, String refreshToken) {
-        Member member = memberService.getMemberById(userId);
+    public void updateRefreshToken(String memberId, String refreshToken) {
+        Member member = memberService.getMemberById(memberId);
         RefreshToken oldToken = getRefreshTokenByMember(member);
         oldToken.updateToken(refreshToken);
     }
 
     @Override
-    public String createAccessToken(String userId, String role) {
+    public String createAccessToken(String memberId, String role) {
         Date now = new Date();
         return Jwts.builder()
-            .claim("userId", userId)
+            .claim("memberId", memberId)
             .claim("role", role)
             .issuedAt(now)
             .expiration(new Date(now.getTime() + EXPIRATION_TIME_MS))
@@ -134,9 +139,9 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String createRefreshToken(String userId) {
+    public String createRefreshToken(String memberId) {
         return Jwts.builder()
-            .claim("userId", userId)
+            .claim("memberId", memberId)
             .issuedAt(new Date(System.currentTimeMillis()))
             .expiration(new Date(System.currentTimeMillis() + 1*(1000*60*60*24*7)))
             .signWith(secretKey)
@@ -146,6 +151,17 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public RefreshToken findByRefreshToken(String refreshToken) {
         return getRefreshTokenByRefreshToken(refreshToken);
+    }
+
+    @Override
+    public String createAccessTokenByProviderUserId(String providerUserId) {
+        Member member = getMemberByProviderUserId(providerUserId);
+        return createRefreshToken(member.getId());
+    }
+
+    private Member getMemberByProviderUserId(String providerUserId) {
+        User user = userService.getByProviderUserId(providerUserId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_THIRD_PARTY_ACCOUNT));
+        return user.getMember();
     }
 
 
