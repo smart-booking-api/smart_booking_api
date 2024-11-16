@@ -1,4 +1,4 @@
-package com.smart.booking.common.security.config;
+package com.smart.booking.presentation.security.config;
 
 import com.smart.booking.common.util.JsonUtil;
 import jakarta.servlet.ServletException;

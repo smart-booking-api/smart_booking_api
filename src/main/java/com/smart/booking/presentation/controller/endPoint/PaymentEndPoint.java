@@ -1,4 +1,4 @@
-package com.smart.booking.controller.endPoint;
+package com.smart.booking.presentation.controller.endPoint;
 
 public class PaymentEndPoint {
 

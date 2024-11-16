@@ -1,9 +1,9 @@
-package com.smart.booking.controller;
+package com.smart.booking.presentation.controller;
 
 import com.smart.booking.common.dto.MemberContext;
 import com.smart.booking.facade.dto.payment.CancelPaymentRequestDto;
 import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
-import com.smart.booking.controller.endPoint.PaymentEndPoint;
+import com.smart.booking.presentation.controller.endPoint.PaymentEndPoint;
 import com.smart.booking.facade.dto.payment.SavePaymentTrackingHistoryRequestDto;
 import com.smart.booking.facade.pg.CompletePaymentFacade;
 import com.smart.booking.facade.user.payment.CancelPaymentFacade;
