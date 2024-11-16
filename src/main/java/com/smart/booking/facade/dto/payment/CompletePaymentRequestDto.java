@@ -1,6 +1,5 @@
 package com.smart.booking.facade.dto.payment;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.NonNull;
 
