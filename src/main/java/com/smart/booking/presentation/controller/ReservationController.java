@@ -14,6 +14,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,7 @@ public class ReservationController {
     private final GetReservationFacade getReservationFacade;
     private final GetEnableReservationTeeBoxFacade getEnableReservationTeeBoxFacade;
 
+    // todo x
     @GetMapping(ReservationEndpoint.RESERVATION_CHECK_LOCK)
     public boolean checkReservationLock(@RequestParam String storeId, @RequestParam String timeId, MemberContext memberContext) {
         var dto = new ReservationLockDto.Get(storeId, timeId);
@@ -45,13 +47,13 @@ public class ReservationController {
         deleteReservationLockFacade.execute(deleteDto);
     }
 
-    @GetMapping(ReservationEndpoint.GET_ENABLE_RESERVATION_TEE_BOX)
-    public List<String> getEnableReservationTeeBox(String startDate) {
-        return null;
+    @GetMapping(ReservationEndpoint.GET_MY_RESERVATION)
+    public List<ReservationSimpleResponse> getMyReservations(MemberContext memberContext, @PathVariable String startDate) {
+        return getReservationFacade.getMyReservations(memberContext.getMemberId(), startDate);
     }
 
-    @GetMapping(ReservationEndpoint.GET_MY_RESERVATION)
-    public List<ReservationSimpleResponse> getMyReservations(MemberContext memberContext, String startDate) {
-        return getReservationFacade.getMyReservations(memberContext.getMemberId(), startDate);
+    @GetMapping(ReservationEndpoint.GET_ENABLE_RESERVATION_TIME)
+    public List<ReservationSimpleResponse> getEnableReservationTime(@RequestParam String storeId, @RequestParam String teeBoxId) {
+        return null;
     }
 }
