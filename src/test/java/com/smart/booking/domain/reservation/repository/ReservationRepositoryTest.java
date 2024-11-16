@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.enums.MemberType;
+import com.smart.booking.domain.member.repository.MemberRepository;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.entity.ReservationMember;
 import com.smart.booking.domain.reservation.enums.ReservationStatus;
@@ -14,18 +15,24 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
-@DataJpaTest
+@SpringBootTest
 class ReservationRepositoryTest {
     @Autowired
     private ReservationRepository reservationRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
     private Reservation reservation;
 
     @BeforeEach
     void setUp() {
-        Member member = new Member("1", MemberType.USER);
+        Member member = new Member(null, MemberType.USER);
+        memberRepository.save(member);
+
         ReservationMember reservationMember = new ReservationMember(member, "테스트", "01036010559");
         // 테스트 전에 데이터 초기화
         reservation = new Reservation("1", null, 12345678, null, LocalDate.now(), "01","02", ReservationStatus.RESERVED, reservationMember, "111");
