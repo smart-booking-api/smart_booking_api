@@ -9,8 +9,8 @@ public record CompletePaymentRequestDto(
     @NonNull String merchantUid,
     @NonNull String trackingId,
     @NonNull String teeBoxId,
-    @NonNull String startTimeTableId,
-    @NonNull String endTimeTableId,
+    @NonNull Long startTimeTableId,
+    @NonNull Long endTimeTableId,
     @NonNull Integer amount,
     @NonNull String reservationUserName,
     @NonNull String reservationUserPhoneNum

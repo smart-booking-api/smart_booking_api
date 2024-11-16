@@ -41,10 +41,10 @@ public class Reservation extends BaseEntity {
     private TeeBox box;
     @Comment("예약일")
     private LocalDate reservationDate;
-    @Comment("예약 시작시간")
-    private String startTimeId;
-    @Comment("예약 종료시간")
-    private String endTimeId;
+    @Comment("예약 시작시간 id")
+    private Long startTimeId;
+    @Comment("예약 종료시간 id")
+    private Long endTimeId;
     @Comment("예약상태")
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
