@@ -13,7 +13,8 @@ import com.smart.booking.domain.payment.entity.Payment;
 import com.smart.booking.domain.payment.entity.PaymentStatus;
 import com.smart.booking.domain.payment.repositroy.ExternalPaymentRepository;
 import com.smart.booking.domain.payment.repositroy.PaymentRepository;
-import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -78,6 +79,11 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public void savePaymentCancelInfo(@NonNull Payment payment) {
         payment.updatePaymentStatus(PaymentStatus.REFUND);
+    }
+
+    @Override
+    public List<Payment> getPaymentsByDateTime(OffsetDateTime fromDate, OffsetDateTime toDate) {
+        return paymentRepository.findByCreatedAtBetween(fromDate, toDate);
     }
 
     private PaymentAnnotationDto getExternalPaymentResponse(@NonNull String merchantUid) {

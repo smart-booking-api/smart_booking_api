@@ -23,6 +23,7 @@ public class ExternalPaymentRepositoryImpl implements ExternalPaymentRepository 
         return token.response().accessToken();
     }
 
+    //TODO token 관리 개선
     @Override
     public ExternalPaymentInfoResponseDto searchPaymentInfo(SearchPaymentInfoRequestDto request) {
         var token = getToken();

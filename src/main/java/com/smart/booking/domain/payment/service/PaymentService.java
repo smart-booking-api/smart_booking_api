@@ -6,6 +6,8 @@ import com.smart.booking.domain.external.dto.PaymentAnnotationDto;
 import com.smart.booking.domain.payment.dto.PaymentResponseDto;
 import com.smart.booking.domain.payment.dto.SavePaymentDto;
 import com.smart.booking.domain.payment.entity.Payment;
+import java.time.OffsetDateTime;
+import java.util.List;
 
 public interface PaymentService {
 
@@ -59,5 +61,7 @@ public interface PaymentService {
      * request : payment
      */
     void savePaymentCancelInfo(Payment payment);
+
+    List<Payment> getPaymentsByDateTime(OffsetDateTime fromDate, OffsetDateTime toDate);
 
 }
