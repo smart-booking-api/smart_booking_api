@@ -41,59 +41,6 @@ jobs:
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ASIA22ZMJPFVBWH3PWBC #${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: vBsgxfzkemFp1DrCN3Ndmqdz38S4bvnEIxVy+iu1 #${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1 #${{ secrets.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: smart-booking/dev #${{ secrets.AWS_EB_APP_NAME }}
-          IMAGE_TAG: latest
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"        
-
-      - name: Get current time
-        uses: 1466587594/get-current-time@v2
-        id: current-time
-        with:
-          format: YYYYMMDD_HH-mm-ss
-          utcOffset: "+09:00"
-
-      - name: Set Dockerrun.aws.json environment variables
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: ./Dockerrun.aws.json
-        env:
-          Image.Name: ${{ steps.login-ecr.outputs.registry }}/smart-booking/dev:latest
-
-      - name: Generate deployment package
-        run: |
-          mkdir -p deploy
-          cp Dockerrun.aws.json deploy/Dockerrun.aws.json # Elastic Beanstalk에서 Docker 실행 시 체크하는 설정 파일
-          cd deploy && zip -r deploy.zip .
-
-      - name: Beanstalk Deploy
-        uses: einaregilsson/beanstalk-deploy@v21
-        with:
-          aws_access_key: ASIA22ZMJPFVBWH3PWBC #${{ secrets.AWS_ACCESS_KEY }}
-          aws_secret_key: vBsgxfzkemFp1DrCN3Ndmqdz38S4bvnEIxVy+iu1 #${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: smart-booking/dev #${{ secrets.AWS_EB_APP_NAME }}
-          environment_name: dev #${{ secrets.AWS_EB_ENV_NAME }}
-          version_label: smart-booking/dev-${{steps.current-time.outputs.formattedTime}}
-          region: us-east-1 #${{ secrets.AWS_REGION }}
-          deployment_package: deploy/deploy.zip
-          wait_for_environment_recovery: 200
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
