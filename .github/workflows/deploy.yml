@@ -41,9 +41,9 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ASIA22ZMJPFVBWH3PWBC #${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: vBsgxfzkemFp1DrCN3Ndmqdz38S4bvnEIxVy+iu1 #${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1 #${{ secrets.AWS_REGION }}
+          aws-access-key-id: AKIA22ZMJPFVBOAVBER4 #${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: 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 #${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2 #${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -83,8 +83,8 @@ jobs:
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v21
         with:
-          aws_access_key: ASIA22ZMJPFVBWH3PWBC #${{ secrets.AWS_ACCESS_KEY }}
-          aws_secret_key: vBsgxfzkemFp1DrCN3Ndmqdz38S4bvnEIxVy+iu1 #${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_access_key: AKIA22ZMJPFVBOAVBER4 #${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: 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 #${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: smart-booking/dev #${{ secrets.AWS_EB_APP_NAME }}
           environment_name: dev #${{ secrets.AWS_EB_ENV_NAME }}
           version_label: smart-booking/dev-${{steps.current-time.outputs.formattedTime}}
