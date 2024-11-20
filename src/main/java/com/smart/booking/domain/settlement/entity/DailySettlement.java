@@ -1,5 +1,7 @@
 package com.smart.booking.domain.settlement.entity;
 
+import com.smart.booking.common.util.PriceUtil;
+import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.partner.entity.Partner;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import jakarta.persistence.Entity;
@@ -12,10 +14,18 @@ import jakarta.persistence.PrePersist;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class DailySettlement {
+public class DailySettlement extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -31,21 +41,46 @@ public class DailySettlement {
     @JoinColumn(name = "tee_box_id", referencedColumnName = "id")
     private TeeBox teeBox;
 
-    private BigDecimal totalAmount; // 총액 (부가세 포함)
-    private BigDecimal supplyAmount; // 공급가액 (부가세 제외)
-    private BigDecimal vatAmount; // 부가세
+    private Integer totalAmount; // 총액 (부가세 포함)
+    private Integer supplyAmount; // 공급가액 (부가세 제외)
+    private Integer vatAmount; // 부가세
 
     @PrePersist
     public void calculateAmounts() {
         if (totalAmount != null) {
-            // 부가세율 설정
-            BigDecimal vatRate = BigDecimal.valueOf(0.1);
+            PriceUtil.AmountResult result = PriceUtil.calculateAmounts(totalAmount);
 
-            // 공급가액 계산
-            this.supplyAmount = totalAmount.divide(BigDecimal.ONE.add(vatRate), 2, RoundingMode.HALF_UP);
+            this.supplyAmount = result.getSupplyAmount();
+            this.vatAmount = result.getVatAmount();
+        }
+    }
 
-            // 부가세 계산
-            this.vatAmount = totalAmount.subtract(supplyAmount);
+    @Data
+    @AllArgsConstructor
+    public static class DailySettlementKey {
+
+        private LocalDate startDate;
+        private Partner partner;
+        private TeeBox teeBox;
+
+        // Equals and hashCode are critical for using this as a Map key.
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            DailySettlementKey that = (DailySettlementKey) o;
+            return Objects.equals(startDate, that.startDate) &&
+                Objects.equals(partner, that.partner) &&
+                Objects.equals(teeBox, that.teeBox);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(startDate, partner, teeBox);
         }
     }
 }

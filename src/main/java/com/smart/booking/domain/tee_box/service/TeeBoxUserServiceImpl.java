@@ -1,8 +1,10 @@
 package com.smart.booking.domain.tee_box.service;
 
 import com.smart.booking.domain.tee_box.repositroy.TeeBoxRepository;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+@Primary
 @Service
 public class TeeBoxUserServiceImpl extends TeeBoxCommonServiceImpl implements TeeBoxUserService {
 
@@ -12,5 +14,5 @@ public class TeeBoxUserServiceImpl extends TeeBoxCommonServiceImpl implements Te
         super(teeBoxRepository);
         this.teeBoxRepository = teeBoxRepository;
     }
-    
+
 }
