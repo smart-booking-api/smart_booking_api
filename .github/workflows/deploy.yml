@@ -41,9 +41,9 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: AKIA22ZMJPFVBOAVBER4 #${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: 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 #${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2 #${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -53,12 +53,12 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: smart-booking/dev #${{ secrets.AWS_EB_APP_NAME }}
+          ECR_REPOSITORY: ${{ secrets.AWS_EB_APP_NAME }}
           IMAGE_TAG: latest
         run: |
-          docker build -t smart-booking/dev .
-          docker tag smart-booking/dev:latest 744732850538.dkr.ecr.ap-northeast-2.amazonaws.com/smart-booking/dev:latest
-          docker push 744732850538.dkr.ecr.ap-northeast-2.amazonaws.com/smart-booking/dev:latest
+          docker build -t ${{ secrets.AWS_EB_APP_NAME }} .
+          docker tag $ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"        
 
       - name: Get current time
@@ -73,7 +73,7 @@ jobs:
         with:
           files: ./Dockerrun.aws.json
         env:
-          Image.Name: ${{ steps.login-ecr.outputs.registry }}/smart-booking/dev:latest
+          Image.Name: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_EB_APP_NAME }}:latest
 
       - name: Generate deployment package
         run: |
@@ -84,12 +84,12 @@ jobs:
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v21
         with:
-          aws_access_key: AKIA22ZMJPFVBOAVBER4 #${{ secrets.AWS_ACCESS_KEY }}
-          aws_secret_key: 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 #${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: smart-booking-api-dev #${{ secrets.AWS_EB_APP_NAME }}
-          environment_name: smart-booking-api-dev-env #${{ secrets.AWS_EB_ENV_NAME }}
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: ${{ secrets.AWS_EB_APP_NAME }}
+          environment_name: ${{ secrets.AWS_EB_ENV_NAME }}
           version_label: smart-booking-${{steps.current-time.outputs.formattedTime}}
-          region: ap-northeast-2 #${{ secrets.AWS_REGION }}
+          region: ${{ secrets.AWS_REGION }}
           deployment_package: deploy/deploy.zip
           wait_for_environment_recovery: 200
 
