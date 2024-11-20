@@ -87,7 +87,7 @@ jobs:
           aws_access_key: AKIA22ZMJPFVBOAVBER4 #${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: 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 #${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: smart-booking-api-dev #${{ secrets.AWS_EB_APP_NAME }}
-          environment_name: smart-booking-api-dev #${{ secrets.AWS_EB_ENV_NAME }}
+          environment_name: smart-booking-api-dev-env #${{ secrets.AWS_EB_ENV_NAME }}
           version_label: smart-booking-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2 #${{ secrets.AWS_REGION }}
           deployment_package: deploy/deploy.zip
