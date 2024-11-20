@@ -1,4 +1,4 @@
-FROM arm64v8/amazoncorretto:21-alpine-jdk
+FROM amazoncorretto:21-alpine-jdk
 
 LABEL authors="smart-booking"
 
