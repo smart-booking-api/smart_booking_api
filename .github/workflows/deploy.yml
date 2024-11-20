@@ -56,8 +56,8 @@ jobs:
           ECR_REPOSITORY: smart-booking/dev #${{ secrets.AWS_EB_APP_NAME }}
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t smart-booking/dev .
+          docker push 744732850538.dkr.ecr.ap-northeast-2.amazonaws.com/smart-booking/dev:latest
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"        
 
       - name: Get current time
