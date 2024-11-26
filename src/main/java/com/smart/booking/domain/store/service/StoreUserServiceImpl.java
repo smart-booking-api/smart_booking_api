@@ -2,6 +2,7 @@ package com.smart.booking.domain.store.service;
 
 import com.smart.booking.domain.common.enums.Region;
 import com.smart.booking.domain.store.entity.Store;
+import com.smart.booking.domain.store.repository.StoreClosedDayRepository;
 import com.smart.booking.domain.store.repository.StoreRepository;
 import java.util.List;
 import lombok.NonNull;
@@ -12,8 +13,8 @@ class StoreUserServiceImpl extends StoreCommonServiceImpl implements StoreUserSe
 
     private final StoreRepository storeRepository;
 
-    public StoreUserServiceImpl(@NonNull StoreRepository storeRepository) {
-        super(storeRepository);
+    public StoreUserServiceImpl(@NonNull StoreRepository storeRepository, @NonNull StoreClosedDayRepository storeClosedDayRepository) {
+        super(storeRepository, storeClosedDayRepository);
         this.storeRepository = storeRepository;
     }
 

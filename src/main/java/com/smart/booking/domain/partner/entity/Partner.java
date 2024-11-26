@@ -71,15 +71,13 @@ public class Partner extends BaseEntity {
     private BusinessRegistration businessRegistration;
 
 
-    @OneToOne(
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
+    @OneToOne(cascade = CascadeType.ALL)
     private PartnerCompany company;
 
     private OffsetDateTime deletedAt;
 
-    public void initialize(@NonNull PartnerCompany company) {
+    public void initialize(@NonNull BusinessRegistration businessRegistration, @NonNull PartnerCompany company) {
+        this.businessRegistration = businessRegistration;
         company.changePartner(this);
         this.company = company;
     }
@@ -89,7 +87,7 @@ public class Partner extends BaseEntity {
     }
 
     public boolean isInitialized() {
-        return company != null;
+        return company != null || businessRegistration != null;
     }
 
     public void withdraw() {

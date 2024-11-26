@@ -63,6 +63,7 @@ public class Store extends BaseEntity {
     
     private OffsetDateTime deletedAt;
 
+
     public void update(
         @NonNull String name,
         @NonNull Region region,
