@@ -8,11 +8,11 @@ public enum ResponseCode implements EnumModel {
     COMMON_UNKNOWN(101, "COMMON_UNKNOWN"),
     NOT_FOUND_ELEMENT(102, "유효한 데이터가 없습니다."),
     COMMON_BAD_REQUEST(102, "잘못된 요청 입니다."),
-
     NOT_FOUND_STORE(301, "매장이 존재하지 않습니다"),
     NOT_FOUND_PARTNER(401, "파트너가 존재하지 않습니다"),
     ALREADY_INITIALIZED_PARTNER(402, "이미 초기화된 파트너입니다."),
     NOT_INITIALIZED_PARTNER(403, "초기화 되지 않은 파트너입니다."),
+    DUPLICATE_PARTNER_BUSINESS_REGISTRATION(404, "중복된 사업자 등록번호가 존재합니다."),
     NOT_FOUND_USER(501, "유저가 존재하지 않습니다"),
     NOT_FOUND_THIRD_PARTY_ACCOUNT(502, "존재하지 않는 소셜 계정입니다."),
 

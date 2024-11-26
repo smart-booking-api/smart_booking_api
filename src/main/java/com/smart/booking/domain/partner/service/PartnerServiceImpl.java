@@ -1,6 +1,7 @@
 package com.smart.booking.domain.partner.service;
 
 import static com.smart.booking.common.enums.ResponseCode.ALREADY_INITIALIZED_PARTNER;
+import static com.smart.booking.common.enums.ResponseCode.DUPLICATE_PARTNER_BUSINESS_REGISTRATION;
 import static com.smart.booking.common.enums.ResponseCode.NOT_FOUND_PARTNER;
 import static com.smart.booking.common.enums.ResponseCode.NOT_INITIALIZED_PARTNER;
 
@@ -27,18 +28,27 @@ class PartnerServiceImpl implements PartnerService {
 
     @Override
     public @NonNull Partner createPartner(@NonNull CreatePartnerDto createPartnerDto) {
+
         return partnerRepository.save(PartnerMapper.toPartner(createPartnerDto));
     }
 
     @Override
     public @NonNull Partner initializePartner(@NonNull InitializePartnerDto initializePartnerDto) throws CommonException {
+
         final Partner partner = getPartner(initializePartnerDto.partnerId());
 
         if (partner.isInitialized()) {
             throw new CommonException(ALREADY_INITIALIZED_PARTNER);
         }
 
-        partner.initialize(PartnerMapper.toPartnerCompany(initializePartnerDto.upsertPartnerCompanyDto()));
+        if (partnerRepository.existsByBusinessRegistration(initializePartnerDto.businessRegistration())) {
+            throw new CommonException(DUPLICATE_PARTNER_BUSINESS_REGISTRATION);
+        }
+
+        partner.initialize(
+            initializePartnerDto.businessRegistration(),
+            PartnerMapper.toPartnerCompany(initializePartnerDto.upsertPartnerCompanyDto())
+        );
 
         return partnerRepository.save(partner);
     }
