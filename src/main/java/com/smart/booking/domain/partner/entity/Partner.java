@@ -86,6 +86,10 @@ public class Partner extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
+    public void changePassword(@NonNull String password) {
+        this.password = password;
+    }
+
     public boolean isInitialized() {
         return company != null || businessRegistration != null;
     }

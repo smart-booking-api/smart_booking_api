@@ -13,6 +13,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -44,22 +46,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf((csrf) -> csrf.disable())
+        http.csrf(AbstractHttpConfigurer::disable)
             // form 로그인 방식 disable
-            .formLogin((loginConfig) -> loginConfig.disable())
+            .formLogin(AbstractHttpConfigurer::disable)
             // http basic 인증방식 disable
-            .httpBasic((httpConfig) -> httpConfig.disable())
+            .httpBasic(AbstractHttpConfigurer::disable)
             // h2 console 사용을 위해 disable
             .headers((headerConfig) ->
-                headerConfig.frameOptions(frameOptionsConfig ->
-                    frameOptionsConfig.disable())
+                headerConfig.frameOptions(FrameOptionsConfig::disable)
             ).authorizeHttpRequests((auth) ->
                 auth.requestMatchers(PathRequest.toH2Console()).permitAll()
-                    .requestMatchers("/", "/join", "/api/auth/login").permitAll()
-                    .requestMatchers("/booking/swagger.html", "/booking/swagger-ui/**", "/booking/v3/**").permitAll()
-                    .requestMatchers("/partner").hasAnyRole("PARTNER")
-                    .requestMatchers("/reservation/**").hasAnyRole("PARTNER")
-                    .requestMatchers("/user/**").hasAnyRole("USER")
+                    .requestMatchers("/api/auth/**").permitAll()
+                    .requestMatchers("/api-docs/**", "/swagger-ui/**").permitAll()
+                    .requestMatchers("/api/partner/**").hasAnyRole("PARTNER")
+                    .requestMatchers("/api/user/**").hasAnyRole("USER")
                     .anyRequest().authenticated()
             );
 

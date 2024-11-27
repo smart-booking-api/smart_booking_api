@@ -13,6 +13,7 @@ public interface PartnerMapper {
             .type(createPartnerDto.type())
             .code(createPartnerDto.code())
             .phoneNumber(createPartnerDto.phoneNumber())
+            .password(createPartnerDto.password())
             .build();
     }
 

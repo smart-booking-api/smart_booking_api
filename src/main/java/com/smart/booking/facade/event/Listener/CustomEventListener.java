@@ -1,4 +1,4 @@
-package com.smart.booking.facade.event.Listener;
+package com.smart.booking.facade.event.listener;
 
 import com.smart.booking.domain.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;

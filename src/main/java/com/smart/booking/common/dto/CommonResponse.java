@@ -1,5 +1,6 @@
 package com.smart.booking.common.dto;
 
+import com.smart.booking.common.enums.ResponseCode;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,12 @@ public class CommonResponse<T> {
     public CommonResponse(Integer responseCode, String message, T result) {
         this.responseCode = responseCode;
         this.message = message;
+        this.result = result;
+    }
+
+    public CommonResponse(T result) {
+        this.responseCode = ResponseCode.COMMON_OK.getCode();
+        this.message = ResponseCode.COMMON_OK.getMessage();
         this.result = result;
     }
 }

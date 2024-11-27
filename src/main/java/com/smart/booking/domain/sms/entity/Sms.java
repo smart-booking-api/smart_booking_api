@@ -1,34 +1,39 @@
-package com.smart.booking.domain.member.entity;
+package com.smart.booking.domain.sms.entity;
 
 import com.smart.booking.common.annotations.TsidGenerator;
 import com.smart.booking.domain.common.entity.BaseEntity;
-import com.smart.booking.domain.member.enums.MemberType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.NonNull;
 
 @Builder
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "member")
-public class Member extends BaseEntity {
+public class Sms extends BaseEntity {
 
     @Id
     @TsidGenerator
     private String id;
 
-    @Enumerated(EnumType.STRING)
-    private MemberType type;
+    private String phoneNumber;
+
+    private String message;
+
+    private String errorMessage;
+
+    public boolean getIsSent() {
+        return errorMessage == null;
+    }
+
+    public void occurredError(@NonNull String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
 }

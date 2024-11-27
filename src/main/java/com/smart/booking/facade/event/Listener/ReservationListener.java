@@ -1,4 +1,4 @@
-package com.smart.booking.facade.event.Listener;
+package com.smart.booking.facade.event.listener;
 
 import com.smart.booking.facade.event.dto.CompletePaymentEventDto;
 import com.smart.booking.facade.user.reservation.CreateReservationFacade;
