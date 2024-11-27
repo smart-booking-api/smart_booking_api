@@ -41,6 +41,8 @@ public class DailySettlement extends BaseEntity {
     @JoinColumn(name = "tee_box_id", referencedColumnName = "id")
     private TeeBox teeBox;
 
+    private Integer totalCount;
+
     private Integer totalAmount; // 총액 (부가세 포함)
     private Integer supplyAmount; // 공급가액 (부가세 제외)
     private Integer vatAmount; // 부가세

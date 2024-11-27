@@ -1,5 +1,6 @@
 package com.smart.booking.batch;
 
+import com.smart.booking.batch.tasklet.DailyStatisticsTasklet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
