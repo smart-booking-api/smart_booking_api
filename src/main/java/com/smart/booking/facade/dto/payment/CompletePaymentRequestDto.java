@@ -1,19 +1,15 @@
 package com.smart.booking.facade.dto.payment;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
 public record CompletePaymentRequestDto(
-    @NonNull String memberId,
-    @NonNull String merchantUid,
-    @NonNull String trackingId,
-    @NonNull String teeBoxId,
-    @NonNull Long startTimeTableId,
-    @NonNull Long endTimeTableId,
-    @NonNull Integer amount,
-    @NonNull String reservationUserName,
-    @NonNull String reservationUserPhoneNum
+    @JsonProperty("imp_uid")
+    @NonNull String impUid,
+    @JsonProperty("merchant_uid")
+    @NonNull String merchantUid
 ) {
 
 }
