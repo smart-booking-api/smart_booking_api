@@ -12,6 +12,7 @@ public class CommonException extends RuntimeException {
     protected String message;
 
     public CommonException(@NonNull ResponseCode responseCode) {
+        this.httpStatus = HttpStatus.BAD_REQUEST;
         this.responseCode = responseCode;
     }
 

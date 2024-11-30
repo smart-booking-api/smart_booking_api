@@ -34,11 +34,15 @@ public class ReservationLockServiceImpl implements ReservationLockService {
     }
 
     @Override
-    public void deleteReservationLock(CreateReservationLockDto deleteDto) {
-//        ReservationLock reservationLock = ReservationLock.builder()
-//            .key(deleteDto.getStoreId() + "-" + deleteDto.getTimeId())
-//            .build();
-//        reservationLockRepository.delete(reservationLock);
+    public void deleteReservationLock(ReservationLockDto deleteDto) {
+        validateMyReservationLock(deleteDto);
+
+        ReservationLock reservationLock = ReservationLock.builder()
+            .key(getKey(deleteDto))
+            .memberId(deleteDto.memberId())
+            .build();
+
+        reservationLockRepository.delete(reservationLock);
     }
 
     private void validateReservationLock(ReservationLockDto lockDto) {
@@ -46,6 +50,14 @@ public class ReservationLockServiceImpl implements ReservationLockService {
 
         if (!Objects.isNull(reservationLock))
             throw new CommonException(ResponseCode.ALREADY_LOCK_RESERVATION);
+    }
+
+    private void validateMyReservationLock(ReservationLockDto lockDto) {
+        ReservationLock reservationLock = getReservationLock(getKey(lockDto));
+
+        if (!reservationLock.getMemberId().equals(lockDto.memberId())) {
+            throw new CommonException(ResponseCode.NOT_MY_RESERVATION_LOCK);
+        }
     }
 
     private ReservationLock getReservationLock(String key) {
