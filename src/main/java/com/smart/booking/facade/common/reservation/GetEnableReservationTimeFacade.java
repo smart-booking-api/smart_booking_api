@@ -1,31 +1,22 @@
 package com.smart.booking.facade.common.reservation;
 
-import com.smart.booking.domain.common.entity.CommonTimeTable;
-import com.smart.booking.domain.reservation.entity.Reservation;
+import com.smart.booking.domain.common.model.TimeCode;
 import com.smart.booking.domain.reservation.service.CommonReservationService;
-import com.smart.booking.domain.reservation.service.CommonReservationServiceImpl;
 import com.smart.booking.domain.reservation.service.UserReservationService;
 import com.smart.booking.domain.store.entity.Store;
-import com.smart.booking.domain.store.entity.StoreOperationInfo;
 import com.smart.booking.domain.store.service.StoreUserService;
-import com.smart.booking.domain.common.model.TimeCode;
-import com.smart.booking.domain.tee_box.entity.TeeBox;
-import com.smart.booking.domain.tee_box.service.TeeBoxService;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Component
 public class GetEnableReservationTimeFacade {
     private final StoreUserService storeUserService;
-    private final CommonReservationService commonReservationService;
+//    private final CommonReservationService commonReservationService;
 
     public GetEnableReservationTimeFacade(StoreUserService storeUserService, UserReservationService userReservationService) {
         this.storeUserService = storeUserService;
-        this.commonReservationService = userReservationService;
+//        this.commonReservationService = userReservationService;
     }
 
     //    private final TeeBoxService teeBoxService;
