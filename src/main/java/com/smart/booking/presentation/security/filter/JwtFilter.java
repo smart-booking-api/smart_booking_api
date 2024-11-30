@@ -73,7 +73,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private CustomUserDetails getCustomUserDetails(String memberId) {
         Member member = memberService.getMemberById(memberId);
-        return new CustomUserDetails(memberId, member.getType().getKey(), getPasswordByRole(member));
+        return new CustomUserDetails(memberId, "ROLE_" + member.getType().getKey(), getPasswordByRole(member));
     }
 
     private String getPasswordByRole(Member member) {
