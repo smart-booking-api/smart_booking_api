@@ -4,7 +4,9 @@ import com.smart.booking.domain.reservation.repository.ReservationRepository;
 import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
 import com.smart.booking.domain.reservation.enums.SearchDateType;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AdminReservationServiceImpl extends CommonReservationServiceImpl implements AdminReservationService {
 
     public AdminReservationServiceImpl(ReservationRepository reservationRepository) {

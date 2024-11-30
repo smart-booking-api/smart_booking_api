@@ -45,10 +45,10 @@ public class ReservationController {
         createPhoneReservationFacade.execute(createDto, memberContext);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "예약취소", description = "예약을 취소한다.")
+    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "선점락 제거", description = "예약을 취소한다.")
     @DeleteMapping(ReservationEndpoint.RESERVATION_LOCK)
-    public void deleteReservationLock(@RequestBody @Valid CreateReservationLockDto deleteDto) {
-        deleteReservationLockFacade.execute(deleteDto);
+    public void deleteReservationLock(@RequestBody @Valid CreateReservationLockDto deleteDto, MemberContext memberContext) {
+        deleteReservationLockFacade.execute(deleteDto, memberContext.getMemberId());
     }
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "예약조회", description = "메인화면 - 내 예약을 조회한다.")

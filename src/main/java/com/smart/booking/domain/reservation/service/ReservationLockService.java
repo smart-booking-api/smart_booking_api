@@ -16,5 +16,5 @@ public interface ReservationLockService {
      * 선점락 삭제
      * @param deleteDto
      */
-    void deleteReservationLock(CreateReservationLockDto deleteDto);
+    void deleteReservationLock(ReservationLockDto deleteDto);
 }
