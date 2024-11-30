@@ -24,14 +24,21 @@ public class CreateReservationFacade {
     private final MemberService memberService;
     private final FirebaseComponent firebaseComponent;
 
+    /**
+     * 결제 완료 후 예약처리
+     * @param eventDto
+     */
     public void createReservation(@NonNull CompletePaymentEventDto eventDto) {
         // 예약
         Store store = storeUserService.getStoreById(eventDto.storeId());
         Member member = memberService.getMemberById(eventDto.memberId());
         userReservationService.createReservation(getCreateReservationDto(store, null, member, eventDto));
 
-        // firebase trackingId 삭제
+        // todo firebase 처리상태 업데이트 = event 처리
         firebaseComponent.deleteDocument(COLLECTION_NAME, eventDto.trackingId());
+
+        // todo 선점락 제거 = event 처리
+
     }
 
     private CreateReservationDto getCreateReservationDto(Store store, TeeBox teeBox, Member member, CompletePaymentEventDto eventDto) {
