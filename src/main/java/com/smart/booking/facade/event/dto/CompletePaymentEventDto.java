@@ -10,8 +10,8 @@ public record CompletePaymentEventDto(
     @NonNull String trackingId,
     @NonNull String storeId,
     @NonNull String teeBoxId,
-    @NonNull Long startTimeTableId,
-    @NonNull Long endTimeTableId,
+    @NonNull String startTimeTableId,
+    @NonNull String endTimeTableId,
     @NonNull Integer amount,
     String reservationUserName,
     String reservationUserPhoneNumber
