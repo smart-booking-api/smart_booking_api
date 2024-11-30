@@ -49,7 +49,7 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
     }
 
     @Override
-    public List<Reservation> getReservationByStoreAndReservationDate(Store store, LocalDate reservationDate) {
+    public List<Reservation> getStoreReservation(Store store, LocalDate reservationDate) {
         return getReservationByStoreAndReservationDate(store, reservationDate);
     }
 

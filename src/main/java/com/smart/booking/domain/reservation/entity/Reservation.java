@@ -29,26 +29,36 @@ public class Reservation extends BaseEntity {
     @Id
     @TsidGenerator
     private String id;
+
     @Comment("매장")
     @ManyToOne
     @JoinColumn(name= "store_id")
     private Store store;
+
     @Comment("예약번호")
     private int reservationNo;
+
     @Comment("타석")
     @ManyToOne
     @JoinColumn(name= "box_id")
     private TeeBox box;
+
     @Comment("예약일")
     private LocalDate reservationDate;
-    @Comment("예약 시작시간")
+
+    @Comment("예약 시작시간 id")
     private String startTimeId;
-    @Comment("예약 종료시간")
+
+    @Comment("예약 종료시간 id")
     private String endTimeId;
+
     @Comment("예약상태")
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
+
     @Embedded
     private ReservationMember reservationMember;
+
+    @Comment("결제 트래킹 ID")
     private String trackingId;
 }
