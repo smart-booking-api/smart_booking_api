@@ -156,7 +156,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String createAccessTokenByProviderUserId(String providerUserId) {
         Member member = getMemberByProviderUserId(providerUserId);
-        return createRefreshToken(member.getId());
+        return createAccessToken(member.getId(), member.getType().getKey());
     }
 
     private Member getMemberByProviderUserId(String providerUserId) {
