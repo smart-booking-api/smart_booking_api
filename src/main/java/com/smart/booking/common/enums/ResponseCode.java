@@ -25,6 +25,13 @@ public enum ResponseCode implements EnumModel {
     NOT_FOUND_TEE_BOX(701, "타석이 존재하지 않습니다."),
     DUPLICATE_TEE_BOX_SHARE_PARTNER_TYPE(702, "중복된 파트너 타입이 존재합니다."),
     EXCEED_TEE_BOX_SHARE_SUM(703, "타석 지분 비율이 100을 초과합니다."),
+
+    /**
+     * 800
+     * 예약, 선점
+     */
+    ALREADY_LOCK_RESERVATION(801, "다른 이용자가 예약중입니다."),
+    NOT_FOUND_RESERVATION_TIME(802, "예약시간이 존재하지 않습니다.")
     ;
 
     private final int code;

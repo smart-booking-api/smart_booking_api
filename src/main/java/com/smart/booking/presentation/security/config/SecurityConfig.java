@@ -57,7 +57,9 @@ public class SecurityConfig {
             ).authorizeHttpRequests((auth) ->
                 auth.requestMatchers(PathRequest.toH2Console()).permitAll()
                     .requestMatchers("/", "/join", "/login").permitAll()
+                    .requestMatchers("/booking/swagger.html", "/booking/swagger-ui/**", "/booking/v3/**").permitAll()
                     .requestMatchers("/partner").hasAnyRole("PARTNER")
+                    .requestMatchers("/reservation/**").hasAnyRole("PARTNER")
                     .requestMatchers("/user/**").hasAnyRole("USER")
                     .anyRequest().authenticated()
             );

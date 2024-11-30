@@ -17,8 +17,10 @@ public class ReservationMember {
     @OneToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
     @Comment("예약자 이름")
     private String reservationUserName;
+
     @Comment("예약자 휴대폰 번호")
     private String reservationUserPhone;
 }
