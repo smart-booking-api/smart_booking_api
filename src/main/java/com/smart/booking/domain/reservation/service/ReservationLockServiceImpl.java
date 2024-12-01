@@ -45,6 +45,11 @@ public class ReservationLockServiceImpl implements ReservationLockService {
         reservationLockRepository.delete(reservationLock);
     }
 
+    @Override
+    public ReservationLock getReservationLock(ReservationLockDto reservationLockDto) {
+        return getReservationLock(getKey(reservationLockDto));
+    }
+
     private void validateReservationLock(ReservationLockDto lockDto) {
         ReservationLock reservationLock = getReservationLock(getKey(lockDto));
 
@@ -66,6 +71,6 @@ public class ReservationLockServiceImpl implements ReservationLockService {
     }
 
     private String getKey(ReservationLockDto lockDto) {
-        return lockDto.teeBoxId() + "-" + lockDto.lockTimeId();
+        return lockDto.teeBoxId() + "-" + lockDto.date() + "-" +lockDto.lockTimeId();
     }
 }

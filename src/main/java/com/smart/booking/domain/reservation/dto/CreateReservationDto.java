@@ -27,7 +27,7 @@ public record CreateReservationDto(
         ReservationMember reservationMember = new ReservationMember(member, reservationUserName, reservationUserPhoneNumber);
         return Reservation.builder()
             .store(store)
-            .box(teeBox)
+            .teeBox(teeBox)
             .reservationNo(randomNumber)
             .reservationDate(reservationDate)
             .startTimeId(startTimeTableId)

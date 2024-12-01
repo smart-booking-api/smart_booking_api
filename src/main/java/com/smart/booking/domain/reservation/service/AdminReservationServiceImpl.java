@@ -34,12 +34,12 @@ public class AdminReservationServiceImpl extends CommonReservationServiceImpl im
     }
 
     @Override
-    boolean validateCancelPermission(String reservationId) {
+    public boolean validateCancelPermission(String reservationId) {
         return false;
     }
 
     @Override
-    boolean validateSearchPermission(String reservationId) {
+    public boolean validateSearchPermission(String reservationId) {
         return false;
     }
 }

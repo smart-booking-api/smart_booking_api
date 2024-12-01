@@ -2,7 +2,6 @@ package com.smart.booking.domain.reservation.service;
 
 import com.smart.booking.domain.reservation.dto.ReservationLockDto;
 import com.smart.booking.domain.reservation.entity.ReservationLock;
-import com.smart.booking.facade.dto.reservation.CreateReservationLockDto;
 
 public interface ReservationLockService {
 
@@ -17,4 +16,11 @@ public interface ReservationLockService {
      * @param deleteDto
      */
     void deleteReservationLock(ReservationLockDto deleteDto);
+
+    /**
+     * 선점락 조회
+     * @param searchDto
+     * @return
+     */
+    ReservationLock getReservationLock(ReservationLockDto searchDto);
 }

@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface ReservationTimeService {
     List<ReservationTimeCode> getReservationTimeBetweenStartAndEnd(String startTimeId, String endTimeId);
+
+    ReservationTimeCode getReservationTimeByTimeName(String timeName);
 }

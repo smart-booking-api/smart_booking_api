@@ -19,4 +19,9 @@ public class ReservationTimeServiceImpl implements ReservationTimeService {
         ReservationTimeCode endTime = reservationTimeCodeRepository.findById(endTimeId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION_TIME));
         return reservationTimeCodeRepository.findByTimeBetween(startTime.getTime(), endTime.getTime());
     }
+
+    @Override
+    public ReservationTimeCode getReservationTimeByTimeName(String timeName) {
+        return reservationTimeCodeRepository.findByTimeName(timeName);
+    }
 }
