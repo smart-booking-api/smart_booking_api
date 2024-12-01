@@ -7,6 +7,8 @@ import com.smart.booking.facade.admin.reservation.CreatePhoneReservationFacade;
 import com.smart.booking.facade.common.reservation.CreateReservationLockFacade;
 import com.smart.booking.facade.common.reservation.DeleteReservationLockFacade;
 import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
+import com.smart.booking.facade.dto.reservation.ReservationTimeResponse;
+import com.smart.booking.facade.common.reservation.GetEnableReservationTimeFacade;
 import com.smart.booking.facade.user.reservation.GetReservationFacade;
 import com.smart.booking.presentation.controller.endPoint.ReservationEndpoint;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,7 @@ public class ReservationController {
     private final CreateReservationLockFacade createReservationLockFacade;
     private final DeleteReservationLockFacade deleteReservationLockFacade;
     private final GetReservationFacade getReservationFacade;
+    private final GetEnableReservationTimeFacade getEnableReservationTimeFacade;
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "선점락 생성", description = "이용자 예약시 선점락 생성")
     @PostMapping(ReservationEndpoint.RESERVATION_LOCK)
@@ -57,9 +59,9 @@ public class ReservationController {
         return getReservationFacade.getMyReservations(memberContext.getMemberId(), startDate);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "시간조회", description = "예약 가능시간을 조회한다.")
+    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "시간조회", description = "예약이 가능하고 선점락이 걸려있지 않은 예약 가능 시간을 조회한다.")
     @GetMapping(ReservationEndpoint.GET_ENABLE_RESERVATION_TIME)
-    public List<ReservationSimpleResponse> getEnableReservationTime(@RequestParam String storeId, @RequestParam String teeBoxId) {
-        return null;
+    public List<ReservationTimeResponse> getEnableReservationTime(@RequestParam String teeBoxId, @RequestParam String reservationDate) {
+        return getEnableReservationTimeFacade.execute(teeBoxId, reservationDate);
     }
 }

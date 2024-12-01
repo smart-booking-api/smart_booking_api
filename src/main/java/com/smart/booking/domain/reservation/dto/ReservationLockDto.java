@@ -5,6 +5,7 @@ import lombok.Builder;
 @Builder
 public record ReservationLockDto(
     String teeBoxId,
+    String date,
     String lockTimeId,
     String memberId
 ) {}

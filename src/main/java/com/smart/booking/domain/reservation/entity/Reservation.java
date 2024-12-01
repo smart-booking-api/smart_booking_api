@@ -41,7 +41,7 @@ public class Reservation extends BaseEntity {
     @Comment("타석")
     @ManyToOne
     @JoinColumn(name= "box_id")
-    private TeeBox box;
+    private TeeBox teeBox;
 
     @Comment("예약일")
     private LocalDate reservationDate;

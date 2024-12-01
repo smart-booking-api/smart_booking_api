@@ -23,14 +23,15 @@ public class CreateReservationLockFacade {
         List<ReservationTimeCode> reservationTimeCodes = reservationTimeService.getReservationTimeBetweenStartAndEnd(lockDto.startTimeId(), lockDto.endTimeId());
 
         for (ReservationTimeCode reservationTime : reservationTimeCodes) {
-            ReservationLockDto reservationLockDto = createLockDto(lockDto.teeBoxId(), reservationTime, memberId);
+            ReservationLockDto reservationLockDto = createLockDto(lockDto.teeBoxId(), lockDto.date(), reservationTime, memberId);
             reservationLockService.createReservationLock(reservationLockDto);
         }
     }
 
-    private ReservationLockDto createLockDto(String teeBoxId, ReservationTimeCode timeCode, String memberId) {
+    private ReservationLockDto createLockDto(String teeBoxId, String date, ReservationTimeCode timeCode, String memberId) {
         return ReservationLockDto.builder()
             .teeBoxId(teeBoxId)
+            .date(date)
             .lockTimeId(timeCode.getId())
             .memberId(memberId)
             .build();

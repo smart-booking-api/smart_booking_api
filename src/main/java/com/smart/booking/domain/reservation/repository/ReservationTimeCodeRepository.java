@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReservationTimeCodeRepository extends JpaRepository<ReservationTimeCode, String> {
     List<ReservationTimeCode> findByTimeBetween(Time startTime, Time endTime);
+
+    ReservationTimeCode findByTimeName(String timeName);
 }

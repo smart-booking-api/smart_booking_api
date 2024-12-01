@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public abstract class CommonReservationServiceImpl implements CommonReservationService {
+public class CommonReservationServiceImpl implements CommonReservationService {
     private final ReservationRepository reservationRepository;
 
     /**
@@ -22,6 +22,16 @@ public abstract class CommonReservationServiceImpl implements CommonReservationS
     @Override
     public List<Reservation> getReservationByStoreAndReservationDate(Store store, LocalDate reservationDate) {
         return reservationRepository.findAllByStoreAndReservationDate(store, reservationDate);
+    }
+
+    @Override
+    public List<Reservation> getReservationByTeeBoxId(String teeBoxId, LocalDate searchDate) {
+        return reservationRepository.getReservationByTeeBoxIdAndReservationDate(teeBoxId, searchDate);
+    }
+
+    @Override
+    public List<Reservation> getReservationByTeeBoxIdAndReservationDate(String teeBoxId, LocalDate reservationDate) {
+        return reservationRepository.getReservationByTeeBoxIdAndReservationDate(teeBoxId, reservationDate);
     }
 
     /**
@@ -58,7 +68,13 @@ public abstract class CommonReservationServiceImpl implements CommonReservationS
         return null;
     }
 
-    abstract boolean validateCancelPermission(String reservationId);
+    @Override
+    public boolean validateCancelPermission(String reservationId) {
+        return true;
+    };
 
-    abstract boolean validateSearchPermission(String reservationId);
+    @Override
+    public boolean validateSearchPermission(String reservationId) {
+        return true;
+    };
 }
