@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CreatePartnerFacade {
 
     private final MemberService memberService;
-
     private final PartnerService partnerService;
     private final PartnerEventPublisher partnerEventPublisher;
 

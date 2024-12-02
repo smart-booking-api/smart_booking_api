@@ -53,7 +53,7 @@ public class StoreOperationInfo extends BaseEntity {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "open_days")
-    private List<DayOfWeek> openDays = new ArrayList<>();
+    private List<DayOfWeek> openDayOfWeeks = new ArrayList<>();
 
 
     public boolean isTrialOperation(OffsetDateTime dateTime) {

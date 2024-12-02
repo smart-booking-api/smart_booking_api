@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Slf4j
@@ -19,7 +21,8 @@ public class PartnerEventListener {
 
     @Async
     @TransactionalEventListener
-    public void onCreatePartnerSuccessEvent(@NonNull CreatePartnerSuccessEvent createPartnerSuccessEvent) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void onCreatePartnerSuccessEvent(@NonNull CreatePartnerSuccessEvent createPartnerSuccessEvent) throws Exception {
         final SendSmsRequestDto sendSmsRequestDto = new SendSmsRequestDto(
             createPartnerSuccessEvent.getPhoneNumber(),
             createPartnerSuccessEvent.getMessage()

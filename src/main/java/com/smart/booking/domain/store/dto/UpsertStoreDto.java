@@ -15,9 +15,23 @@ public record UpsertStoreDto(
     @NonNull String closeTime,
     @NonNull StoreTrialOperation trialOperation,
     @NonNull List<UpsertStoreDtoTeeBoxFee> teeBoxFees,
-    @NonNull List<DayOfWeek> openDays,
+    @NonNull List<DayOfWeek> openDayOfWeeks,
     @NonNull String memo
 ) {
+
+    public UpsertStoreDto copyWithId(@NonNull String id) {
+        return new UpsertStoreDto(id,
+            name,
+            address,
+            businessRegistration,
+            openTime,
+            closeTime,
+            trialOperation,
+            teeBoxFees,
+            openDayOfWeeks,
+            memo
+        );
+    }
 
 
 }

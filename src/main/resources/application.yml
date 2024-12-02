@@ -45,7 +45,7 @@ springdoc:
     display-query-params-without-oauth2: true
 
 server:
-  port: 8000
+  port: 8080
 
 external:
   kakao-rest-api-key: '18aba9ac1f406cb303b93d2a03a5bbd3'

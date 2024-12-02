@@ -2,6 +2,7 @@ package com.smart.booking.domain.store.service;
 
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.domain.common.entity.BusinessRegistration;
 import com.smart.booking.domain.common.enums.Region;
 import com.smart.booking.domain.common.model.CursorResult;
 import com.smart.booking.domain.store.dto.GetStoresDto;
@@ -38,8 +39,18 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
     }
 
     @Override
+    public @NonNull Store getStoreByBusinessRegistration(@NonNull BusinessRegistration businessRegistration) {
+        return null;
+    }
+
+    @Override
     public @NonNull Store createStore(@NonNull UpsertStoreDto upsertStoreDto) {
         final Region region = regionRepository.parseRegion(upsertStoreDto.address());
+
+        if (storeRepository.existsByBusinessRegistration(upsertStoreDto.businessRegistration())) {
+            throw new CommonException(ResponseCode.DUPLICATE_STORE_BUSINESS_REGISTRATION);
+        }
+
         final Store store = StoreMapper.toStore(upsertStoreDto, region);
 
         return storeRepository.save(store);
@@ -53,6 +64,13 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
         }
 
         final Store store = getStoreById(upsertStoreDto.id());
+
+        final boolean isSameBusinessRegistration = store.getBusinessRegistration().equals(upsertStoreDto.businessRegistration());
+        final boolean isDuplicateBusinessRegistration = storeRepository.existsByBusinessRegistration(upsertStoreDto.businessRegistration());
+        
+        if (isSameBusinessRegistration && isDuplicateBusinessRegistration) {
+            throw new CommonException(ResponseCode.DUPLICATE_STORE_BUSINESS_REGISTRATION);
+        }
 
         final Region region = regionRepository.parseRegion(upsertStoreDto.address());
 
