@@ -4,6 +4,7 @@ import com.smart.booking.domain.auth.entity.RefreshToken;
 import com.smart.booking.domain.auth.value_object.Token;
 import com.smart.booking.domain.auth.value_object.UserSignInDto;
 import com.smart.booking.domain.member.entity.Member;
+import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
 import lombok.NonNull;
 
 public interface AuthService {
@@ -44,5 +45,5 @@ public interface AuthService {
 
     RefreshToken findByRefreshToken(String refreshToken);
 
-    String createAccessTokenByProviderUserId(String providerUserId);
+    Member getMemberByProviderUserIdAndProvider(String providerUserId, ThirdPartyAccountProvider provider);
 }

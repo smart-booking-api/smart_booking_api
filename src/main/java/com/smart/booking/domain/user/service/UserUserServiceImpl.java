@@ -5,6 +5,7 @@ import static com.smart.booking.common.enums.ResponseCode.NOT_FOUND_THIRD_PARTY_
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.user.entity.User;
+import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
 import com.smart.booking.domain.user.repository.UserRepository;
 import com.smart.booking.domain.user.value_object.UserPolicyAgreement;
 import java.util.Optional;
@@ -71,8 +72,8 @@ class UserUserServiceImpl extends UserCommonServiceImpl implements UserUserServi
     }
 
     @Override
-    public Optional<User> getByProviderUserId(String providerUserId) {
-        return userRepository.findByProviderUserId(providerUserId);
+    public Optional<User> getByProviderUserIdAndProvider(String providerUserId, ThirdPartyAccountProvider provider) {
+        return userRepository.findByProviderUserIdAndProvider(providerUserId, provider);
     }
 
 }
