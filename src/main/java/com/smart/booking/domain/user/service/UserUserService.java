@@ -3,6 +3,7 @@ package com.smart.booking.domain.user.service;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.user.entity.User;
+import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
 import com.smart.booking.domain.user.value_object.UserPolicyAgreement;
 import java.util.Optional;
 import lombok.NonNull;
@@ -24,5 +25,5 @@ public interface UserUserService extends UserCommonService {
 
     void login(@NonNull String userId) throws CommonException;
 
-    Optional<User> getByProviderUserId(String providerUserId);
+    Optional<User> getByProviderUserIdAndProvider(String providerUserId, ThirdPartyAccountProvider provider);
 }

@@ -5,7 +5,6 @@ import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.partner.service.PartnerService;
 import com.smart.booking.domain.user.service.UserUserService;
 import com.smart.booking.presentation.security.filter.JwtFilter;
-import com.smart.booking.presentation.security.filter.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -56,7 +55,7 @@ public class SecurityConfig {
                     frameOptionsConfig.disable())
             ).authorizeHttpRequests((auth) ->
                 auth.requestMatchers(PathRequest.toH2Console()).permitAll()
-                    .requestMatchers("/", "/join", "/login").permitAll()
+                    .requestMatchers("/", "/join", "/api/auth/login").permitAll()
                     .requestMatchers("/booking/swagger.html", "/booking/swagger-ui/**", "/booking/v3/**").permitAll()
                     .requestMatchers("/partner").hasAnyRole("PARTNER")
                     .requestMatchers("/reservation/**").hasAnyRole("PARTNER")
@@ -65,10 +64,10 @@ public class SecurityConfig {
             );
 
         // login filter 적용 전에 jwtFilter 적용
-        http.addFilterBefore(new JwtFilter(authService, memberService, userUserService, partnerService), LoginFilter.class);
+        http.addFilterBefore(new JwtFilter(authService, memberService, userUserService, partnerService), UsernamePasswordAuthenticationFilter.class);
 
         // UsernamePasswordAuthenticationFilter 필터 적용시 LoginFilter 를 대신 적용
-        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), authService), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), authService), UsernamePasswordAuthenticationFilter.class);
 
         // jwt 인증인가를 위한 세션 설정
         http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

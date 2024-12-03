@@ -15,6 +15,8 @@ public enum ResponseCode implements EnumModel {
     DUPLICATE_PARTNER_BUSINESS_REGISTRATION(404, "중복된 사업자 등록번호가 존재합니다."),
     NOT_FOUND_USER(501, "유저가 존재하지 않습니다"),
     NOT_FOUND_THIRD_PARTY_ACCOUNT(502, "존재하지 않는 소셜 계정입니다."),
+    NOT_MATCHED_PASSWORD(503, "패스워드가 일치하지 않습니다."),
+    NOT_VALID_REFRESH_TOKEN(504, "유효하지 않은 리프레시 토큰입니다"),
 
     /**
      * 600~700

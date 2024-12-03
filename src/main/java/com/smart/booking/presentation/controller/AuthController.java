@@ -1,7 +1,13 @@
 package com.smart.booking.presentation.controller;
 
-import com.smart.booking.domain.auth.entity.RefreshToken;
 import com.smart.booking.domain.auth.service.AuthService;
+import com.smart.booking.facade.admin.auth.AdminLoginFacade;
+import com.smart.booking.facade.admin.auth.RequestRefreshTokenFacade;
+import com.smart.booking.facade.admin.auth.ThirdPartyLoginFacade;
+import com.smart.booking.facade.dto.auth.AdminLogin;
+import com.smart.booking.facade.dto.auth.RequestRefreshToken;
+import com.smart.booking.facade.dto.auth.ThirdPartyLogin;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,21 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    private final AuthService authService;
+    private final AdminLoginFacade adminLoginFacade;
+    private final ThirdPartyLoginFacade thirdPartyLoginFacade;
+    private final RequestRefreshTokenFacade requestRefreshTokenFacade;
 
     @PostMapping("/refresh")
-    public String refreshToken(@RequestBody String refreshToken) {
-        if (authService.isExpiredRefreshToken(refreshToken)) {
-            return "Refresh token is expired";
-        }
-
-        RefreshToken findToken = authService.findByRefreshToken(refreshToken);
-
-        return authService.createAccessToken(findToken.getMember().getId(), findToken.getMember().getType().getKey());
+    public RequestRefreshToken.responseToken refreshToken(@RequestBody RequestRefreshToken.requestToken requestToken) {
+        return requestRefreshTokenFacade.execute(requestToken);
     }
 
     @PostMapping("/third-party")
-    public String thirdPartyLogin(@RequestBody String providerUserId) {
-        return authService.createAccessTokenByProviderUserId(providerUserId);
+    public ThirdPartyLogin.thirdLoginResponse thirdPartyLogin(@RequestBody @Valid ThirdPartyLogin.thirdLoginRequest thirdLoginRequest) {
+        return thirdPartyLoginFacade.execute(thirdLoginRequest);
+    }
+
+    @PostMapping("/login")
+    public AdminLogin.loginResponse login(@RequestBody @Valid AdminLogin.loginRequest loginRequest) {
+        return adminLoginFacade.execute(loginRequest);
     }
 }

@@ -9,6 +9,7 @@ import com.smart.booking.domain.auth.value_object.UserSignInDto;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.user.entity.User;
+import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
 import com.smart.booking.domain.user.service.UserUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Jwts.SIG;
@@ -154,13 +155,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String createAccessTokenByProviderUserId(String providerUserId) {
-        Member member = getMemberByProviderUserId(providerUserId);
-        return createAccessToken(member.getId(), member.getType().getKey());
-    }
-
-    private Member getMemberByProviderUserId(String providerUserId) {
-        User user = userService.getByProviderUserId(providerUserId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_THIRD_PARTY_ACCOUNT));
+    public Member getMemberByProviderUserIdAndProvider(String providerUserId, ThirdPartyAccountProvider provider) {
+        User user = userService.getByProviderUserIdAndProvider(providerUserId, provider).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_THIRD_PARTY_ACCOUNT));
         return user.getMember();
     }
 
