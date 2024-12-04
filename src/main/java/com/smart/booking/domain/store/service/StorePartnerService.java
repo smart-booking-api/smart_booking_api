@@ -1,6 +1,7 @@
 package com.smart.booking.domain.store.service;
 
 import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.domain.common.entity.BusinessRegistration;
 import com.smart.booking.domain.common.model.CursorResult;
 import com.smart.booking.domain.store.dto.GetStoresDto;
 import com.smart.booking.domain.store.dto.ScheduleStoreClosedDaysDto;
@@ -12,9 +13,12 @@ import lombok.NonNull;
 
 public interface StorePartnerService extends StoreCommonService {
 
-    @NonNull Store createStore(@NonNull UpsertStoreDto createStoreDto);
 
-    @NonNull Store updateStore(@NonNull UpsertStoreDto createStoreDto) throws CommonException;
+    @NonNull Store getStoreByBusinessRegistration(@NonNull BusinessRegistration businessRegistration);
+
+    @NonNull Store createStore(@NonNull UpsertStoreDto upsertStoreDto);
+
+    @NonNull Store updateStore(@NonNull UpsertStoreDto upsertStoreDto) throws CommonException;
 
     void deleteStore(@NonNull String storeId);
 

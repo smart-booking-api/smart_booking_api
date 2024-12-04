@@ -30,4 +30,5 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private MemberType type;
+
 }

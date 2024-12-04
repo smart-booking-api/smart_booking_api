@@ -14,5 +14,7 @@ public interface PartnerRepository extends JpaRepository<Partner, String>, Partn
 
     Optional<Partner> findByMember(Member member);
 
+    Optional<Partner> findByMember_Id(String memberId);
+
     boolean existsByBusinessRegistration(@NonNull BusinessRegistration businessRegistration);
 }

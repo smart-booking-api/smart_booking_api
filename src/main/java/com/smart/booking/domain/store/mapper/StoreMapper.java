@@ -40,7 +40,7 @@ public interface StoreMapper {
                     )
                     .collect(Collectors.toList())
             )
-            .openDays(upsertStoreDto.openDays())
+            .openDayOfWeeks(upsertStoreDto.openDayOfWeeks())
             .memo(upsertStoreDto.memo())
             .build();
     }

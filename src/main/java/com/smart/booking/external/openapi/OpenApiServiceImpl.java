@@ -1,5 +1,6 @@
 package com.smart.booking.external.openapi;
 
+import com.mysema.commons.lang.Assert;
 import com.smart.booking.external.openapi.model.GetRestDayInfoDto;
 import com.smart.booking.external.openapi.model.GetRestDayInfoResponseDto;
 import com.smart.booking.external.openapi.model.RestDayDto;
@@ -26,7 +27,7 @@ class OpenApiServiceImpl implements OpenApiService {
         final RestTemplate restTemplate = new RestTemplate();
 
         final URI uri;
-        
+
         try {
             uri = new URI(
                 "https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?"
@@ -46,9 +47,7 @@ class OpenApiServiceImpl implements OpenApiService {
             GetRestDayInfoResponseDto.class
         );
 
-        if (response == null) {
-            throw new RuntimeException("GetRestDayInfoResponseDto is null");
-        }
+        Assert.isTrue(response != null, "response is null");
 
         final var item = response.response().body().items().item();
 

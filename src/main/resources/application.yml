@@ -31,20 +31,28 @@ spring:
     secret: smartbookingsystem2024smartbookingsystem2024
 
 springdoc:
-  swagger-ui:
-    path: /booking/swagger.html
-    url: /booking/v3/api-docs
-    enabled: true
-
+  version: '@project.version@'
   api-docs:
-    path: /booking/v3/api-docs
+    path: /api-docs
     enabled: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    path: /swagger-ui
+    disable-swagger-default-url: true
+    display-query-params-without-oauth2: true
 
 server:
-  port: 8000
-
+  port: 8080
 
 external:
   kakao-rest-api-key: '18aba9ac1f406cb303b93d2a03a5bbd3'
   openapi-rest-api-key: 'vFsA8BSDXJ%2FFR79%2By6MfZU9ejxyLYtruz9Ms%2F7dbjKXMuYbOFvi1Du0HsUWutw1VRgtEaSAD%2F8h9TFWANic3aw%3D%3D'
+  sms:
+    from: "1544-9971"
+    key: "NCSEQVFDLTFVMSIR"
+    secret: "LD6JAHNQG4XOXYIQ3YT1IDYVODITQNGA"
+    endpoint: "https://api.coolsms.co.kr"
 
