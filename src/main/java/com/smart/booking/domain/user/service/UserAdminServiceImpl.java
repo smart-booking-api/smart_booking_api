@@ -1,11 +1,9 @@
 package com.smart.booking.domain.user.service;
 
 import com.smart.booking.domain.common.model.CursorResult;
-import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.user.dto.GetUsersDto;
 import com.smart.booking.domain.user.entity.User;
 import com.smart.booking.domain.user.repository.UserRepository;
-import java.util.Optional;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +20,12 @@ class UserAdminServiceImpl extends UserCommonServiceImpl implements UserAdminSer
     @Override
     public @NonNull CursorResult<User> getUsers(@NonNull GetUsersDto getUsersDto) {
         return userRepository.findByNicknameAndStatusWithCursor(
-            getUsersDto.nickname(),
-            getUsersDto.status(),
-            getUsersDto.cursor(),
-            getUsersDto.pageSize()
+                getUsersDto.nickname(),
+                getUsersDto.status(),
+                getUsersDto.cursor(),
+                getUsersDto.pageSize()
         );
     }
 
 
-    @Override
-    public @NonNull Optional<User> getUserByMember(@NonNull Member member) {
-        return userRepository.findByMember(member);
-    }
 }

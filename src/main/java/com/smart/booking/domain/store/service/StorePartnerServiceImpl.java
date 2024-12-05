@@ -15,10 +15,11 @@ import com.smart.booking.domain.store.mapper.StoreMapper;
 import com.smart.booking.domain.store.repository.RegionRepository;
 import com.smart.booking.domain.store.repository.StoreClosedDayRepository;
 import com.smart.booking.domain.store.repository.StoreRepository;
-import java.time.OffsetDateTime;
-import java.util.List;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
+
+import java.time.OffsetDateTime;
+import java.util.List;
 
 @Service
 class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePartnerService {
@@ -28,9 +29,9 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
     private final StoreClosedDayRepository storeClosedDayRepository;
 
     public StorePartnerServiceImpl(
-        @NonNull StoreRepository storeRepository,
-        @NonNull RegionRepository regionRepository,
-        @NonNull StoreClosedDayRepository storeClosedDayRepository
+            @NonNull StoreRepository storeRepository,
+            @NonNull RegionRepository regionRepository,
+            @NonNull StoreClosedDayRepository storeClosedDayRepository
     ) {
         super(storeRepository, storeClosedDayRepository);
         this.storeRepository = storeRepository;
@@ -40,7 +41,8 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
 
     @Override
     public @NonNull Store getStoreByBusinessRegistration(@NonNull BusinessRegistration businessRegistration) {
-        return null;
+        return storeRepository.findByBusinessRegistration(businessRegistration)
+                .orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_STORE));
     }
 
     @Override
@@ -67,7 +69,7 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
 
         final boolean isSameBusinessRegistration = store.getBusinessRegistration().equals(upsertStoreDto.businessRegistration());
         final boolean isDuplicateBusinessRegistration = storeRepository.existsByBusinessRegistration(upsertStoreDto.businessRegistration());
-        
+
         if (isSameBusinessRegistration && isDuplicateBusinessRegistration) {
             throw new CommonException(ResponseCode.DUPLICATE_STORE_BUSINESS_REGISTRATION);
         }
@@ -75,11 +77,11 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
         final Region region = regionRepository.parseRegion(upsertStoreDto.address());
 
         store.update(
-            upsertStoreDto.name(),
-            region,
-            upsertStoreDto.address(),
-            upsertStoreDto.businessRegistration(),
-            StoreMapper.toStoreOperationInfo(upsertStoreDto)
+                upsertStoreDto.name(),
+                region,
+                upsertStoreDto.address(),
+                upsertStoreDto.businessRegistration(),
+                StoreMapper.toStoreOperationInfo(upsertStoreDto)
         );
 
         return storeRepository.save(store);
@@ -87,16 +89,17 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
 
     @Override
     public void deleteStore(@NonNull String storeId) {
-        storeRepository.deleteById(storeId);
+        final var store = storeRepository.findById(storeId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_STORE));
+        storeRepository.delete(store);
     }
 
     @Override
     public @NonNull CursorResult<Store> getStores(@NonNull GetStoresDto getStoresDto) {
         return storeRepository.findByNameAndRegionWithCursor(
-            getStoresDto.name(),
-            getStoresDto.region(),
-            getStoresDto.cursor(),
-            getStoresDto.pageSize()
+                getStoresDto.name(),
+                getStoresDto.region(),
+                getStoresDto.cursor(),
+                getStoresDto.pageSize()
         );
     }
 
@@ -111,27 +114,26 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
      * 날짜에는 있고 엔티티 리스트에는 없다 => 생성
      *
      * @param scheduleClosedDaysDto 매장 휴무일 정보
-     *
      * @return 휴무일 목록
      */
     @Override
     public @NonNull List<StoreClosedDay> scheduleClosedDays(@NonNull ScheduleStoreClosedDaysDto scheduleClosedDaysDto) {
 
         final List<StoreClosedDay> closedDays = storeClosedDayRepository.findAllByStoreAndClosedAtAfter(
-            scheduleClosedDaysDto.store(),
-            OffsetDateTime.now()
+                scheduleClosedDaysDto.store(),
+                OffsetDateTime.now()
         );
 
         final var removalClosedDays = closedDays.stream()
-            .filter(closedDay -> !scheduleClosedDaysDto.dates().contains(closedDay.getClosedAt()))
-            .toList();
+                .filter(closedDay -> !scheduleClosedDaysDto.dates().contains(closedDay.getClosedAt()))
+                .toList();
 
         final var newClosedDays = StoreClosedDayMapper.toStoreClosedDays(new ScheduleStoreClosedDaysDto(
-                scheduleClosedDaysDto.store(),
-                scheduleClosedDaysDto.dates().stream()
-                    .filter(date -> closedDays.stream().map(StoreClosedDay::getClosedAt).noneMatch(date::equals))
-                    .toList()
-            )
+                        scheduleClosedDaysDto.store(),
+                        scheduleClosedDaysDto.dates().stream()
+                                .filter(date -> closedDays.stream().map(StoreClosedDay::getClosedAt).noneMatch(date::equals))
+                                .toList()
+                )
         );
 
         storeClosedDayRepository.deleteAll(removalClosedDays);

@@ -3,22 +3,12 @@ package com.smart.booking.domain.member.entity;
 import com.smart.booking.common.annotations.TsidGenerator;
 import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.member.enums.MemberType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Builder
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "member")

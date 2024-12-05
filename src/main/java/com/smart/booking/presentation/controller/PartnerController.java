@@ -22,9 +22,9 @@ public class PartnerController {
     private final ChangePartnerPasswordFacade changePartnerPasswordFacade;
 
     @ApiResponse(
-        responseCode = "200",
-        description = "Success",
-        content = @Content(schema = @Schema(implementation = GetPartnerFacade.GetPartnerResponse.class))
+            responseCode = "200",
+            description = "Success",
+            content = @Content(schema = @Schema(implementation = GetPartnerFacade.GetPartnerResponse.class))
     )
     @GetMapping(PartnerEndPoint.ME)
     public GetPartnerFacade.GetPartnerResponse me() {
@@ -33,13 +33,13 @@ public class PartnerController {
 
 
     @ApiResponse(
-        responseCode = "200",
-        description = "Success",
-        content = @Content(schema = @Schema(implementation = ChangePartnerPasswordFacade.ChangePartnerPasswordResponse.class))
+            responseCode = "200",
+            description = "Success",
+            content = @Content(schema = @Schema(implementation = ChangePartnerPasswordFacade.ChangePartnerPasswordResponse.class))
     )
     @PutMapping(PartnerEndPoint.CHANGE_PASSWORD)
     public ChangePartnerPasswordFacade.ChangePartnerPasswordResponse changePassword(
-        @RequestBody @Valid ChangePartnerPasswordFacade.ChangePartnerPasswordRequestDto changePartnerPasswordRequestDto
+            @RequestBody @Valid ChangePartnerPasswordFacade.ChangePartnerPasswordRequestDto changePartnerPasswordRequestDto
     ) {
         return changePartnerPasswordFacade.execute(SecurityUtils.getCurrentMemberContext(), changePartnerPasswordRequestDto);
     }
