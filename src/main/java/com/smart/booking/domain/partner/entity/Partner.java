@@ -5,28 +5,12 @@ import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.common.entity.BusinessRegistration;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.partner.enums.PartnerType;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
-import java.time.OffsetDateTime;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+
+import java.time.OffsetDateTime;
 
 @Builder
 @Entity
@@ -36,8 +20,8 @@ import org.hibernate.annotations.SQLRestriction;
 @SQLDelete(sql = "UPDATE partner SET deleted_at = current_timestamp WHERE id = ?")
 @SQLRestriction(value = "deleted_at is NULL")
 @Table(name = "partner", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"type", "code"}),
-    @UniqueConstraint(columnNames = {"business_registration_number", "business_registration_code"})
+        @UniqueConstraint(columnNames = {"type", "code"}),
+        @UniqueConstraint(columnNames = {"business_registration_number", "business_registration_code"})
 })
 public class Partner extends BaseEntity {
 
@@ -65,8 +49,8 @@ public class Partner extends BaseEntity {
 
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "number", column = @Column(name = "business_registration_number")),
-        @AttributeOverride(name = "code", column = @Column(name = "business_registration_code")),
+            @AttributeOverride(name = "number", column = @Column(name = "business_registration_number")),
+            @AttributeOverride(name = "code", column = @Column(name = "business_registration_code")),
     })
     private BusinessRegistration businessRegistration;
 
@@ -94,13 +78,14 @@ public class Partner extends BaseEntity {
         return company != null || businessRegistration != null;
     }
 
-    public void withdraw() {
+
+    @PreRemove
+    public void preRemove() {
         this.loginId = null;
         this.password = null;
         this.code = null;
         this.company.changePartner(null);
         this.company = null;
-        this.deletedAt = OffsetDateTime.now();
     }
 
 }

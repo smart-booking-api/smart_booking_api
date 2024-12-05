@@ -1,5 +1,12 @@
 package com.smart.booking.facade.partner.store;
 
+import com.smart.booking.common.dto.CommonEmptyResponse;
+import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.enums.ResponseCode;
+import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.domain.member.service.MemberService;
+import com.smart.booking.domain.partner.enums.PartnerType;
+import com.smart.booking.domain.partner.service.PartnerService;
 import com.smart.booking.domain.store.service.StorePartnerService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -10,10 +17,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class DeleteStoreFacade {
 
+    private final MemberService memberService;
+    private final PartnerService partnerService;
     private final StorePartnerService storePartnerService;
 
     @Transactional
-    public void deleteStore(@NonNull String storeId) {
+    public @NonNull DeleteStoreResponse execute(
+            @NonNull String storeId,
+            @NonNull MemberContext memberContext
+    ) {
+        final var member = memberService.getMemberByIdOrThrow(memberContext.getMemberId());
+        final var partnerType = partnerService.getPartnerTypeByMember(member);
+
+        if (partnerType != PartnerType.M) {
+            throw new CommonException(ResponseCode.NOT_PERMITTED_PARTNER_TYPE);
+        }
+
         storePartnerService.deleteStore(storeId);
+        
+        return new DeleteStoreResponse();
+    }
+
+
+    public static class DeleteStoreResponse extends CommonEmptyResponse {
     }
 }

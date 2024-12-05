@@ -2,30 +2,51 @@ package com.smart.booking.facade.partner.store;
 
 
 import com.smart.booking.common.dto.CommonResponse;
+import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.enums.ResponseCode;
+import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.domain.member.service.MemberService;
+import com.smart.booking.domain.partner.enums.PartnerType;
+import com.smart.booking.domain.partner.service.PartnerService;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.store.service.StorePartnerService;
 import com.smart.booking.facade.dto.store.PartnerStoreDto;
 import com.smart.booking.facade.dto.store.TeeBoxFeeDto;
 import com.smart.booking.facade.dto.store.UpsertStoreRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.DayOfWeek;
-import java.time.OffsetDateTime;
-import java.util.List;
+import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.time.OffsetDateTime;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Component
 public class CreateStoreFacade {
 
+    private final MemberService memberService;
+    private final PartnerService partnerService;
     private final StorePartnerService storePartnerService;
 
 
     @Transactional
-    public @NonNull CreateStoreResultDto execute(@NonNull CreateStoreRequestDto createStoreRequestDto) {
-        final Store store = storePartnerService.createStore(createStoreRequestDto.toUpsertStoreDto());
+    public @NonNull CreateStoreResultDto execute(
+            @NonNull CreateStoreRequestDto createStoreRequestDto,
+            @NonNull MemberContext memberContext
+    ) {
+
+        final var member = memberService.getMemberByIdOrThrow(memberContext.getMemberId());
+        final var partnerType = partnerService.getPartnerTypeByMember(member);
+
+        if (partnerType != PartnerType.M) {
+            throw new CommonException(ResponseCode.NOT_PERMITTED_PARTNER_TYPE);
+        }
+        
+        final var store = storePartnerService.createStore(createStoreRequestDto.toUpsertStoreDto());
 
         return new CreateStoreResultDto(store);
     }
@@ -34,30 +55,30 @@ public class CreateStoreFacade {
     public static class CreateStoreRequestDto extends UpsertStoreRequestDto {
 
         public CreateStoreRequestDto(
-            @NonNull String name,
-            @NonNull String address,
-            @NonNull String businessRegistrationNumber,
-            @NonNull String businessRegistrationCode,
-            @NonNull String openTime,
-            @NonNull String closeTime,
-            @NonNull OffsetDateTime trialEndAt,
-            int discountRate,
-            @NonNull List<TeeBoxFeeDto> teeBoxFees,
-            @NonNull List<DayOfWeek> openWeekDays,
-            @NonNull String memo
+                @NotNull String name,
+                @NotNull String address,
+                @NotNull String businessRegistrationNumber,
+                @NotNull String businessRegistrationCode,
+                @NotNull String openTime,
+                @NotNull String closeTime,
+                @NotNull OffsetDateTime trialEndAt,
+                int discountRate,
+                @NotNull List<TeeBoxFeeDto> teeBoxFees,
+                @NotNull List<DayOfWeek> openWeekDays,
+                @NotNull String memo
         ) {
             super(
-                name,
-                address,
-                businessRegistrationNumber,
-                businessRegistrationCode,
-                openTime,
-                closeTime,
-                trialEndAt,
-                discountRate,
-                teeBoxFees,
-                openWeekDays,
-                memo
+                    name,
+                    address,
+                    businessRegistrationNumber,
+                    businessRegistrationCode,
+                    openTime,
+                    closeTime,
+                    trialEndAt,
+                    discountRate,
+                    teeBoxFees,
+                    openWeekDays,
+                    memo
             );
         }
 

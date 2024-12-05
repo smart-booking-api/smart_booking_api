@@ -1,6 +1,7 @@
 package com.smart.booking.common.dto;
 
 import com.smart.booking.common.enums.ResponseCode;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommonResponse<T> {
 
+    @NotNull
     private Integer responseCode;
+    @NotNull
     private String message;
     private T result;
 

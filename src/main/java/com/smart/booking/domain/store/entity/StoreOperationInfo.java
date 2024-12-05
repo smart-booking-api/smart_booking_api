@@ -3,24 +3,12 @@ package com.smart.booking.domain.store.entity;
 import com.smart.booking.common.annotations.TsidGenerator;
 import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.store.value_object.StoreTrialOperation;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import java.time.DayOfWeek;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Builder
 @Entity
@@ -51,9 +39,8 @@ public class StoreOperationInfo extends BaseEntity {
     private List<StoreTeeBoxFee> teeBoxFees = new ArrayList<>();
 
     @Builder.Default
-    @Enumerated(EnumType.STRING)
-    @Column(name = "open_days")
-    private List<DayOfWeek> openDayOfWeeks = new ArrayList<>();
+    @OneToMany(mappedBy = "storeOperationInfo", cascade = CascadeType.ALL)
+    private List<StoreOpenDayOfWeek> openDayOfWeeks = new ArrayList<>();
 
 
     public boolean isTrialOperation(OffsetDateTime dateTime) {
