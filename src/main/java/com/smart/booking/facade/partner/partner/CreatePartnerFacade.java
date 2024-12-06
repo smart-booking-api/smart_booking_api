@@ -7,7 +7,7 @@ import com.smart.booking.domain.partner.dto.CreatePartnerDto;
 import com.smart.booking.domain.partner.entity.Partner;
 import com.smart.booking.domain.partner.enums.PartnerType;
 import com.smart.booking.domain.partner.service.PartnerService;
-import com.smart.booking.facade.dto.partner.PartnerDto;
+import com.smart.booking.facade.dto.partner.PartnerDetailDto;
 import com.smart.booking.facade.event.dto.CreatePartnerSuccessEvent;
 import com.smart.booking.facade.event.publisher.PartnerEventPublisher;
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +27,7 @@ public class CreatePartnerFacade {
     private final PartnerEventPublisher partnerEventPublisher;
 
     @Transactional
-    public PartnerDto execute(@NonNull CreatePartnerRequestDto createPartnerRequestDto) {
+    public PartnerDetailDto execute(@NonNull CreatePartnerRequestDto createPartnerRequestDto) {
         final String password = this.generateRandomPassword(6);
 
         final Member member = memberService.createMember(MemberType.PARTNER);
@@ -43,7 +43,7 @@ public class CreatePartnerFacade {
 
         partnerEventPublisher.publishCreatePartnerSuccessEvent(new CreatePartnerSuccessEvent(partner.getPhoneNumber(), message));
 
-        return new PartnerDto(partner);
+        return new PartnerDetailDto(partner);
     }
 
     private String generateRandomPassword(int length) {

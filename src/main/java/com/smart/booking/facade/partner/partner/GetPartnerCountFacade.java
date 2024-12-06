@@ -11,6 +11,7 @@ import com.smart.booking.domain.partner.service.PartnerService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -19,8 +20,9 @@ public class GetPartnerCountFacade {
     private final MemberService memberService;
     private final PartnerService partnerService;
 
-    public GetPartnerCountResponse execute(@NonNull MemberContextDto memberContextDto) {
-        final Member member = this.memberService.getMemberByIdOrThrow(memberContextDto.getMemberId());
+    @Transactional(readOnly = true)
+    public GetPartnerCountResponse execute(@NonNull MemberContext memberContext) {
+        final Member member = this.memberService.getMemberByIdOrThrow(memberContext.getMemberId());
         final PartnerType partnerType = this.partnerService.getPartnerTypeByMember(member);
 
         if (!partnerType.equals(PartnerType.M)) {

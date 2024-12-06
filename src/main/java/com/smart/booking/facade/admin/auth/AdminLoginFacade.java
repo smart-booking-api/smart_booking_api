@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class AdminLoginFacade {
+
     private final AuthService authService;
     private final PartnerService partnerService;
     private final PasswordUtil passwordUtil;
@@ -21,12 +22,12 @@ public class AdminLoginFacade {
     public AdminLogin.loginResponse execute(AdminLogin.loginRequest loginRequest) {
         Partner partner = getByLoginId(loginRequest.getLoginId()).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_USER));
 
-        if (!matchPassword(loginRequest.getPassword(),partner.getPassword())) {
+        if (!matchPassword(loginRequest.getPassword(), partner.getPassword())) {
             throw new CommonException(ResponseCode.NOT_MATCHED_PASSWORD);
         }
 
         String accessToken = authService.createAccessToken(partner.getMember().getId(), partner.getMember().getType().getKey());
-        String refreshToken = authService.createRefreshToken(partner.getMember().getId());
+        String refreshToken = authService.createRefreshToken(partner.getMember()).getToken();
 
         return new AdminLogin.loginResponse(accessToken, refreshToken);
     }

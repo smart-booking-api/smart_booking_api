@@ -1,57 +1,52 @@
 package com.smart.booking.facade.partner.partner;
 
-import com.smart.booking.common.dto.CommonResponse;
+import com.smart.booking.common.dto.CommonEmptyResponse;
 import com.smart.booking.common.dto.MemberContext;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.domain.auth.service.AuthService;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.partner.entity.Partner;
 import com.smart.booking.domain.partner.enums.PartnerType;
 import com.smart.booking.domain.partner.service.PartnerService;
-import com.smart.booking.facade.dto.partner.PartnerDetailDto;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-
-@Component
 @RequiredArgsConstructor
-public class GetPartnerFacade {
+@Component
+public class DeletePartnerFacade {
 
+    private final AuthService authService;
     private final MemberService memberService;
     private final PartnerService partnerService;
 
 
-    @Transactional(readOnly = true)
-    public GetPartnerResponse execute(@NonNull MemberContextDto memberContextDto) {
-        final Member member = memberService.getMemberById(memberContextDto.getMemberId());
-        final Partner partner = partnerService.getPartnerByMemberOrThrow(member);
-        return new GetPartnerResponse(partner);
-    }
-
-    @Transactional(readOnly = true)
-    public GetPartnerResponse execute(
+    @Transactional
+    public DeletePartnerResponse execute(
         @NonNull String partnerId,
         @NonNull MemberContext memberContext
     ) {
-        final Member member = memberService.getMemberById(memberContext.getMemberId());
-        final Partner partner = partnerService.getPartnerByMemberOrThrow(member);
 
-        if (partner.getType() != PartnerType.M) {
+        final Member member = memberService.getMemberById(memberContext.getMemberId());
+        final Partner me = partnerService.getPartnerByMemberOrThrow(member);
+
+        if (me.getType() != PartnerType.M) {
             throw new CommonException(ResponseCode.NOT_PERMITTED_PARTNER_TYPE);
         }
 
-        return new GetPartnerResponse(partnerService.getPartner(partnerId));
+        final Partner partner = partnerService.getPartner(partnerId);
+
+        partnerService.deletePartner(partner.getId());
+        authService.deleteRefreshTokenByMember(partner.getMember());
+        memberService.deleteMember(partner.getMember());
+
+        return new DeletePartnerResponse();
     }
 
-    public static class GetPartnerResponse extends CommonResponse<PartnerDetailDto> {
-
-        GetPartnerResponse(@NonNull Partner partner) {
-            super(new PartnerDetailDto(partner));
-        }
+    public static class DeletePartnerResponse extends CommonEmptyResponse {
 
     }
-
 }

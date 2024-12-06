@@ -19,7 +19,6 @@ public enum PartnerType implements EnumModel {
     private final @NonNull String value;
 
     PartnerType(@NonNull String value) {
-
         this.value = value;
     }
 

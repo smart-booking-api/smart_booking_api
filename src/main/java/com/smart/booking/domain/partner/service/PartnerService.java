@@ -37,4 +37,6 @@ public interface PartnerService {
     @NonNull PartnerType getPartnerTypeByMember(@NonNull Member member);
 
     void changePassword(@NonNull Member member, @NonNull ChangePartnerPasswordDto changePartnerPasswordDto);
+
+    void deletePartner(@NonNull String partnerId);
 }

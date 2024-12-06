@@ -11,4 +11,6 @@ public interface MemberService {
     Member getMemberById(@NonNull String memberId);
 
     @NonNull Member getMemberByIdOrThrow(@NonNull String memberId);
+
+    void deleteMember(@NonNull Member member);
 }

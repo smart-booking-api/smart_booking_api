@@ -15,7 +15,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public @NonNull Member createMember(@NonNull MemberType memberType) {
-
         return memberRepository.save(
             Member.builder()
                 .type(memberType)
@@ -31,5 +30,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public @NonNull Member getMemberByIdOrThrow(@NonNull String memberId) {
         return memberRepository.findById(memberId).orElseThrow();
+    }
+
+    @Override
+    public void deleteMember(@NonNull Member member) {
+        memberRepository.delete(member);
     }
 }
