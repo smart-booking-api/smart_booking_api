@@ -1,5 +1,5 @@
 package com.smart.booking.domain.reservation.dto;
 
-public class ReservationDetailResponse {
+public class ReservationDetailResponseDto {
 
 }

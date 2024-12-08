@@ -1,7 +1,11 @@
 package com.smart.booking.domain.reservation.service;
 
+import com.smart.booking.domain.reservation.dto.UpsertPhoneReservationDto;
+import com.smart.booking.domain.reservation.entity.Reservation;
+import com.smart.booking.domain.tee_box.entity.TeeBox;
 import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
 import com.smart.booking.domain.reservation.enums.SearchDateType;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AdminReservationService {
@@ -22,13 +26,12 @@ public interface AdminReservationService {
      * @return
      */
     List<ReservationSimpleResponse> getReservationList(String reservationUserName, String reservationNo);
-    
+
     /**
      * 전화예약 생성
-     * @param reservationUserName
-     * @param phone
+     * @param upsertPhoneReservationDto
      */
-    void createPhoneReservation(String reservationUserName, String phone);
+    void createPhoneReservation(UpsertPhoneReservationDto upsertPhoneReservationDto);
 
     /**
      * 월별 예약 관리
@@ -36,4 +39,6 @@ public interface AdminReservationService {
      * @param dateType
      */
     void getMonthlyReservationDates(String storeId, SearchDateType dateType);
+
+    List<Reservation> getReservationByTeeBoxAndReservationDate(TeeBox teeBox, LocalDate reservationDate);
 }

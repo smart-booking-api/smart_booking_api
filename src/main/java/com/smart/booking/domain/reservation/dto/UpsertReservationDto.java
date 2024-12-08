@@ -11,7 +11,7 @@ import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
-public record CreateReservationDto(
+public record UpsertReservationDto(
     Store store,
     TeeBox teeBox,
     LocalDate reservationDate,

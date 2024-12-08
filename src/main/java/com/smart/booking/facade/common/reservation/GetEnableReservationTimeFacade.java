@@ -1,6 +1,6 @@
 package com.smart.booking.facade.common.reservation;
 
-import com.smart.booking.domain.reservation.dto.ReservationLockDto;
+import com.smart.booking.domain.reservation.dto.UpsertReservationLockDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.entity.ReservationTimeCode;
 import com.smart.booking.domain.reservation.service.CommonReservationService;
@@ -9,6 +9,7 @@ import com.smart.booking.domain.reservation.service.ReservationLockService;
 import com.smart.booking.domain.reservation.service.ReservationTimeService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import com.smart.booking.domain.tee_box.service.TeeBoxCommonService;
+import com.smart.booking.domain.tee_box.service.TeeBoxUserService;
 import com.smart.booking.facade.dto.reservation.ReservationTimeResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -70,7 +71,9 @@ public class GetEnableReservationTimeFacade {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate reservationDate = LocalDate.parse(searchDate, formatter);
 
-        List<Reservation> reservations = commonReservationService.getReservationByTeeBoxIdAndReservationDate(teeBoxId, reservationDate);
+        TeeBox teeBox = teeBoxCommonService.getTeeBoxById(teeBoxId);
+
+        List<Reservation> reservations = commonReservationService.getReservationByTeeBoxAndReservationDate(teeBox, reservationDate);
 
         return reservations.stream()
             .flatMap(reservation -> getReservationTimeIds(reservation).stream())
@@ -94,7 +97,7 @@ public class GetEnableReservationTimeFacade {
         return reservableTimeCodes.stream()
             .filter(reservationTimeCode ->
                 Objects.isNull(reservationLockService.getReservationLock(
-                    ReservationLockDto.builder()
+                    UpsertReservationLockDto.builder()
                         .date(reservationDate)
                         .lockTimeId(reservationTimeCode.getId())
                         .teeBoxId(teeBoxId)
