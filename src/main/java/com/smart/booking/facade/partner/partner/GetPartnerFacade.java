@@ -1,7 +1,7 @@
 package com.smart.booking.facade.partner.partner;
 
 import com.smart.booking.common.dto.CommonResponse;
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.partner.entity.Partner;
@@ -22,8 +22,8 @@ public class GetPartnerFacade {
 
 
     @Transactional(readOnly = true)
-    public GetPartnerResponse execute(@NonNull MemberContext memberContext) {
-        final Member member = memberService.getMemberById(memberContext.getMemberId());
+    public GetPartnerResponse execute(@NonNull MemberContextDto memberContextDto) {
+        final Member member = memberService.getMemberById(memberContextDto.getMemberId());
         final Partner partner = partnerService.getPartnerByMemberOrThrow(member);
         return new GetPartnerResponse(partner);
     }

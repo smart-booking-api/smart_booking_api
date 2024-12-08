@@ -1,6 +1,6 @@
 package com.smart.booking.facade.common.reservation;
 
-import com.smart.booking.domain.reservation.dto.ReservationLockDto;
+import com.smart.booking.domain.reservation.dto.UpsertReservationLockDto;
 import com.smart.booking.domain.reservation.entity.ReservationTimeCode;
 import com.smart.booking.domain.reservation.service.ReservationTimeService;
 import com.smart.booking.facade.dto.reservation.CreateReservationLockDto;
@@ -20,13 +20,13 @@ public class DeleteReservationLockFacade {
         List<ReservationTimeCode> reservationTimeCodes = reservationTimeService.getReservationTimeBetweenStartAndEnd(deleteDto.startTimeId(), deleteDto.endTimeId());
 
         for (ReservationTimeCode reservationTime : reservationTimeCodes) {
-            ReservationLockDto reservationLockDto = createLockDto(deleteDto.teeBoxId(), reservationTime, memberId);
-            reservationLockService.deleteReservationLock(reservationLockDto);
+            UpsertReservationLockDto upsertReservationLockDto = createLockDto(deleteDto.teeBoxId(), reservationTime, memberId);
+            reservationLockService.deleteReservationLock(upsertReservationLockDto);
         }
     }
 
-    private ReservationLockDto createLockDto(String teeBoxId, ReservationTimeCode timeCode, String memberId) {
-        return ReservationLockDto.builder()
+    private UpsertReservationLockDto createLockDto(String teeBoxId, ReservationTimeCode timeCode, String memberId) {
+        return UpsertReservationLockDto.builder()
             .teeBoxId(teeBoxId)
             .lockTimeId(timeCode.getId())
             .memberId(memberId)

@@ -1,11 +1,9 @@
 package com.smart.booking.domain.reservation.service;
 
 import com.smart.booking.domain.member.entity.Member;
-import com.smart.booking.domain.reservation.dto.CreateReservationDto;
-import com.smart.booking.domain.reservation.dto.ReservationDateHistory;
+import com.smart.booking.domain.reservation.dto.ReservationDateHistoryDto;
+import com.smart.booking.domain.reservation.dto.UpsertReservationDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
-import com.smart.booking.domain.store.entity.Store;
-import java.time.LocalDate;
 import java.util.List;
 
 public interface UserReservationService {
@@ -19,9 +17,9 @@ public interface UserReservationService {
 
     /**
      * 예약하기
-     * @param createReservationDto
+     * @param upsertReservationDto
      */
-    void createReservation(CreateReservationDto createReservationDto);
+    void createReservation(UpsertReservationDto upsertReservationDto);
 
     /**
      * 월별 내 예약이력
@@ -29,19 +27,11 @@ public interface UserReservationService {
      * @param yearMonth
      * @return
      */
-    List<ReservationDateHistory> getMyReservationDateHistory(String userId, String yearMonth);
+    List<ReservationDateHistoryDto> getMyReservationDateHistory(String userId, String yearMonth);
 
     /**
      * 예약상태 변경(게임시작)
      * @param reservationId
      */
     void startReservationStatus(String reservationId);
-
-    /**
-     * 예약조회
-     * @param store
-     * @param reservationDate
-     * @return
-     */
-    List<Reservation> getStoreReservation(Store store, LocalDate reservationDate);
 }

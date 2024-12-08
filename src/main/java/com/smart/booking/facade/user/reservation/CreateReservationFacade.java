@@ -3,7 +3,7 @@ package com.smart.booking.facade.user.reservation;
 import com.smart.booking.common.firebase.FirebaseComponent;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
-import com.smart.booking.domain.reservation.dto.CreateReservationDto;
+import com.smart.booking.domain.reservation.dto.UpsertReservationDto;
 import com.smart.booking.domain.reservation.service.UserReservationService;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.store.service.StoreUserService;
@@ -41,8 +41,8 @@ public class CreateReservationFacade {
 
     }
 
-    private CreateReservationDto getCreateReservationDto(Store store, TeeBox teeBox, Member member, CompletePaymentEventDto eventDto) {
-        return CreateReservationDto.builder()
+    private UpsertReservationDto getCreateReservationDto(Store store, TeeBox teeBox, Member member, CompletePaymentEventDto eventDto) {
+        return UpsertReservationDto.builder()
             .store(store)
             .teeBox(teeBox)
             .startTimeTableId(eventDto.startTimeTableId())

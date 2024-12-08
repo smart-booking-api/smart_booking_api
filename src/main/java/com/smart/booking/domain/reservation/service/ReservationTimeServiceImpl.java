@@ -14,6 +14,11 @@ public class ReservationTimeServiceImpl implements ReservationTimeService {
     private final ReservationTimeCodeRepository reservationTimeCodeRepository;
 
     @Override
+    public ReservationTimeCode getReservationTimeCodeById(String timeId) {
+        return reservationTimeCodeRepository.findById(timeId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION_TIME));
+    }
+
+    @Override
     public List<ReservationTimeCode> getReservationTimeBetweenStartAndEnd(String startTimeId, String endTimeId) {
         ReservationTimeCode startTime = reservationTimeCodeRepository.findById(startTimeId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION_TIME));
         ReservationTimeCode endTime = reservationTimeCodeRepository.findById(endTimeId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION_TIME));

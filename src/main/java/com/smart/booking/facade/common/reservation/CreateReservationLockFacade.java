@@ -1,7 +1,6 @@
 package com.smart.booking.facade.common.reservation;
 
-import com.smart.booking.common.dto.MemberContext;
-import com.smart.booking.domain.reservation.dto.ReservationLockDto;
+import com.smart.booking.domain.reservation.dto.UpsertReservationLockDto;
 import com.smart.booking.domain.reservation.entity.ReservationTimeCode;
 import com.smart.booking.domain.reservation.service.ReservationLockService;
 import com.smart.booking.domain.reservation.service.ReservationTimeService;
@@ -23,13 +22,13 @@ public class CreateReservationLockFacade {
         List<ReservationTimeCode> reservationTimeCodes = reservationTimeService.getReservationTimeBetweenStartAndEnd(lockDto.startTimeId(), lockDto.endTimeId());
 
         for (ReservationTimeCode reservationTime : reservationTimeCodes) {
-            ReservationLockDto reservationLockDto = createLockDto(lockDto.teeBoxId(), lockDto.date(), reservationTime, memberId);
-            reservationLockService.createReservationLock(reservationLockDto);
+            UpsertReservationLockDto upsertReservationLockDto = createLockDto(lockDto.teeBoxId(), lockDto.date(), reservationTime, memberId);
+            reservationLockService.createReservationLock(upsertReservationLockDto);
         }
     }
 
-    private ReservationLockDto createLockDto(String teeBoxId, String date, ReservationTimeCode timeCode, String memberId) {
-        return ReservationLockDto.builder()
+    private UpsertReservationLockDto createLockDto(String teeBoxId, String date, ReservationTimeCode timeCode, String memberId) {
+        return UpsertReservationLockDto.builder()
             .teeBoxId(teeBoxId)
             .date(date)
             .lockTimeId(timeCode.getId())

@@ -1,6 +1,6 @@
 package com.smart.booking.common.resolver;
 
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -17,7 +17,7 @@ public class MemberContextResolver implements HandlerMethodArgumentResolver {
     private final MemberService memberService;
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().isAssignableFrom(MemberContext.class);
+        return parameter.hasParameterAnnotation(MemberContext.class);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class MemberContextResolver implements HandlerMethodArgumentResolver {
         var auth = SecurityContextHolder.getContext().getAuthentication();
         var memberDto = memberService.getMemberById(auth.getName());
 
-        return MemberContext.builder()
+        return MemberContextDto.builder()
             .memberType(memberDto.getType())
             .memberId(memberDto.getId())
             .build();
