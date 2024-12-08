@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "예약", description = "예약 컨트롤러")
+@Tag(name = "이용자 예약", description = "이용자 예약 컨트롤러")
 public class ReservationController {
     private final CreateReservationLockFacade createReservationLockFacade;
     private final DeleteReservationLockFacade deleteReservationLockFacade;

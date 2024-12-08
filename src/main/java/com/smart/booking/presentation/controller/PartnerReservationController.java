@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "예약", description = "예약 컨트롤러")
+@Tag(name = "파트너 예약", description = "파트너 예약 컨트롤러")
 public class PartnerReservationController {
     private final CreatePhoneReservationFacade createPhoneReservationFacade;
     private final GetEnableReservationTimeFacade getEnableReservationTimeFacade;
