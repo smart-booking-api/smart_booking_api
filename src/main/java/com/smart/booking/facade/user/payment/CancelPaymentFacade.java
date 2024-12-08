@@ -1,13 +1,11 @@
 package com.smart.booking.facade.user.payment;
 
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.external.dto.CancelPaymentRequestDto;
 import com.smart.booking.domain.external.dto.PaymentAnnotationDto;
-import com.smart.booking.domain.payment.dto.PaymentResponseDto;
 import com.smart.booking.domain.payment.dto.SavePaymentHistoryDto;
-import com.smart.booking.domain.payment.entity.Payment;
 import com.smart.booking.domain.payment.entity.PaymentStatus;
 import com.smart.booking.domain.payment.service.PaymentHistoryService;
 import com.smart.booking.domain.payment.service.PaymentService;
@@ -27,7 +25,7 @@ public class CancelPaymentFacade {
      * 결제 취소 프로세스
      */
     @Transactional
-    public void exceuete(com.smart.booking.facade.dto.payment.CancelPaymentRequestDto request, MemberContext memberContext) {
+    public void exceuete(com.smart.booking.facade.dto.payment.CancelPaymentRequestDto request, MemberContextDto memberContextDto) {
         //1. 결제 정보 조회
         var payment = paymentInfoService.getPaymentInfo(request.paymentId());
 

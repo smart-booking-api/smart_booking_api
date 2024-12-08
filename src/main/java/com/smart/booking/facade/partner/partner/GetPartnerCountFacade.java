@@ -1,7 +1,7 @@
 package com.smart.booking.facade.partner.partner;
 
 import com.smart.booking.common.dto.CommonResponse;
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.member.entity.Member;
@@ -19,8 +19,8 @@ public class GetPartnerCountFacade {
     private final MemberService memberService;
     private final PartnerService partnerService;
 
-    public GetPartnerCountResponse execute(@NonNull MemberContext memberContext) {
-        final Member member = this.memberService.getMemberByIdOrThrow(memberContext.getMemberId());
+    public GetPartnerCountResponse execute(@NonNull MemberContextDto memberContextDto) {
+        final Member member = this.memberService.getMemberByIdOrThrow(memberContextDto.getMemberId());
         final PartnerType partnerType = this.partnerService.getPartnerTypeByMember(member);
 
         if (!partnerType.equals(PartnerType.M)) {

@@ -1,6 +1,7 @@
 package com.smart.booking.presentation.controller;
 
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
+import com.smart.booking.common.resolver.MemberContext;
 import com.smart.booking.facade.dto.payment.CancelPaymentRequestDto;
 import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
 import com.smart.booking.presentation.controller.endPoint.PaymentEndPoint;
@@ -10,7 +11,6 @@ import com.smart.booking.facade.user.payment.CancelPaymentFacade;
 import com.smart.booking.facade.user.payment.PreparePaymentFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,8 +39,8 @@ public class PaymentController {
      */
     @PostMapping(PaymentEndPoint.PAYMENT_CANCEL_URL)
     public void cancelPayment(
-        @Validated @RequestBody CancelPaymentRequestDto request, MemberContext memberContext) {
-        cancelPaymentFacade.exceuete(request, memberContext);
+        @Validated @RequestBody CancelPaymentRequestDto request, @MemberContext MemberContextDto memberContextDto) {
+        cancelPaymentFacade.exceuete(request, memberContextDto);
     }
 
     /**
@@ -48,8 +48,8 @@ public class PaymentController {
      * 결제창 접근
      */
     @PostMapping(PaymentEndPoint.PAYMENT_PREPARE_URL)
-    public void preparePayment(@Validated @RequestBody SavePaymentTrackingHistoryRequestDto request, MemberContext memberContext) {
-        preparePaymentFacade.exceuete(request, memberContext);
+    public void preparePayment(@Validated @RequestBody SavePaymentTrackingHistoryRequestDto request, @MemberContext MemberContextDto memberContextDto) {
+        preparePaymentFacade.exceuete(request, memberContextDto);
     }
 
 }

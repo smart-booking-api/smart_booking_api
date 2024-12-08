@@ -51,6 +51,10 @@ public class ReservationLockServiceImpl implements ReservationLockService {
         return getReservationLock(getKey(upsertReservationLockDto));
     }
 
+    /**
+     * 선점락이 있는지 체크
+     * @param lockDto
+     */
     private void validateReservationLock(UpsertReservationLockDto lockDto) {
         ReservationLock reservationLock = getReservationLock(getKey(lockDto));
 
@@ -58,6 +62,10 @@ public class ReservationLockServiceImpl implements ReservationLockService {
             throw new CommonException(ResponseCode.ALREADY_LOCK_RESERVATION);
     }
 
+    /**
+     * 내 선점락인지 체크
+     * @param lockDto
+     */
     private void validateMyReservationLock(UpsertReservationLockDto lockDto) {
         ReservationLock reservationLock = getReservationLock(getKey(lockDto));
 
@@ -66,11 +74,21 @@ public class ReservationLockServiceImpl implements ReservationLockService {
         }
     }
 
+    /**
+     * key 로 선점락 조회
+      * @param key
+     * @return
+     */
     private ReservationLock getReservationLock(String key) {
         log.info("key::" + key);
         return reservationLockRepository.findById(key).orElse(null);
     }
 
+    /**
+     * 선점락 키 생성
+     * @param lockDto
+     * @return
+     */
     private String getKey(UpsertReservationLockDto lockDto) {
         return lockDto.teeBoxId() + "-" + lockDto.date() + "-" +lockDto.lockTimeId();
     }

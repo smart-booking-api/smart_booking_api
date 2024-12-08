@@ -1,6 +1,6 @@
 package com.smart.booking.facade.admin.reservation;
 
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.common.util.CommonUtil;
@@ -13,8 +13,6 @@ import com.smart.booking.domain.reservation.entity.ReservationTimeCode;
 import com.smart.booking.domain.reservation.service.AdminReservationService;
 import com.smart.booking.domain.reservation.service.ReservationLockService;
 import com.smart.booking.domain.reservation.service.ReservationTimeService;
-import com.smart.booking.domain.store.service.StoreCommonService;
-import com.smart.booking.domain.store.service.StorePartnerService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import com.smart.booking.domain.tee_box.service.TeeBoxCommonService;
 import com.smart.booking.facade.dto.reservation.CreatePhoneReservationDto;
@@ -39,19 +37,19 @@ public class CreatePhoneReservationFacade {
     private final MemberService memberService;
 
     @Transactional
-    public void execute(@NonNull CreatePhoneReservationDto createDto, MemberContext memberContext) {
+    public void execute(@NonNull CreatePhoneReservationDto createDto, MemberContextDto memberContextDto) {
         // 선점락 생성
-        createReservationLock(createDto, memberContext.getMemberId());
+        createReservationLock(createDto, memberContextDto.getMemberId());
 
         // 예약조회
         validateReservation(createDto);
 
         // 예약처리
-        UpsertPhoneReservationDto dto = convertToUpsertPhoneReservationDto(createDto, memberContext.getMemberId());
+        UpsertPhoneReservationDto dto = convertToUpsertPhoneReservationDto(createDto, memberContextDto.getMemberId());
         adminReservationService.createPhoneReservation(dto);
 
         // 락 해제
-        deleteReservationLock(createDto, memberContext.getMemberId());
+        deleteReservationLock(createDto, memberContextDto.getMemberId());
     }
 
     private void createReservationLock(CreatePhoneReservationDto createDto, String memberId) {

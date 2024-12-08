@@ -1,6 +1,6 @@
 package com.smart.booking.common.configs;
 
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -39,8 +39,8 @@ public class SwaggerConfig {
     }
 
 
-    @Bean
-    public OpenApiCustomizer customOpenApi() {
-        return openApi -> openApi.getComponents().getSchemas().remove(MemberContext.class.getSimpleName()); // 전역 스키마에서 제외
-    }
+//    @Bean
+//    public OpenApiCustomizer customOpenApi() {
+//        return openApi -> openApi.getComponents().getSchemas().remove(MemberContextDto.class.getSimpleName()); // 전역 스키마에서 제외
+//    }
 }

@@ -1,6 +1,7 @@
 package com.smart.booking.presentation.controller;
 
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
+import com.smart.booking.common.resolver.MemberContext;
 import com.smart.booking.facade.admin.reservation.CreatePhoneReservationFacade;
 import com.smart.booking.facade.common.reservation.GetEnableReservationTimeFacade;
 import com.smart.booking.facade.dto.reservation.CreatePhoneReservationDto;
@@ -27,8 +28,8 @@ public class PartnerReservationController {
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "전화예약생성", description = "전화예약인 경우 해당 API 로 예약을 생성한다.")
     @PostMapping(PartnerReservationEndpoint.RESERVATION_PARTNER_CREATE_PHONE_RESERVATION)
-    public void createReservation(@RequestBody @Valid CreatePhoneReservationDto createDto, MemberContext memberContext) {
-        createPhoneReservationFacade.execute(createDto, memberContext);
+    public void createReservation(@RequestBody @Valid CreatePhoneReservationDto createDto, @MemberContext MemberContextDto memberContextDto) {
+        createPhoneReservationFacade.execute(createDto, memberContextDto);
     }
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "시간조회", description = "예약이 가능하고 선점락이 걸려있지 않은 예약 가능 시간을 조회한다.")
