@@ -2,13 +2,14 @@ package com.smart.booking.domain.reservation.service;
 
 import com.smart.booking.domain.reservation.dto.UpsertPhoneReservationDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
+import com.smart.booking.domain.store.service.StoreCommonService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
 import com.smart.booking.domain.reservation.enums.SearchDateType;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface AdminReservationService {
+public interface AdminReservationService extends CommonReservationService {
 
     /**
      * 주간 예약 건수
@@ -39,6 +40,4 @@ public interface AdminReservationService {
      * @param dateType
      */
     void getMonthlyReservationDates(String storeId, SearchDateType dateType);
-
-    List<Reservation> getReservationByTeeBoxAndReservationDate(TeeBox teeBox, LocalDate reservationDate);
 }

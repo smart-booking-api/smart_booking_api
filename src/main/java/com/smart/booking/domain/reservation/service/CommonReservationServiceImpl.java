@@ -3,13 +3,11 @@ package com.smart.booking.domain.reservation.service;
 import com.smart.booking.domain.reservation.dto.ReservationDetailResponseDto;
 import com.smart.booking.domain.reservation.dto.TimeCodeDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
-import com.smart.booking.domain.reservation.entity.ReservationTimeCode;
 import com.smart.booking.domain.reservation.repository.ReservationRepository;
-import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +40,16 @@ public class CommonReservationServiceImpl implements CommonReservationService {
     @Override
     public List<Reservation> getReservationByTeeBoxAndReservationDate(TeeBox teeBox, LocalDate reservationDate) {
         return reservationRepository.getReservationByTeeBoxAndReservationDate(teeBox, reservationDate);
+    }
+
+    /**
+     * 예약번호로 검색
+     * @param reservationNo
+     * @return
+     */
+    @Override
+    public Optional<Reservation> findByReservationNo(int reservationNo) {
+        return reservationRepository.findByReservationNo(reservationNo);
     }
 
     /**

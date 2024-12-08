@@ -3,6 +3,9 @@ package com.smart.booking.facade.admin.reservation;
 import com.smart.booking.common.dto.MemberContext;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.common.util.CommonUtil;
+import com.smart.booking.domain.member.entity.Member;
+import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.reservation.dto.UpsertPhoneReservationDto;
 import com.smart.booking.domain.reservation.dto.UpsertReservationLockDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
@@ -10,6 +13,8 @@ import com.smart.booking.domain.reservation.entity.ReservationTimeCode;
 import com.smart.booking.domain.reservation.service.AdminReservationService;
 import com.smart.booking.domain.reservation.service.ReservationLockService;
 import com.smart.booking.domain.reservation.service.ReservationTimeService;
+import com.smart.booking.domain.store.service.StoreCommonService;
+import com.smart.booking.domain.store.service.StorePartnerService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import com.smart.booking.domain.tee_box.service.TeeBoxCommonService;
 import com.smart.booking.facade.dto.reservation.CreatePhoneReservationDto;
@@ -18,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -30,6 +36,7 @@ public class CreatePhoneReservationFacade {
     private final ReservationLockService reservationLockService;
     private final ReservationTimeService reservationTimeService;
     private final TeeBoxCommonService teeBoxCommonService;
+    private final MemberService memberService;
 
     @Transactional
     public void execute(@NonNull CreatePhoneReservationDto createDto, MemberContext memberContext) {
@@ -94,7 +101,16 @@ public class CreatePhoneReservationFacade {
     }
 
     private UpsertPhoneReservationDto convertToUpsertPhoneReservationDto(CreatePhoneReservationDto createDto, String memberId) {
-        return new UpsertPhoneReservationDto(createDto, memberId);
+        Member member = memberService.getMemberById(memberId);
+        TeeBox teeBox = teeBoxCommonService.getTeeBoxById(createDto.teeBoxId());
+
+        var randomNumber = CommonUtil.createRandomNumber();
+
+        while(Objects.isNull(adminReservationService.findByReservationNo(randomNumber))) {
+            randomNumber = CommonUtil.createRandomNumber();
+        }
+
+        return new UpsertPhoneReservationDto(createDto, teeBox, member, randomNumber);
     }
 
     private void deleteReservationLock(CreatePhoneReservationDto createDto, String memberId) {
