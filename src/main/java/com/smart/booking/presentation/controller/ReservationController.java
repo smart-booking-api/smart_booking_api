@@ -6,6 +6,7 @@ import com.smart.booking.facade.common.reservation.CreateReservationLockFacade;
 import com.smart.booking.facade.common.reservation.DeleteReservationLockFacade;
 import com.smart.booking.facade.common.reservation.GetEnableReservationTimeFacade;
 import com.smart.booking.facade.dto.reservation.CreateReservationLockDto;
+import com.smart.booking.facade.dto.reservation.GetReservationTime;
 import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
 import com.smart.booking.facade.dto.reservation.ReservationTimeResponse;
 import com.smart.booking.facade.user.reservation.GetReservationFacade;
@@ -53,7 +54,7 @@ public class ReservationController {
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "시간조회", description = "예약이 가능하고 선점락이 걸려있지 않은 예약 가능 시간을 조회한다.")
     @GetMapping(ReservationEndpoint.GET_ENABLE_RESERVATION_TIME)
-    public List<ReservationTimeResponse> getEnableReservationTime(@RequestParam String teeBoxId, @RequestParam String reservationDate) {
-        return getEnableReservationTimeFacade.execute(teeBoxId, reservationDate);
+    public List<ReservationTimeResponse> getEnableReservationTime(GetReservationTime getReservationTime) {
+        return getEnableReservationTimeFacade.execute(getReservationTime.teeBoxId(), getReservationTime.reservationDate());
     }
 }
