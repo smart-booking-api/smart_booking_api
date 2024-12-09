@@ -86,4 +86,12 @@ public class Payment extends BaseEntity {
         }
     }
 
+    /**
+     * 상태가 계산 가능한지 확인하는 유틸리티 메서드
+     */
+    public boolean isValidStatusForSettlement() {
+        return !PaymentStatus.CANCEL.equals(paymentStatus) &&
+            !PaymentStatus.PENDING.equals(paymentStatus);
+    }
+
 }
