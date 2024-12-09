@@ -1,4 +1,14 @@
 spring:
+  cloud:
+    gcp:
+      project-id: screen-golf-5e7e4
+      credentials:
+        location: classpath:smart-booking-google.json
+      config:
+        project-id: screen-golf-5e7e4
+        credentials:
+          location: classpath:smart-booking-google.json
+
   application:
     name: smart-booking-api
 
@@ -55,4 +65,3 @@ external:
     key: "NCSEQVFDLTFVMSIR"
     secret: "LD6JAHNQG4XOXYIQ3YT1IDYVODITQNGA"
     endpoint: "https://api.coolsms.co.kr"
-
