@@ -1,12 +1,16 @@
 package com.smart.booking.common.advice;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smart.booking.common.dto.CommonResponse;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.external.gcp.ExternalLogger;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.boot.cfgxml.internal.CfgXmlAccessServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -19,6 +23,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RequiredArgsConstructor
 public class CommonExceptionAdvice {
 
+    private final ExternalLogger logger;
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+
     @ExceptionHandler(CommonException.class)
     public ResponseEntity<?> commonExceptionHandler(CommonException e) {
         var commonResponse = getCommonResponse(
@@ -26,7 +34,7 @@ public class CommonExceptionAdvice {
             e
         );
 
-        log.error(e.getMessage());
+        sendExternalLog(e, commonResponse);
 
         if (e.getHttpStatus().is2xxSuccessful()) {
             return ResponseEntity.ok(commonResponse);
@@ -42,7 +50,7 @@ public class CommonExceptionAdvice {
             e
         );
 
-        log.error(e.getMessage());
+        sendExternalLog(e, commonResponse);
 
         return ResponseEntity.ok(commonResponse);
     }
@@ -54,7 +62,7 @@ public class CommonExceptionAdvice {
             e
         );
 
-        log.error(e.getMessage());
+        sendExternalLog(e, commonResponse);
 
         return ResponseEntity.ok(commonResponse);
     }
@@ -66,7 +74,7 @@ public class CommonExceptionAdvice {
             e
         );
 
-        log.error(e.getMessage());
+        sendExternalLog(e, commonResponse);
 
         return ResponseEntity.status(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED.value())
             .body(commonResponse);
@@ -79,7 +87,8 @@ public class CommonExceptionAdvice {
             e
         );
 
-        log.error(e.getMessage());
+        sendExternalLog(e, commonResponse);
+
         return ResponseEntity.ok(commonResponse);
     }
 
@@ -112,6 +121,16 @@ public class CommonExceptionAdvice {
             sb.append(lines[i]).append("\n");
         }
         return sb.toString();
+    }
+
+    private <T extends Exception> void sendExternalLog(T e, CommonResponse<Object> commonResponse) {
+
+        try {
+            log.info("send error log");
+            logger.errorLog(e, objectMapper.writeValueAsString(commonResponse));
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
     }
 
 }

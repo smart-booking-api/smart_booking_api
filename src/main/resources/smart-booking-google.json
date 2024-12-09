@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "screen-golf-5e7e4",
+  "private_key_id": "7d2a270ec65caae6b1eb926cac8d0da148fcb1ca",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC3Zzsxli49JnJx\nK7lLfvZenoI0dYAbAcHAbS1SSBYQjNZ80tfmCaw5XOyUFPAW9iscPihkm8ATO2Vt\nOXNABO5A6UuuUDybaYq2XyFWOxmwXNgWiBSwSGiQ2V3D7h223VvBFiEIC13SCFNG\npP2vrg6thXD/4m75gkPT00xTDFWZ/14ON3Lhqe6cdyZfy+wrDTizQQ0ZPCGnRAAy\noKfiq5JtaiTiwEHr2T4ZVlllOe4WCtZ786JZZiug3hLh2NpHGtydGj4hADTnx+HN\ntjai5HC+LYxkzTu6zh4x/55ehA3ElORJQxkz/g8b8NvRxri6F/Mt2eRd82OrVTvv\nRGbB4zenAgMBAAECggEAFtKqW5fYRjTQHgQ2aU4x44FvK48Js5Kq5ULQ1oHw+PtF\nv7/PLSm7/GFzcVQPspPMtpWHmkmFg/8qtoZlMKzMZ1iA2f7TI/Xk1KAO+nedUUSk\ngV1K0csY9BmQoQ6zNOvj/Km/z4v2j2oIzuw+Q4vx+Kb38mffrn4G6cfMIjORPXoD\nBLQMQKl6WUodAwk9zMv0qfMdmXOvTwnH+4NaulBzZ/d2bEtIIMFfYaLq0WmNw3b6\nsnH/cabVhLZ0iZldqtNpxC8/MhUD2BXEC1z4u7pneahE4fWwFDDfVpkZp6hh2Vgt\nm1a2TTdi9/IWslnGIPeYW7gZWyEkpqOp9mG3+sFKyQKBgQD1kmPClKu+zw0y4fuF\nV9ZsHlcXiWH2B+TO3fZ9T35XFkjrJwLxHAdTlxNxUIWz2biTAwboMXUT54WHAdjQ\nNQ6Tgb5g6Gr3+PQG58z+dhA8WASVpbZbiMp0JC2snSdAyfYqizQh/3yQ+VzPkdpo\nxL8zny68gM+6AOL7g8k7fy3kSQKBgQC/MQHRROsh+4LVdl3hgtkWAWt86bJgJX91\n+Jp2vLMqWGe7CSv/rvx18TsXiDD7IDA7XEZ9bXouuzbje34rzv8pZmldlFw8gYpR\n/LcaPRWlapQMkicOV57y8THJDN6hAqesVqJyTXx68EY2VGfpGhjgGUWXaoz3iQGX\nGfzEMVtcbwKBgHNKNuuzQK5kJp4s2hjQFCrOU7UJGqSXMCSusHpER9w66iD8P7VS\no13rH4WjeCHnpW/fi+6WyZB+sYGgrFmTjzRRRT/Z3d5tUqOrT+JnK1gpOn3HPsXa\ngrHkCk1vum4AY0G1+NO9To4BhEEvCIsHU3y4zwhQsTVyFR5f0KnOG42BAoGAV11S\ngkjm1Qlz2I0VCyZagna1oke7rbmUy9iE5LsHd9Mb21iulVBlppNLuE4Qa8Biqc1Z\nnJj5Gv+LblmQ5v3YlRdqEEvp9fAPv7UmCkRdbtALxM7IMAKT7FmQsVlDJfnrmpGf\n+3Ey74551vus29SEB2sk5LLYpYgihORoH1Kad9sCgYAoQ4pKaBPa4RCFzLSSPvRL\nj1aXC4c0QeE1vHXn6s1sYAw+bol4e2ifyF50LV6nfx4wKTQjS82qpBmWT8Y11QGk\nGvamWbgu0wWOvha7FBLFKJAmrLTRGW74GwJHIUaZrvbuMdo+XKkMdXr4USGWgUGo\nMgU08TYp0PYon7zNfchJdg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "logging-logwriter@screen-golf-5e7e4.iam.gserviceaccount.com",
+  "client_id": "103571549598866716874",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/logging-logwriter%40screen-golf-5e7e4.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
