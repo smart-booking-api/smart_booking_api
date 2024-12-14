@@ -34,9 +34,10 @@ public class ReservationController {
     private final GetReservationFacade getReservationFacade;
     private final GetEnableReservationTimeFacade getEnableReservationTimeFacade;
 
-    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "선점락 생성", description = "이용자 예약시 선점락 생성")
+    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "선점락 + firebase data 생성", description = "이용자 예약시 선점락 생성")
     @PostMapping(ReservationEndpoint.RESERVATION_LOCK)
-    public void createReservationLock(@RequestBody @Valid CreateReservationLockDto lockDto, @MemberContext MemberContextDto memberContextDto) {
+    public void createReservationLock(@RequestBody @Valid CreateReservationLockDto lockDto, @MemberContext MemberContextDto memberContextDto)
+        throws Exception {
         createReservationLockFacade.execute(lockDto, memberContextDto.getMemberId());
     }
 

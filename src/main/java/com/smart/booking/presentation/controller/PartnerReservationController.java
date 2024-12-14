@@ -8,6 +8,7 @@ import com.smart.booking.facade.dto.reservation.CreatePhoneReservationDto;
 import com.smart.booking.facade.dto.reservation.ReservationTimeResponse;
 import com.smart.booking.presentation.controller.endPoint.PartnerReservationEndpoint;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ public class PartnerReservationController {
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "전화예약생성", description = "전화예약인 경우 해당 API 로 예약을 생성한다.")
     @PostMapping(PartnerReservationEndpoint.RESERVATION_PARTNER_CREATE_PHONE_RESERVATION)
-    public void createReservation(@RequestBody @Valid CreatePhoneReservationDto createDto, @MemberContext MemberContextDto memberContextDto) {
+    public void createReservation(@Parameter(hidden = true) @MemberContext MemberContextDto memberContextDto, @RequestBody @Valid CreatePhoneReservationDto createDto) {
         createPhoneReservationFacade.execute(createDto, memberContextDto);
     }
 
