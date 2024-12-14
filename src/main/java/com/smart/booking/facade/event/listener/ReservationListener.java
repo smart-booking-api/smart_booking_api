@@ -16,7 +16,7 @@ public class ReservationListener {
 
     @TransactionalEventListener
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void createReservation(CompletePaymentEventDto completePaymentEventDto) {
+    public void createReservation(CompletePaymentEventDto completePaymentEventDto) throws Exception {
         createReservationFacade.createReservation(completePaymentEventDto);
     }
 }

@@ -3,12 +3,16 @@ package com.smart.booking.facade.user.reservation;
 import com.smart.booking.common.firebase.FirebaseComponent;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
+import com.smart.booking.domain.payment.entity.PaymentStatus;
 import com.smart.booking.domain.reservation.dto.UpsertReservationDto;
 import com.smart.booking.domain.reservation.service.UserReservationService;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.store.service.StoreUserService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
+import com.smart.booking.domain.tee_box.service.TeeBoxCommonService;
+import com.smart.booking.facade.dto.reservation.ReservationFirebaseStatus;
 import com.smart.booking.facade.event.dto.CompletePaymentEventDto;
+import java.util.concurrent.ExecutionException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +24,7 @@ import org.springframework.stereotype.Component;
 public class CreateReservationFacade {
     private static final String COLLECTION_NAME = "booking";
     private final UserReservationService userReservationService;
-    private final StoreUserService storeUserService;
+    private final TeeBoxCommonService teeBoxService;
     private final MemberService memberService;
     private final FirebaseComponent firebaseComponent;
 
@@ -28,14 +32,15 @@ public class CreateReservationFacade {
      * 결제 완료 후 예약처리
      * @param eventDto
      */
-    public void createReservation(@NonNull CompletePaymentEventDto eventDto) {
+    public void createReservation(@NonNull CompletePaymentEventDto eventDto) throws Exception {
         // 예약
-        Store store = storeUserService.getStoreById(eventDto.storeId());
+        TeeBox teeBox = teeBoxService.getTeeBoxById(eventDto.teeBoxId());
         Member member = memberService.getMemberById(eventDto.memberId());
-        userReservationService.createReservation(getCreateReservationDto(store, null, member, eventDto));
+        userReservationService.createReservation(getCreateReservationDto(teeBox.getStore(), teeBox, member, eventDto));
 
-        // todo firebase 처리상태 업데이트 = event 처리
-        firebaseComponent.deleteDocument(COLLECTION_NAME, eventDto.trackingId());
+        // firebase 처리상태 업데이트
+        firebaseComponent.updateDocument(COLLECTION_NAME, eventDto.trackingId(),
+            new ReservationFirebaseStatus(eventDto.trackingId(), eventDto.memberId(), PaymentStatus.COMPLETE));
 
         // todo 선점락 제거 = event 처리
 
