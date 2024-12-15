@@ -6,7 +6,7 @@ import com.smart.booking.domain.reservation.dto.UpsertReservationDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import java.util.List;
 
-public interface UserReservationService {
+public interface UserReservationService extends CommonReservationService {
 
     /**
      * 홈 내 예약현황 요약 조회(오늘이후)

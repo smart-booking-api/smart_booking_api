@@ -1,8 +1,12 @@
 package com.smart.booking.domain.reservation.service;
 
+import com.smart.booking.common.enums.ResponseCode;
+import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.domain.member.enums.MemberType;
 import com.smart.booking.domain.reservation.dto.ReservationDetailResponseDto;
 import com.smart.booking.domain.reservation.dto.TimeCodeDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
+import com.smart.booking.domain.reservation.enums.ReservationStatus;
 import com.smart.booking.domain.reservation.repository.ReservationRepository;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import java.time.LocalDate;
@@ -56,10 +60,12 @@ public class CommonReservationServiceImpl implements CommonReservationService {
      * 예약 취소
      * @param reservationId
      */
-    public void cancelReservation(String reservationId) {
-        if (validateCancelPermission(reservationId)) {
-            // todo 예약취소 로직
-            // admin : 관리자체크 , user: 자기 예약인지 체크
+    @Override
+    public void cancelReservation(String reservationId, String memberId, MemberType memberType) {
+        if (validateCancelPermission(reservationId, memberId, memberType)) {
+            Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION));
+
+            reservation.updateReservationStatus(ReservationStatus.CANCELED);
         }
     }
 
@@ -68,9 +74,9 @@ public class CommonReservationServiceImpl implements CommonReservationService {
      * @param reservationId
      * @return
      */
-    public ReservationDetailResponseDto getReservationDetail(String reservationId) {
+    public ReservationDetailResponseDto getReservationDetail(String reservationId, String memberId) {
         // todo 예약 조회
-        if (validateSearchPermission(reservationId)) {
+        if (validateSearchPermission(reservationId, memberId)) {
             // admin : 관리자체크 , user: 자기 예약인지 체크
         }
         return null;
@@ -87,12 +93,12 @@ public class CommonReservationServiceImpl implements CommonReservationService {
     }
 
     @Override
-    public boolean validateCancelPermission(String reservationId) {
+    public boolean validateCancelPermission(String reservationId, String memberId, MemberType memberType) {
         return true;
     };
 
     @Override
-    public boolean validateSearchPermission(String reservationId) {
+    public boolean validateSearchPermission(String reservationId, String memberId) {
         return true;
     };
 }

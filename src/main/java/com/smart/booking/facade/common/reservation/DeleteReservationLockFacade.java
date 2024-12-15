@@ -20,15 +20,16 @@ public class DeleteReservationLockFacade {
         List<ReservationTimeCode> reservationTimeCodes = reservationTimeService.getReservationTimeBetweenStartAndEnd(deleteDto.startTimeId(), deleteDto.endTimeId());
 
         for (ReservationTimeCode reservationTime : reservationTimeCodes) {
-            UpsertReservationLockDto upsertReservationLockDto = createLockDto(deleteDto.teeBoxId(), reservationTime, memberId);
+            UpsertReservationLockDto upsertReservationLockDto = createLockDto(deleteDto.teeBoxId(), deleteDto.date(), reservationTime, memberId);
             reservationLockService.deleteReservationLock(upsertReservationLockDto);
         }
     }
 
-    private UpsertReservationLockDto createLockDto(String teeBoxId, ReservationTimeCode timeCode, String memberId) {
+    private UpsertReservationLockDto createLockDto(String teeBoxId, String date, ReservationTimeCode timeCode, String memberId) {
         return UpsertReservationLockDto.builder()
             .teeBoxId(teeBoxId)
             .lockTimeId(timeCode.getId())
+            .date(date)
             .memberId(memberId)
             .build();
     }
