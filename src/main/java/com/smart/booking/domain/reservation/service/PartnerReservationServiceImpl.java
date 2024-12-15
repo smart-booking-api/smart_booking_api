@@ -1,19 +1,21 @@
 package com.smart.booking.domain.reservation.service;
 
+import com.smart.booking.common.dto.MemberContextDto;
+import com.smart.booking.domain.member.entity.Member;
+import com.smart.booking.domain.member.enums.MemberType;
 import com.smart.booking.domain.reservation.dto.UpsertPhoneReservationDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.repository.ReservationRepository;
 import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
 import com.smart.booking.domain.reservation.enums.SearchDateType;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdminReservationServiceImpl extends CommonReservationServiceImpl implements AdminReservationService {
+public class PartnerReservationServiceImpl extends CommonReservationServiceImpl implements PartnerReservationService {
     private final ReservationRepository reservationRepository;
 
-    public AdminReservationServiceImpl(ReservationRepository reservationRepository, ReservationRepository reservationRepository1) {
+    public PartnerReservationServiceImpl(ReservationRepository reservationRepository, ReservationRepository reservationRepository1) {
         super(reservationRepository);
         this.reservationRepository = reservationRepository1;
     }
@@ -40,12 +42,12 @@ public class AdminReservationServiceImpl extends CommonReservationServiceImpl im
     }
 
     @Override
-    public boolean validateCancelPermission(String reservationId) {
-        return false;
+    public boolean validateCancelPermission(String reservationId, String memberId, MemberType memberType) {
+        return memberType == MemberType.PARTNER;
     }
 
     @Override
-    public boolean validateSearchPermission(String reservationId) {
+    public boolean validateSearchPermission(String reservationId, String memberId) {
         return false;
     }
 }

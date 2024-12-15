@@ -2,10 +2,11 @@ package com.smart.booking.presentation.controller;
 
 import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.resolver.MemberContext;
-import com.smart.booking.facade.admin.reservation.CreatePhoneReservationFacade;
 import com.smart.booking.facade.common.reservation.GetEnableReservationTimeFacade;
 import com.smart.booking.facade.dto.reservation.CreatePhoneReservationDto;
 import com.smart.booking.facade.dto.reservation.ReservationTimeResponse;
+import com.smart.booking.facade.partner.reservation.CancelReservationFacade;
+import com.smart.booking.facade.partner.reservation.CreatePhoneReservationFacade;
 import com.smart.booking.presentation.controller.endPoint.PartnerReservationEndpoint;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,7 +15,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PartnerReservationController {
     private final CreatePhoneReservationFacade createPhoneReservationFacade;
     private final GetEnableReservationTimeFacade getEnableReservationTimeFacade;
+    private final CancelReservationFacade cancelReservationFacade;
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "전화예약생성", description = "전화예약인 경우 해당 API 로 예약을 생성한다.")
     @PostMapping(PartnerReservationEndpoint.RESERVATION_PARTNER_CREATE_PHONE_RESERVATION)
@@ -37,5 +41,11 @@ public class PartnerReservationController {
     @GetMapping(PartnerReservationEndpoint.GET_ENABLE_RESERVATION_TIME)
     public List<ReservationTimeResponse> getEnableReservationTime(@RequestParam String teeBoxId, @RequestParam String reservationDate) {
         return getEnableReservationTimeFacade.execute(teeBoxId, reservationDate);
+    }
+
+    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "예약취소", description = "관리자취소")
+    @DeleteMapping(PartnerReservationEndpoint.RESERVATION_PARTNER_CANCEL_PHONE_RESERVATION)
+    public void cancelReservation(@PathVariable String reservationId, @MemberContext MemberContextDto memberContextDto) {
+        cancelReservationFacade.execute(reservationId, memberContextDto.getMemberId());
     }
 }

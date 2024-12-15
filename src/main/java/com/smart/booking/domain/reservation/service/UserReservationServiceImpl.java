@@ -1,7 +1,11 @@
 package com.smart.booking.domain.reservation.service;
 
+import com.smart.booking.common.dto.MemberContextDto;
+import com.smart.booking.common.enums.ResponseCode;
+import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.common.util.CommonUtil;
 import com.smart.booking.domain.member.entity.Member;
+import com.smart.booking.domain.member.enums.MemberType;
 import com.smart.booking.domain.reservation.dto.UpsertReservationDto;
 import com.smart.booking.domain.reservation.dto.ReservationDateHistoryDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
@@ -60,12 +64,13 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
     }
 
     @Override
-    public boolean validateCancelPermission(String reservationId) {
-        return false;
+    public boolean validateCancelPermission(String reservationId, String memberId, MemberType memberType) {
+        Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION));
+        return reservation.getCreatedBy().equals(memberId);
     }
 
     @Override
-    public boolean validateSearchPermission(String reservationId) {
+    public boolean validateSearchPermission(String reservationId, String memberId) {
         return false;
     }
 }

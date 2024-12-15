@@ -1,16 +1,17 @@
-package com.smart.booking.facade.admin.reservation;
+package com.smart.booking.facade.partner.reservation;
 
 import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.common.util.CommonUtil;
+import com.smart.booking.domain.common.enums.TeeBoxType;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.reservation.dto.UpsertPhoneReservationDto;
 import com.smart.booking.domain.reservation.dto.UpsertReservationLockDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.entity.ReservationTimeCode;
-import com.smart.booking.domain.reservation.service.AdminReservationService;
+import com.smart.booking.domain.reservation.service.PartnerReservationService;
 import com.smart.booking.domain.reservation.service.ReservationLockService;
 import com.smart.booking.domain.reservation.service.ReservationTimeService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
@@ -24,13 +25,14 @@ import java.util.List;
 import java.util.Objects;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
 public class CreatePhoneReservationFacade {
-    private final AdminReservationService adminReservationService;
+    private final PartnerReservationService partnerReservationService;
     private final ReservationLockService reservationLockService;
     private final ReservationTimeService reservationTimeService;
     private final TeeBoxCommonService teeBoxCommonService;
@@ -38,18 +40,23 @@ public class CreatePhoneReservationFacade {
 
     @Transactional
     public void execute(@NonNull CreatePhoneReservationDto createDto, MemberContextDto memberContextDto) {
-        // 선점락 생성
-        createReservationLock(createDto, memberContextDto.getMemberId());
+        try {
+            // 선점락 생성
+            createReservationLock(createDto, memberContextDto.getMemberId());
 
-        // 예약조회
-        validateReservation(createDto);
+            // 예약조회
+            validateReservation(createDto);
 
-        // 예약처리
-        UpsertPhoneReservationDto dto = convertToUpsertPhoneReservationDto(createDto, memberContextDto.getMemberId());
-        adminReservationService.createPhoneReservation(dto);
+            // 예약처리
+            UpsertPhoneReservationDto dto = convertToUpsertPhoneReservationDto(createDto, memberContextDto.getMemberId());
+            partnerReservationService.createPhoneReservation(dto);
 
-        // 락 해제
-        deleteReservationLock(createDto, memberContextDto.getMemberId());
+            // 락 해제
+            deleteReservationLock(createDto, memberContextDto.getMemberId());
+        } catch (Exception ex) {
+            // 락 해제
+            deleteReservationLock(createDto, memberContextDto.getMemberId());
+        }
     }
 
     private void createReservationLock(CreatePhoneReservationDto createDto, String memberId) {
@@ -91,7 +98,7 @@ public class CreatePhoneReservationFacade {
 
         TeeBox teeBox = teeBoxCommonService.getTeeBoxById(teeBoxId);
 
-        return adminReservationService.getReservationByTeeBoxAndReservationDate(teeBox, reservationDate);
+        return partnerReservationService.getReservationByTeeBoxAndReservationDate(teeBox, reservationDate);
     }
 
     private Time getTime(String timeId) {
@@ -101,10 +108,9 @@ public class CreatePhoneReservationFacade {
     private UpsertPhoneReservationDto convertToUpsertPhoneReservationDto(CreatePhoneReservationDto createDto, String memberId) {
         Member member = memberService.getMemberById(memberId);
         TeeBox teeBox = teeBoxCommonService.getTeeBoxById(createDto.teeBoxId());
-
         var randomNumber = CommonUtil.createRandomNumber();
 
-        while(Objects.isNull(adminReservationService.findByReservationNo(randomNumber))) {
+        while(Objects.isNull(partnerReservationService.findByReservationNo(randomNumber))) {
             randomNumber = CommonUtil.createRandomNumber();
         }
 

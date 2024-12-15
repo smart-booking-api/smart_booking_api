@@ -37,7 +37,8 @@ public enum ResponseCode implements EnumModel {
      */
     ALREADY_LOCK_RESERVATION(801, "다른 이용자가 예약중입니다."),
     NOT_FOUND_RESERVATION_TIME(802, "예약시간이 존재하지 않습니다."),
-    NOT_MY_RESERVATION_LOCK(803, "다른 이용자의 선점락이 존재합니다")
+    NOT_MY_RESERVATION_LOCK(803, "다른 이용자의 선점락이 존재합니다"),
+    NOT_FOUND_RESERVATION(804, "존재하지 않는 예약입니다.")
     ;
 
     private final int code;
