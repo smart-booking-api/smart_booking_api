@@ -1,6 +1,5 @@
 package com.smart.booking.domain.reservation.service;
 
-import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.member.enums.MemberType;

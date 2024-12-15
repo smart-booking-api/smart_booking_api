@@ -43,7 +43,7 @@ public class PartnerReservationController {
         return getEnableReservationTimeFacade.execute(teeBoxId, reservationDate);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "예약취소", description = "관리자취소")
+    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "예약취소", description = "관리자 예약 취소")
     @DeleteMapping(PartnerReservationEndpoint.RESERVATION_PARTNER_CANCEL_PHONE_RESERVATION)
     public void cancelReservation(@PathVariable String reservationId, @MemberContext MemberContextDto memberContextDto) {
         cancelReservationFacade.execute(reservationId, memberContextDto.getMemberId());
