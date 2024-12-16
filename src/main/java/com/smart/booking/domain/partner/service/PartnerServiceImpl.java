@@ -7,7 +7,7 @@ import static com.smart.booking.common.enums.ResponseCode.NOT_INITIALIZED_PARTNE
 
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
-import com.smart.booking.common.util.PasswordEncoderUtil;
+import com.smart.booking.common.util.PasswordUtil;
 import com.smart.booking.domain.common.model.CursorResult;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.partner.dto.ChangePartnerPasswordDto;
@@ -29,11 +29,11 @@ import org.springframework.stereotype.Service;
 class PartnerServiceImpl implements PartnerService {
 
     private final PartnerRepository partnerRepository;
-    private final PasswordEncoderUtil passwordEncoderUtil;
+    private final PasswordUtil passwordUtil;
 
     @Override
     public @NonNull Partner createPartner(@NonNull CreatePartnerDto createPartnerDto) {
-        final String encodedPassword = passwordEncoderUtil.encodePassword(createPartnerDto.password());
+        final String encodedPassword = passwordUtil.encodePassword(createPartnerDto.password());
         final Partner partner = PartnerMapper.toPartner(createPartnerDto.copyWithPassword(encodedPassword));
 
         return partnerRepository.save(partner);
@@ -127,17 +127,22 @@ class PartnerServiceImpl implements PartnerService {
     @Override
     public void changePassword(@NonNull Member member, @NonNull ChangePartnerPasswordDto changePartnerPasswordDto) {
         final Partner partner = getPartnerByMemberOrThrow(member);
-        final boolean isPasswordMatched = passwordEncoderUtil.matches(changePartnerPasswordDto.getPassword(), partner.getPassword());
+        final boolean isPasswordMatched = passwordUtil.matches(changePartnerPasswordDto.getPassword(), partner.getPassword());
 
         if (!isPasswordMatched) {
             throw new CommonException(ResponseCode.NOT_MATCHED_PARTNER_PASSWORD);
         }
 
-        final String encodedNewPassword = passwordEncoderUtil.encodePassword(changePartnerPasswordDto.getNewPassword());
+        final String encodedNewPassword = passwordUtil.encodePassword(changePartnerPasswordDto.getNewPassword());
 
         partner.changePassword(encodedNewPassword);
-        
+
         partnerRepository.save(partner);
+    }
+
+    @Override
+    public void deletePartner(@NonNull String partnerId) {
+        partnerRepository.deleteById(partnerId);
     }
 
 }

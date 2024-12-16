@@ -33,7 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         String accessToken = request.getHeader("Authorization");
-        String refreshToken = request.getHeader("Refresh-Token");
+//        String refreshToken = request.getHeader("Refresh-Token");
 
         if (accessToken == null || !accessToken.startsWith("Bearer ")) {
             log.info("access token null");
@@ -53,12 +53,14 @@ public class JwtFilter extends OncePerRequestFilter {
         // 토큰에서 memberId 획득
         String memberId = authService.getMemberIdFromToken(token);
 
-        // refresh 3일 이내 만료일 경우 refresh Token 재발급
-        if (authService.isExpiredRefreshToken(refreshToken.split(" ")[1])) {
-            refreshToken = authService.createRefreshToken(memberId);
-            response.setHeader("Refresh-Token", "Bearer " + refreshToken);
-            authService.updateRefreshToken(memberId, refreshToken);
-        }
+//        Member member = memberService.getMemberById(memberId);
+
+//        // refresh 3일 이내 만료일 경우 refresh Token 재발급
+//        if (authService.isExpiredRefreshToken(refreshToken.split(" ")[1])) {
+//            refreshToken = authService.createRefreshToken(member).getToken();
+//            response.setHeader("Refresh-Token", "Bearer " + refreshToken);
+//            authService.updateRefreshToken(memberId, refreshToken);
+//        }
 
         CustomUserDetails customUserDetails = getCustomUserDetails(memberId);
 

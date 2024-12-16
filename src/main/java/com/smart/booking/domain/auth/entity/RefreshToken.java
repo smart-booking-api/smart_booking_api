@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,7 +41,7 @@ public class RefreshToken extends BaseEntity {
     private Member member;
 
     @Column(nullable = false)
-    private LocalDateTime expiredAt;
+    private OffsetDateTime expiredAt;
 
     @Column(nullable = false)
     private boolean valid;
@@ -51,7 +51,7 @@ public class RefreshToken extends BaseEntity {
     }
 
     public boolean checkValid() {
-        return this.valid && this.expiredAt.isAfter(LocalDateTime.now());
+        return this.valid && this.expiredAt.isAfter(OffsetDateTime.now());
     }
 
     public void updateToken(String token) {
