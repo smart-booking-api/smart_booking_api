@@ -34,9 +34,9 @@ class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
-    public @NonNull Partner initializePartner(@NonNull InitializePartnerDto initializePartnerDto) {
+    public @NonNull Partner initializePartner(@NonNull String partnerId, @NonNull InitializePartnerDto initializePartnerDto) {
 
-        final Partner partner = getPartner(initializePartnerDto.partnerId());
+        final Partner partner = getPartner(partnerId);
 
         if (partner.isInitialized()) {
             throw new CommonException(ALREADY_INITIALIZED_PARTNER);
@@ -55,8 +55,9 @@ class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
-    public @NonNull Partner updatePartner(@NonNull UpdatePartnerDto updatePartnerDto) {
-        final Partner partner = getPartner(updatePartnerDto.partnerId());
+    public @NonNull Partner updatePartner(@NonNull String partnerId, @NonNull UpdatePartnerDto updatePartnerDto) {
+        final Partner partner = partnerRepository.findById(partnerId)
+                .orElseThrow(() -> new CommonException(NOT_FOUND_PARTNER));
 
         if (!partner.isInitialized()) {
             throw new CommonException(NOT_INITIALIZED_PARTNER);
@@ -96,6 +97,12 @@ class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
+    public @NonNull Partner getPartnerByMemberIdOrThrow(@NonNull String memberId) {
+        return partnerRepository.findByMember_Id(memberId)
+                .orElseThrow(() -> new CommonException(NOT_FOUND_PARTNER));
+    }
+
+    @Override
     public @NonNull Partner getPartnerByMemberOrThrow(@NonNull Member member) {
         return partnerRepository.findByMember(member)
                 .orElseThrow(() -> new CommonException(NOT_FOUND_PARTNER));
@@ -117,6 +124,13 @@ class PartnerServiceImpl implements PartnerService {
     @Override
     public @NonNull PartnerType getPartnerTypeByMember(@NonNull Member member) {
         return getPartnerByMemberOrThrow(member).getType();
+    }
+
+    @Override
+    public @NonNull PartnerType getPartnerTypeByMemberId(@NonNull String memberId) {
+        return partnerRepository.findByMember_Id(memberId)
+                .map(Partner::getType)
+                .orElseThrow(() -> new CommonException(NOT_FOUND_PARTNER));
     }
 
     @Override

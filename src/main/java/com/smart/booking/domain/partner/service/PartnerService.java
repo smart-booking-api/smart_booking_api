@@ -15,10 +15,10 @@ public interface PartnerService {
     Partner createPartner(@NonNull CreatePartnerDto createPartnerDto);
 
     @NonNull
-    Partner initializePartner(@NonNull InitializePartnerDto initializePartnerDto);
+    Partner initializePartner(@NonNull String partnerId, @NonNull InitializePartnerDto initializePartnerDto);
 
     @NonNull
-    Partner updatePartner(@NonNull UpdatePartnerDto updatePartnerDto);
+    Partner updatePartner(@NonNull String partnerId, @NonNull UpdatePartnerDto updatePartnerDto);
 
     @NonNull
     Partner getPartner(@NonNull String id);
@@ -33,6 +33,9 @@ public interface PartnerService {
     Optional<Partner> getPartnerByMember(@NonNull Member member);
 
     @NonNull
+    Partner getPartnerByMemberIdOrThrow(@NonNull String memberId);
+
+    @NonNull
     Partner getPartnerByMemberOrThrow(@NonNull Member member);
 
     void withdrawPartner(@NonNull String id);
@@ -41,6 +44,9 @@ public interface PartnerService {
 
     @NonNull
     PartnerType getPartnerTypeByMember(@NonNull Member member);
+
+    @NonNull
+    PartnerType getPartnerTypeByMemberId(@NonNull String memberId);
 
     void changePassword(@NonNull Member member, @NonNull ChangePartnerPasswordDto changePartnerPasswordDto);
 

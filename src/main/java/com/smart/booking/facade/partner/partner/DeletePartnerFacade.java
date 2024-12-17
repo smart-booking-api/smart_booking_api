@@ -1,7 +1,7 @@
 package com.smart.booking.facade.partner.partner;
 
 import com.smart.booking.common.dto.CommonEmptyResponse;
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.auth.service.AuthService;
@@ -26,11 +26,11 @@ public class DeletePartnerFacade {
 
     @Transactional
     public DeletePartnerResponse execute(
-        @NonNull String partnerId,
-        @NonNull MemberContext memberContext
+            @NonNull String partnerId,
+            @NonNull MemberContextDto memberContextDto
     ) {
 
-        final Member member = memberService.getMemberById(memberContext.getMemberId());
+        final Member member = memberService.getMemberById(memberContextDto.getMemberId());
         final Partner me = partnerService.getPartnerByMemberOrThrow(member);
 
         if (me.getType() != PartnerType.M) {

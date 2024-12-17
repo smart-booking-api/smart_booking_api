@@ -2,7 +2,7 @@ package com.smart.booking.facade.partner.store;
 
 
 import com.smart.booking.common.dto.CommonResponse;
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.member.service.MemberService;
@@ -36,16 +36,16 @@ public class CreateStoreFacade {
     @Transactional
     public @NonNull CreateStoreResultDto execute(
             @NonNull CreateStoreRequestDto createStoreRequestDto,
-            @NonNull MemberContext memberContext
+            @NonNull MemberContextDto memberContextDto
     ) {
 
-        final var member = memberService.getMemberByIdOrThrow(memberContext.getMemberId());
+        final var member = memberService.getMemberByIdOrThrow(memberContextDto.getMemberId());
         final var partnerType = partnerService.getPartnerTypeByMember(member);
 
         if (partnerType != PartnerType.M) {
             throw new CommonException(ResponseCode.NOT_PERMITTED_PARTNER_TYPE);
         }
-        
+
         final var store = storePartnerService.createStore(createStoreRequestDto.toUpsertStoreDto());
 
         return new CreateStoreResultDto(store);

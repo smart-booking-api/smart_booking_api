@@ -21,8 +21,8 @@ public class GetPartnerCountFacade {
     private final PartnerService partnerService;
 
     @Transactional(readOnly = true)
-    public GetPartnerCountResponse execute(@NonNull MemberContext memberContext) {
-        final Member member = this.memberService.getMemberByIdOrThrow(memberContext.getMemberId());
+    public GetPartnerCountResponse execute(@NonNull MemberContextDto memberContextDto) {
+        final Member member = this.memberService.getMemberByIdOrThrow(memberContextDto.getMemberId());
         final PartnerType partnerType = this.partnerService.getPartnerTypeByMember(member);
 
         if (!partnerType.equals(PartnerType.M)) {
