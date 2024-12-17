@@ -19,14 +19,14 @@ public class ChangePartnerPasswordFacade {
 
     private final MemberService memberService;
     private final PartnerService partnerService;
-    
+
 
     @Transactional
     public ChangePartnerPasswordResponse execute(
-        @NonNull MemberContextDto context,
-        @NonNull ChangePartnerPasswordRequestDto changePartnerPasswordRequestDto
+            @NonNull ChangePartnerPasswordRequestDto changePartnerPasswordRequestDto,
+            @NonNull MemberContextDto memberContextDto
     ) {
-        final Member member = memberService.getMemberByIdOrThrow(context.getMemberId());
+        final Member member = memberService.getMemberByIdOrThrow(memberContextDto.getMemberId());
 
         partnerService.changePassword(member, changePartnerPasswordRequestDto.toChangePartnerPasswordDto());
 

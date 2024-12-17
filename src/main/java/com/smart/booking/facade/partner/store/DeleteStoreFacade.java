@@ -1,7 +1,7 @@
 package com.smart.booking.facade.partner.store;
 
 import com.smart.booking.common.dto.CommonEmptyResponse;
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.member.service.MemberService;
@@ -24,9 +24,9 @@ public class DeleteStoreFacade {
     @Transactional
     public @NonNull DeleteStoreResponse execute(
             @NonNull String storeId,
-            @NonNull MemberContext memberContext
+            @NonNull MemberContextDto memberContextDto
     ) {
-        final var member = memberService.getMemberByIdOrThrow(memberContext.getMemberId());
+        final var member = memberService.getMemberByIdOrThrow(memberContextDto.getMemberId());
         final var partnerType = partnerService.getPartnerTypeByMember(member);
 
         if (partnerType != PartnerType.M) {
@@ -34,7 +34,7 @@ public class DeleteStoreFacade {
         }
 
         storePartnerService.deleteStore(storeId);
-        
+
         return new DeleteStoreResponse();
     }
 

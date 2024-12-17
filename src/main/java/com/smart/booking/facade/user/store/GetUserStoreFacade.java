@@ -1,7 +1,7 @@
 package com.smart.booking.facade.user.store;
 
 import com.smart.booking.common.dto.CommonResponse;
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
@@ -26,9 +26,9 @@ public class GetUserStoreFacade {
 
     @NonNull
     @Transactional(readOnly = true)
-    public GetUserStoreResponse execute(@NonNull MemberContext memberContext) {
+    public GetUserStoreResponse execute(@NonNull MemberContextDto memberContextDto) {
 
-        final var member = memberService.getMemberByIdOrThrow(memberContext.getMemberId());
+        final var member = memberService.getMemberByIdOrThrow(memberContextDto.getMemberId());
         final var user = userService.getUserByMember(member);
         final var store = user.getStore();
 

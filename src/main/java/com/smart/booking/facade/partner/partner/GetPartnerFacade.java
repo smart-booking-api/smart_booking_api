@@ -1,7 +1,7 @@
 package com.smart.booking.facade.partner.partner;
 
 import com.smart.booking.common.dto.CommonResponse;
-import com.smart.booking.common.dto.MemberContext;
+import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.member.entity.Member;
@@ -33,10 +33,10 @@ public class GetPartnerFacade {
 
     @Transactional(readOnly = true)
     public GetPartnerResponse execute(
-        @NonNull String partnerId,
-        @NonNull MemberContext memberContext
+            @NonNull String partnerId,
+            @NonNull MemberContextDto memberContextDto
     ) {
-        final Member member = memberService.getMemberById(memberContext.getMemberId());
+        final Member member = memberService.getMemberById(memberContextDto.getMemberId());
         final Partner partner = partnerService.getPartnerByMemberOrThrow(member);
 
         if (partner.getType() != PartnerType.M) {
