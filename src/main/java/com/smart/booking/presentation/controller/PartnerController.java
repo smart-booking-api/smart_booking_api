@@ -37,7 +37,7 @@ public class PartnerController {
     @Operation(summary = "비밀번호 변경")
     @PutMapping(PartnerEndPoint.CHANGE_PASSWORD)
     public ChangePartnerPasswordFacade.ChangePartnerPasswordResponse changePassword(
-        @RequestBody @Valid ChangePartnerPasswordFacade.ChangePartnerPasswordRequestDto changePartnerPasswordRequestDto
+            @RequestBody @Valid ChangePartnerPasswordFacade.ChangePartnerPasswordRequestDto changePartnerPasswordRequestDto
     ) {
         return changePartnerPasswordFacade.execute(SecurityUtils.getCurrentMemberContext(), changePartnerPasswordRequestDto);
     }

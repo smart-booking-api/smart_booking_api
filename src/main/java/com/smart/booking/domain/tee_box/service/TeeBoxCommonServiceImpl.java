@@ -2,9 +2,10 @@ package com.smart.booking.domain.tee_box.service;
 
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import com.smart.booking.domain.tee_box.repositroy.TeeBoxRepository;
-import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
