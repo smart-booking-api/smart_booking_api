@@ -23,7 +23,7 @@ public class PartnerSettlementFacade {
      *
      * @return 파트너 정산 DTO
      */
-    public PartnerSettlementFacadeResponse getPartnerSettlement(PartnerSettlementFacadeRequest request) {
+    public PartnerSettlementFacadeResponse execute(String memberId, PartnerSettlementFacadeRequest request) {
         var partner = partnerService.getPartner(request.partnerId);
         var response = paymentSettlementService.getSettlementByPartner(partner, request.getStartDate(), request.getEndDate());
         return new PartnerSettlementFacadeResponse(

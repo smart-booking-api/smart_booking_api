@@ -21,7 +21,7 @@ public class MasterPartnerSettlementFacade {
      *
      * @return 파트너 정산 DTO
      */
-    public MasterPartnerSettlementFacadeResponse getPartnerSettlement(MasterPartnerSettlementFacadeRequest request) {
+    public MasterPartnerSettlementFacadeResponse execute(String memberId, MasterPartnerSettlementFacadeRequest request) {
         var response = paymentSettlementService.getPartnerSettlement(request.getStartDate(), request.getEndDate());
         return new MasterPartnerSettlementFacadeResponse(
             response.getTotalAmount(),

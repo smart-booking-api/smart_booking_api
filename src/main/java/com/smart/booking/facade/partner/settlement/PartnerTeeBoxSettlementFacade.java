@@ -25,7 +25,7 @@ public class PartnerTeeBoxSettlementFacade {
      *
      * @return 파트너와 TeeBox별 정산 DTO
      */
-    public PartnerTeeBoxSettlementFacadeResponse getPartnerTeeBoxSettlement(PartnerTeeBoxSettlementFacadeRequest request) {
+    public PartnerTeeBoxSettlementFacadeResponse execute(String memberId, PartnerTeeBoxSettlementFacadeRequest request) {
         var partner = partnerService.getPartner(request.getPartnerId());
         var teeBox = teeBoxCommonService.getTeeBoxById(request.getTeeBoxId());
 
