@@ -1,4 +1,4 @@
-package com.smart.booking.domain.external.dto;
+package com.smart.booking.external.portOne.model;
 
 
 import lombok.Builder;
@@ -9,7 +9,8 @@ public record ExternalCustomDataDto(
     String memberId,
     String trackingId,
     String teeBoxId,
-    String timeTableId,
+    String startTimeTableId,
+    String endTimeTableId,
     String storeId,
     String storeName,
     String storeAddress,

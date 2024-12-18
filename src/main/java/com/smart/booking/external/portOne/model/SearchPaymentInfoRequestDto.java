@@ -1,4 +1,4 @@
-package com.smart.booking.domain.external.dto;
+package com.smart.booking.external.portOne.model;
 
 import jakarta.annotation.Nullable;
 import lombok.NonNull;

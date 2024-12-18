@@ -1,9 +1,7 @@
-package com.smart.booking.domain.external.dto;
+package com.smart.booking.external.portOne.model;
 
 import jakarta.annotation.Nullable;
 import lombok.NonNull;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.NotFound;
 
 public record CancelPaymentRequestDto(
     //포트원 거래고유번호

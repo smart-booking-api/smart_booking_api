@@ -1,14 +1,8 @@
 package com.smart.booking.domain.payment.service;
 
-import com.smart.booking.domain.external.dto.CancelPaymentRequestDto;
-import com.smart.booking.domain.external.dto.ExternalCustomDataDto;
-import com.smart.booking.domain.external.dto.PaymentAnnotationDto;
 import com.smart.booking.domain.partner.entity.Partner;
 import com.smart.booking.domain.payment.dto.PartnerSettlementDto;
 import com.smart.booking.domain.payment.dto.PartnerTeeBoxSettlementDto;
-import com.smart.booking.domain.payment.dto.PaymentResponseDto;
-import com.smart.booking.domain.payment.dto.SavePaymentDto;
-import com.smart.booking.domain.payment.entity.Payment;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;

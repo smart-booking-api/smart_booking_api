@@ -6,7 +6,6 @@ import lombok.NonNull;
 @Builder
 public record CompletePaymentEventDto(
     @NonNull String memberId,
-    @NonNull String timeTableId,
     @NonNull String trackingId,
     @NonNull String teeBoxId,
     @NonNull String startTimeTableId,

@@ -97,8 +97,8 @@ public class CompletePaymentFacade {
                 .memberId(paymentInfo.memberId())
                 .trackingId(paymentInfo.trackingId())
                 .teeBoxId(paymentInfo.teeBoxId())
-                //TODO 시작/종료 타임 테이블 id 추가
-                .timeTableId(paymentInfo.timeTableId())
+                .startTimeTableId(paymentInfo.startTimeTableId())
+                .endTimeTableId(paymentInfo.endTimeTableId())
                 .amount(paymentInfo.reservationFee())
                 .build()
         );
