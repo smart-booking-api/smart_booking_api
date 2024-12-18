@@ -1,8 +1,8 @@
 package com.smart.booking.domain.payment.service;
 
-import com.smart.booking.domain.external.dto.CancelPaymentRequestDto;
-import com.smart.booking.domain.external.dto.ExternalCustomDataDto;
-import com.smart.booking.domain.external.dto.PaymentAnnotationDto;
+import com.smart.booking.external.portOne.model.CancelPaymentRequestDto;
+import com.smart.booking.external.portOne.model.ExternalCustomDataDto;
+import com.smart.booking.external.portOne.model.PaymentAnnotationDto;
 import com.smart.booking.domain.payment.dto.PaymentResponseDto;
 import com.smart.booking.domain.payment.dto.SavePaymentDto;
 import com.smart.booking.domain.payment.entity.Payment;

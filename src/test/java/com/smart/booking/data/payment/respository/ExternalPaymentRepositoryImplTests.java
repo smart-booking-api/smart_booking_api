@@ -2,7 +2,7 @@ package com.smart.booking.data.payment.respository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.smart.booking.domain.external.dto.SearchPaymentInfoRequestDto;
+import com.smart.booking.external.portOne.model.SearchPaymentInfoRequestDto;
 import com.smart.booking.domain.payment.repositroy.ExternalPaymentRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

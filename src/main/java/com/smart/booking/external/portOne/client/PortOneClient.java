@@ -1,15 +1,15 @@
-package com.smart.booking.domain.external.client;
+package com.smart.booking.external.portOne.client;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smart.booking.common.client.ExternalWebClient;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
-import com.smart.booking.domain.external.dto.CancelPaymentRequestDto;
-import com.smart.booking.domain.external.dto.ExternalCancelPaymentResponseDto;
-import com.smart.booking.domain.external.dto.ExternalPaymentInfoResponseDto;
-import com.smart.booking.domain.external.dto.ExternalTokenResponseDto;
-import com.smart.booking.domain.external.dto.SearchPaymentInfoRequestDto;
+import com.smart.booking.external.portOne.model.CancelPaymentRequestDto;
+import com.smart.booking.external.portOne.model.ExternalCancelPaymentResponseDto;
+import com.smart.booking.external.portOne.model.ExternalPaymentInfoResponseDto;
+import com.smart.booking.external.portOne.model.ExternalTokenResponseDto;
+import com.smart.booking.external.portOne.model.SearchPaymentInfoRequestDto;
 import com.smart.booking.domain.payment.entity.PaymentStatus;
 import java.util.Collections;
 import java.util.Map;

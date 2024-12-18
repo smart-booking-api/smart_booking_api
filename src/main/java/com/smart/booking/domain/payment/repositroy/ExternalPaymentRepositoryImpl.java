@@ -1,15 +1,13 @@
 package com.smart.booking.domain.payment.repositroy;
 
 
-import com.smart.booking.common.exception.CommonException;
-import com.smart.booking.domain.external.client.PortOneClient;
-import com.smart.booking.domain.external.dto.CancelPaymentRequestDto;
-import com.smart.booking.domain.external.dto.ExternalCancelPaymentResponseDto;
-import com.smart.booking.domain.external.dto.ExternalPaymentInfoResponseDto;
-import com.smart.booking.domain.external.dto.SearchPaymentInfoRequestDto;
+import com.smart.booking.external.portOne.client.PortOneClient;
+import com.smart.booking.external.portOne.model.CancelPaymentRequestDto;
+import com.smart.booking.external.portOne.model.ExternalCancelPaymentResponseDto;
+import com.smart.booking.external.portOne.model.ExternalPaymentInfoResponseDto;
+import com.smart.booking.external.portOne.model.SearchPaymentInfoRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
 
 @Service
 @RequiredArgsConstructor
