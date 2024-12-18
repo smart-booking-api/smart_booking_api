@@ -1,5 +1,8 @@
 package com.smart.booking.presentation.security.filter;
 
+import com.smart.booking.common.enums.ResponseCode;
+import com.smart.booking.common.exception.CommonException;
+import com.smart.booking.common.wrapper.SimpleRequestBodyWrapper;
 import com.smart.booking.domain.auth.service.AuthService;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.enums.MemberType;
@@ -15,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,7 +41,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (accessToken == null || !accessToken.startsWith("Bearer ")) {
             log.info("access token null");
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(getSimpleRequest(request), response);
             return;
         }
 
@@ -46,7 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
         // 토큰 소멸시간 검증
         if (authService.isExpiredToken(token)) {
             log.info("token expired");
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(getSimpleRequest(request), response);
             return;
         }
 
@@ -70,7 +74,16 @@ public class JwtFilter extends OncePerRequestFilter {
         // 세션에 사용자 등록
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(getSimpleRequest(request), response);
+    }
+
+    @NotNull
+    private static SimpleRequestBodyWrapper getSimpleRequest(HttpServletRequest request) {
+        try {
+            return new SimpleRequestBodyWrapper(request);
+        } catch (Exception e) {
+            throw new CommonException(ResponseCode.COMMON_BAD_REQUEST);
+        }
     }
 
     private CustomUserDetails getCustomUserDetails(String memberId) {
