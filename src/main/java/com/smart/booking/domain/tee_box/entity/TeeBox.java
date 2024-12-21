@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.OffsetDateTime;
@@ -59,9 +60,11 @@ public class TeeBox extends BaseEntity {
     @JoinColumn(name = "device_id")
     private Device device;
 
-    private int number;
+    private Integer number;
 
     private String screenName;
+
+    private String memo;
 
     private OffsetDateTime deletedAt;
 
@@ -93,6 +96,12 @@ public class TeeBox extends BaseEntity {
         }
 
         this.shares = shares;
+    }
+
+    @PreRemove
+    public void preRemove() {
+        this.number = null;
+        this.device = null;
     }
 
 }

@@ -4,11 +4,12 @@ import com.smart.booking.domain.common.entity.BusinessRegistration;
 import com.smart.booking.domain.store.dto.UpsertStoreDto;
 import com.smart.booking.domain.store.dto.UpsertStoreDtoTeeBoxFee;
 import com.smart.booking.domain.store.value_object.StoreTrialOperation;
+import lombok.Getter;
+import lombok.NonNull;
+
 import java.time.DayOfWeek;
 import java.time.OffsetDateTime;
 import java.util.List;
-import lombok.Getter;
-import lombok.NonNull;
 
 @Getter
 public abstract class UpsertStoreRequestDto {
@@ -39,17 +40,17 @@ public abstract class UpsertStoreRequestDto {
     private final String memo;
 
     public UpsertStoreRequestDto(
-        @NonNull String name,
-        @NonNull String address,
-        @NonNull String businessRegistrationNumber,
-        @NonNull String businessRegistrationCode,
-        @NonNull String openTime,
-        @NonNull String closeTime,
-        @NonNull OffsetDateTime trialEndAt,
-        int discountRate,
-        @NonNull List<TeeBoxFeeDto> teeBoxFees,
-        @NonNull List<DayOfWeek> openWeekDays,
-        @NonNull String memo
+            @NonNull String name,
+            @NonNull String address,
+            @NonNull String businessRegistrationNumber,
+            @NonNull String businessRegistrationCode,
+            @NonNull String openTime,
+            @NonNull String closeTime,
+            @NonNull OffsetDateTime trialEndAt,
+            int discountRate,
+            @NonNull List<TeeBoxFeeDto> teeBoxFees,
+            @NonNull List<DayOfWeek> openWeekDays,
+            @NonNull String memo
     ) {
         this.name = name;
         this.address = address;
@@ -66,29 +67,28 @@ public abstract class UpsertStoreRequestDto {
 
     public UpsertStoreDto toUpsertStoreDto() {
         return new UpsertStoreDto(
-            null,
-            getName(),
-            getAddress(),
-            BusinessRegistration.builder()
-                .number(getBusinessRegistrationNumber())
-                .code(getBusinessRegistrationCode())
-                .build(),
-            getOpenTime(),
-            getCloseTime(),
-            StoreTrialOperation.builder()
-                .trialEndAt(getTrialEndAt())
-                .discountRate(getDiscountRate())
-                .build(),
-            getTeeBoxFees().stream().map(
-                (teeBoxFee) -> new UpsertStoreDtoTeeBoxFee(
-                    teeBoxFee.getTeeBoxType(),
-                    teeBoxFee.getBookingFee(),
-                    teeBoxFee.getUsageFee(),
-                    teeBoxFee.getOnSiteFee()
-                )
-            ).toList(),
-            getOpenWeekDays(),
-            getMemo()
+                getName(),
+                getAddress(),
+                BusinessRegistration.builder()
+                        .number(getBusinessRegistrationNumber())
+                        .code(getBusinessRegistrationCode())
+                        .build(),
+                getOpenTime(),
+                getCloseTime(),
+                StoreTrialOperation.builder()
+                        .trialEndAt(getTrialEndAt())
+                        .discountRate(getDiscountRate())
+                        .build(),
+                getTeeBoxFees().stream().map(
+                        (teeBoxFee) -> new UpsertStoreDtoTeeBoxFee(
+                                teeBoxFee.getTeeBoxType(),
+                                teeBoxFee.getBookingFee(),
+                                teeBoxFee.getUsageFee(),
+                                teeBoxFee.getOnSiteFee()
+                        )
+                ).toList(),
+                getOpenWeekDays(),
+                getMemo()
         );
     }
 

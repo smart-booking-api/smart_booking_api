@@ -17,7 +17,6 @@ public interface StoreMapper {
             Region region
     ) {
         return Store.builder()
-                .id(upsertStoreDto.id())
                 .name(upsertStoreDto.name())
                 .region(region)
                 .address(upsertStoreDto.address())

@@ -8,23 +8,30 @@ import com.smart.booking.domain.store.dto.ScheduleStoreClosedDaysDto;
 import com.smart.booking.domain.store.dto.UpsertStoreDto;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.store.entity.StoreClosedDay;
-import java.util.List;
 import lombok.NonNull;
+
+import java.util.List;
 
 public interface StorePartnerService extends StoreCommonService {
 
 
-    @NonNull Store getStoreByBusinessRegistration(@NonNull BusinessRegistration businessRegistration);
+    @NonNull
+    Store getStoreByBusinessRegistration(@NonNull BusinessRegistration businessRegistration);
 
-    @NonNull Store createStore(@NonNull UpsertStoreDto upsertStoreDto);
+    @NonNull
+    Store createStore(@NonNull UpsertStoreDto upsertStoreDto);
 
-    @NonNull Store updateStore(@NonNull UpsertStoreDto upsertStoreDto) throws CommonException;
+    @NonNull
+    Store updateStore(@NonNull String storeId, @NonNull UpsertStoreDto upsertStoreDto) throws CommonException;
 
     void deleteStore(@NonNull String storeId);
 
-    @NonNull CursorResult<Store> getStores(@NonNull GetStoresDto getStoresDto) throws CommonException;
+    @NonNull
+    CursorResult<Store> getStores(@NonNull GetStoresDto getStoresDto) throws CommonException;
 
-    @NonNull List<StoreClosedDay> getStoreClosedDays(@NonNull Store store);
+    @NonNull
+    List<StoreClosedDay> getStoreClosedDays(@NonNull Store store);
 
-    @NonNull List<StoreClosedDay> scheduleClosedDays(@NonNull ScheduleStoreClosedDaysDto scheduleClosedDays);
+    @NonNull
+    List<StoreClosedDay> scheduleClosedDays(@NonNull ScheduleStoreClosedDaysDto scheduleClosedDays);
 }
