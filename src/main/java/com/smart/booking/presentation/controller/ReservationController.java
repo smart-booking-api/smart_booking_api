@@ -2,13 +2,16 @@ package com.smart.booking.presentation.controller;
 
 import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.resolver.MemberContext;
+import com.smart.booking.domain.reservation.enums.ReservationStatus;
 import com.smart.booking.facade.common.reservation.CreateReservationLockFacade;
 import com.smart.booking.facade.common.reservation.DeleteReservationLockFacade;
 import com.smart.booking.facade.common.reservation.GetEnableReservationTimeFacade;
 import com.smart.booking.facade.dto.reservation.CreateReservationLockDto;
 import com.smart.booking.facade.dto.reservation.GetReservationTime;
+import com.smart.booking.facade.dto.reservation.MonthlyReservation;
 import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
 import com.smart.booking.facade.dto.reservation.ReservationTimeResponse;
+import com.smart.booking.facade.user.reservation.GetMonthlyReservationFacade;
 import com.smart.booking.facade.user.reservation.GetReservationFacade;
 import com.smart.booking.presentation.controller.endPoint.ReservationEndpoint;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +19,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +37,7 @@ public class ReservationController {
     private final DeleteReservationLockFacade deleteReservationLockFacade;
     private final GetReservationFacade getReservationFacade;
     private final GetEnableReservationTimeFacade getEnableReservationTimeFacade;
+    private final GetMonthlyReservationFacade getMonthlyReservationFacade;
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "선점락 + firebase data 생성", description = "이용자 예약시 선점락 생성")
     @PostMapping(ReservationEndpoint.RESERVATION_LOCK)
@@ -57,5 +62,11 @@ public class ReservationController {
     @GetMapping(ReservationEndpoint.GET_ENABLE_RESERVATION_TIME)
     public List<ReservationTimeResponse> getEnableReservationTime(GetReservationTime getReservationTime) {
         return getEnableReservationTimeFacade.execute(getReservationTime.teeBoxId(), getReservationTime.reservationDate());
+    }
+
+    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "월별 나의 예약조회", description = "월별 예약을 조회한다.")
+    @GetMapping(ReservationEndpoint.MONTHLY_RESERVATION_HISTORY)
+    public Map<ReservationStatus, List<MonthlyReservation>> getMonthlyMyReservation(@PathVariable String year, @PathVariable String month, @MemberContext MemberContextDto memberContextDto) {
+        return getMonthlyReservationFacade.execute(year, month, memberContextDto.getMemberId());
     }
 }

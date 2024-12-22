@@ -45,7 +45,7 @@ class AuthServiceTest {
 
     @Test
     void 서드파티_멤버조회() {
-        Optional<User> user = userService.getByProviderUserId("aaa777");
+        Optional<User> user = userService.getByProviderUserIdAndProvider("aaa777", ThirdPartyAccountProvider.KAKAO);
         assertNotNull(user);
     }
 }

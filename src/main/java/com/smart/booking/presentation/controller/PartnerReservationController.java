@@ -33,7 +33,7 @@ public class PartnerReservationController {
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "전화예약생성", description = "전화예약인 경우 해당 API 로 예약을 생성한다.")
     @PostMapping(PartnerReservationEndpoint.RESERVATION_PARTNER_CREATE_PHONE_RESERVATION)
-    public void createReservation(@Parameter(hidden = true) @MemberContext MemberContextDto memberContextDto, @RequestBody @Valid CreatePhoneReservationDto createDto) {
+    public void createReservation(@MemberContext MemberContextDto memberContextDto, @RequestBody @Valid CreatePhoneReservationDto createDto) {
         createPhoneReservationFacade.execute(createDto, memberContextDto);
     }
 
