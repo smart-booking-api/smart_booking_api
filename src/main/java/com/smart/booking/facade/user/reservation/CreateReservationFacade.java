@@ -7,12 +7,10 @@ import com.smart.booking.domain.payment.entity.PaymentStatus;
 import com.smart.booking.domain.reservation.dto.UpsertReservationDto;
 import com.smart.booking.domain.reservation.service.UserReservationService;
 import com.smart.booking.domain.store.entity.Store;
-import com.smart.booking.domain.store.service.StoreUserService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import com.smart.booking.domain.tee_box.service.TeeBoxCommonService;
-import com.smart.booking.facade.dto.reservation.ReservationFirebaseStatus;
+import com.smart.booking.facade.dto.reservation.ReservationFirebaseStatusDto;
 import com.smart.booking.facade.event.dto.CompletePaymentEventDto;
-import java.util.concurrent.ExecutionException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +38,7 @@ public class CreateReservationFacade {
 
         // firebase 처리상태 업데이트
         firebaseComponent.updateDocument(COLLECTION_NAME, eventDto.trackingId(),
-            new ReservationFirebaseStatus(eventDto.trackingId(), eventDto.memberId(), PaymentStatus.COMPLETE));
+            new ReservationFirebaseStatusDto(eventDto.trackingId(), eventDto.memberId(), PaymentStatus.COMPLETE));
     }
 
     private UpsertReservationDto getCreateReservationDto(Store store, TeeBox teeBox, Member member, CompletePaymentEventDto eventDto) {

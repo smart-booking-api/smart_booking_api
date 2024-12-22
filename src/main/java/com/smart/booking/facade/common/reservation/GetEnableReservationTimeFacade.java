@@ -9,8 +9,7 @@ import com.smart.booking.domain.reservation.service.ReservationLockService;
 import com.smart.booking.domain.reservation.service.ReservationTimeService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import com.smart.booking.domain.tee_box.service.TeeBoxCommonService;
-import com.smart.booking.domain.tee_box.service.TeeBoxUserService;
-import com.smart.booking.facade.dto.reservation.ReservationTimeResponse;
+import com.smart.booking.facade.dto.reservation.ReservationTimeResponseDto;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -34,7 +33,7 @@ public class GetEnableReservationTimeFacade {
         this.reservationLockService = reservationLockService;
     }
 
-    public List<ReservationTimeResponse> execute(String teeBoxId, String reservationDate) {
+    public List<ReservationTimeResponseDto> execute(String teeBoxId, String reservationDate) {
         // 타석 운영시간 구하기
         List<ReservationTimeCode> timeCodes = getTeeBoxOperationTimes(teeBoxId);
 
@@ -46,7 +45,7 @@ public class GetEnableReservationTimeFacade {
 
         // 선점락 걸려있지 않은 시간 조회
         return getUnlockedReservationTimeCodes(reservableTimeCodes, teeBoxId, reservationDate)
-            .stream().map(item -> new ReservationTimeResponse(item.getId(), item.getTimeName()))
+            .stream().map(item -> new ReservationTimeResponseDto(item.getId(), item.getTimeName()))
             .collect(Collectors.toList());
     }
 
