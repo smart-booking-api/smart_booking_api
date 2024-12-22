@@ -9,8 +9,8 @@ import com.smart.booking.facade.common.reservation.GetEnableReservationTimeFacad
 import com.smart.booking.facade.dto.reservation.CreateReservationLockDto;
 import com.smart.booking.facade.dto.reservation.GetReservationTime;
 import com.smart.booking.facade.dto.reservation.MonthlyReservation;
-import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
-import com.smart.booking.facade.dto.reservation.ReservationTimeResponse;
+import com.smart.booking.facade.dto.reservation.ReservationSimpleResponseDto;
+import com.smart.booking.facade.dto.reservation.ReservationTimeResponseDto;
 import com.smart.booking.facade.user.reservation.GetMonthlyReservationFacade;
 import com.smart.booking.facade.user.reservation.GetReservationFacade;
 import com.smart.booking.presentation.controller.endPoint.ReservationEndpoint;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -54,13 +53,13 @@ public class ReservationController {
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "예약조회", description = "메인화면 - 내 예약을 조회한다.")
     @GetMapping(ReservationEndpoint.GET_MY_RESERVATION)
-    public List<ReservationSimpleResponse> getMyReservations(@MemberContext MemberContextDto memberContextDto, @PathVariable String startDate) {
+    public List<ReservationSimpleResponseDto> getMyReservations(@MemberContext MemberContextDto memberContextDto, @PathVariable String startDate) {
         return getReservationFacade.getMyReservations(memberContextDto.getMemberId(), startDate);
     }
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "시간조회", description = "예약이 가능하고 선점락이 걸려있지 않은 예약 가능 시간을 조회한다.")
     @GetMapping(ReservationEndpoint.GET_ENABLE_RESERVATION_TIME)
-    public List<ReservationTimeResponse> getEnableReservationTime(GetReservationTime getReservationTime) {
+    public List<ReservationTimeResponseDto> getEnableReservationTime(GetReservationTime getReservationTime) {
         return getEnableReservationTimeFacade.execute(getReservationTime.teeBoxId(), getReservationTime.reservationDate());
     }
 
