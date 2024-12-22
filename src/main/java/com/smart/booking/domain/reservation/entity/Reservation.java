@@ -5,6 +5,7 @@ import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.reservation.enums.ReservationStatus;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -36,6 +37,7 @@ public class Reservation extends BaseEntity {
     private Store store;
 
     @Comment("예약번호")
+    @Column(unique = true)
     private int reservationNo;
 
     @Comment("타석")
