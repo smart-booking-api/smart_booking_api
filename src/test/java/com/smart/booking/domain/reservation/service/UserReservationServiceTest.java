@@ -12,7 +12,7 @@ import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.entity.ReservationMember;
 import com.smart.booking.domain.reservation.enums.ReservationStatus;
 import com.smart.booking.domain.reservation.repository.ReservationRepository;
-import com.smart.booking.facade.dto.reservation.MonthlyReservation;
+import com.smart.booking.facade.dto.reservation.MonthlyReservationDto;
 import com.smart.booking.facade.user.reservation.GetMonthlyReservationFacade;
 import java.time.LocalDate;
 import java.util.List;
@@ -65,10 +65,9 @@ class UserReservationServiceTest {
         String year = String.valueOf(today.getYear());
         String month = String.valueOf(today.getMonthValue());
 
-        Map<ReservationStatus, List<MonthlyReservation>> reservationMap = getMonthlyReservationFacade.execute(year, month, member.getId());
+        List<MonthlyReservationDto> reservationDtoList = getMonthlyReservationFacade.execute(year, month, member.getId());
 
-        assertNotNull(reservationMap.get(ReservationStatus.RESERVED));
-        assertNull(reservationMap.get(ReservationStatus.CANCELED));
+        assertNull(reservationDtoList.stream().filter(item -> item.getReservationStatus() == ReservationStatus.CANCELED).findAny());
     }
 
     private Reservation getReservation(Member member) {
