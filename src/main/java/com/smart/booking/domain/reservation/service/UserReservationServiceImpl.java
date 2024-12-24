@@ -55,7 +55,7 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
 
     @Override
     public List<Reservation> getMonthlyMyReservationHistory(String memberId, String year, String month) {
-        return reservationRepository.getByMemberIdAndYearMonth(memberId, year.concat(month));
+        return reservationRepository.findByMemberIdAndYearMonth(memberId, year.concat(month));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.smart.booking.facade.mapper;
 
 import com.smart.booking.domain.reservation.entity.Reservation;
-import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
+import com.smart.booking.facade.dto.reservation.ReservationSimpleResponseDto;
 import java.util.List;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -16,8 +16,8 @@ public interface ReservationMapper {
     @Named("E2R")
     @Mapping(target = "storeName", source = "store.name")
     @Mapping(target = "teeBoxNumber", source = "teeBox.number")
-    ReservationSimpleResponse reservationToDto(Reservation reservation);
+    ReservationSimpleResponseDto reservationToDto(Reservation reservation);
 
     @IterableMapping(qualifiedByName = "E2R")
-    List<ReservationSimpleResponse> reservationsToDtoList(List<Reservation> lecture);
+    List<ReservationSimpleResponseDto> reservationsToDtoList(List<Reservation> lecture);
 }
