@@ -54,8 +54,8 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
     }
 
     @Override
-    public List<ReservationDateHistoryDto> getMyReservationDateHistory(String memberId, String yearMonth) {
-        return null;
+    public List<Reservation> getMonthlyMyReservationHistory(String memberId, String year, String month) {
+        return reservationRepository.findByMemberIdAndYearMonth(memberId, year.concat(month));
     }
 
     @Override

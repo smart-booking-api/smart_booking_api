@@ -7,7 +7,7 @@ import com.smart.booking.domain.reservation.entity.ReservationTimeCode;
 import com.smart.booking.domain.reservation.service.ReservationLockService;
 import com.smart.booking.domain.reservation.service.ReservationTimeService;
 import com.smart.booking.facade.dto.reservation.CreateReservationLockDto;
-import com.smart.booking.facade.dto.reservation.ReservationFirebaseStatus;
+import com.smart.booking.facade.dto.reservation.ReservationFirebaseStatusDto;
 import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class CreateReservationLockFacade {
 
         // firebase data 생성
         firebaseComponent.updateDocument(COLLECTION_NAME, lockDto.trackingId(),
-            new ReservationFirebaseStatus(lockDto.trackingId(), memberId, PaymentStatus.PENDING));
+            new ReservationFirebaseStatusDto(lockDto.trackingId(), memberId, PaymentStatus.PENDING));
     }
 
     private void createTimesLock(@NotNull CreateReservationLockDto lockDto, String memberId) {

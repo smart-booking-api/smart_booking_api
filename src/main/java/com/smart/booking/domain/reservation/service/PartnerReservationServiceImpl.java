@@ -1,13 +1,10 @@
 package com.smart.booking.domain.reservation.service;
 
-import com.smart.booking.common.dto.MemberContextDto;
-import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.enums.MemberType;
+import com.smart.booking.domain.reservation.dto.PhoneReservationDto;
 import com.smart.booking.domain.reservation.dto.UpsertPhoneReservationDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.repository.ReservationRepository;
-import com.smart.booking.facade.dto.reservation.ReservationSimpleResponse;
-import com.smart.booking.domain.reservation.enums.SearchDateType;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -26,19 +23,14 @@ public class PartnerReservationServiceImpl extends CommonReservationServiceImpl 
     }
 
     @Override
-    public List<ReservationSimpleResponse> getReservationList(String reservationUserName, String reservationNo) {
-        return null;
+    public List<PhoneReservationDto> getPhoneReservationList(String searchText, String memberId) {
+        return reservationRepository.findBySearchTextAndMemberId(searchText, memberId);
     }
 
     @Override
     public void createPhoneReservation(UpsertPhoneReservationDto upsertPhoneReservationDto) {
         Reservation reservation = upsertPhoneReservationDto.toEntity();
         reservationRepository.save(reservation);
-    }
-
-    @Override
-    public void getMonthlyReservationDates(String storeId, SearchDateType dateType) {
-
     }
 
     @Override

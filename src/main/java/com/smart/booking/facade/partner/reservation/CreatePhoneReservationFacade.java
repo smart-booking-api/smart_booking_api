@@ -25,11 +25,13 @@ import java.util.List;
 import java.util.Objects;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class CreatePhoneReservationFacade {
     private final PartnerReservationService partnerReservationService;
@@ -54,6 +56,7 @@ public class CreatePhoneReservationFacade {
             // 락 해제
             deleteReservationLock(createDto, memberContextDto.getMemberId());
         } catch (Exception ex) {
+            log.error("파트너 전화 예약 실패: {}", ex.getMessage());
             // 락 해제
             deleteReservationLock(createDto, memberContextDto.getMemberId());
         }
