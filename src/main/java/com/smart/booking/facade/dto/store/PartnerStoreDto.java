@@ -6,11 +6,12 @@ import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.store.value_object.WeekdayWeekendFee;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import java.time.OffsetDateTime;
-import java.util.List;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+
+import java.time.OffsetDateTime;
+import java.util.List;
 
 
 // 파트너
@@ -41,46 +42,47 @@ public class PartnerStoreDto {
     private final int discountRate;
     @NotNull
     private final List<TeeBoxFeeDto> teeBoxFees;
+    
     private final String memo;
 
     public PartnerStoreDto(@NonNull Store store) {
         this(
-            store.getId(),
-            store.getName(),
-            store.getRegion(),
-            store.getAddress(),
-            store.getBusinessRegistration().getNumber(),
-            store.getBusinessRegistration().getCode(),
-            store.getOperationInfo().getOpenTime(),
-            store.getOperationInfo().getCloseTime(),
-            store.getOperationInfo().getTrialOperation().getTrialEndAt(),
-            store.getOperationInfo().getTrialOperation().getDiscountRate(),
-            store.getOperationInfo().getTeeBoxFees().stream().map(
-                teeBoxFee -> new TeeBoxFeeDto(
-                    teeBoxFee.getTeeBoxType(),
-                    WeekdayWeekendFee.builder()
-                        .weekdayFee(teeBoxFee.getBookingFee().getWeekdayFee())
-                        .weekendFee(teeBoxFee.getBookingFee().getWeekendFee())
-                        .build(),
-                    WeekdayWeekendFee.builder()
-                        .weekdayFee(teeBoxFee.getUsageFee().getWeekdayFee())
-                        .weekendFee(teeBoxFee.getUsageFee().getWeekendFee())
-                        .build(),
-                    teeBoxFee.getOnSiteFee()
-                )
-            ).toList(),
-            store.getOperationInfo().getMemo()
+                store.getId(),
+                store.getName(),
+                store.getRegion(),
+                store.getAddress(),
+                store.getBusinessRegistration().getNumber(),
+                store.getBusinessRegistration().getCode(),
+                store.getOperationInfo().getOpenTime(),
+                store.getOperationInfo().getCloseTime(),
+                store.getOperationInfo().getTrialOperation().getTrialEndAt(),
+                store.getOperationInfo().getTrialOperation().getDiscountRate(),
+                store.getOperationInfo().getTeeBoxFees().stream().map(
+                        teeBoxFee -> new TeeBoxFeeDto(
+                                teeBoxFee.getTeeBoxType(),
+                                WeekdayWeekendFee.builder()
+                                        .weekdayFee(teeBoxFee.getBookingFee().getWeekdayFee())
+                                        .weekendFee(teeBoxFee.getBookingFee().getWeekendFee())
+                                        .build(),
+                                WeekdayWeekendFee.builder()
+                                        .weekdayFee(teeBoxFee.getUsageFee().getWeekdayFee())
+                                        .weekendFee(teeBoxFee.getUsageFee().getWeekendFee())
+                                        .build(),
+                                teeBoxFee.getOnSiteFee()
+                        )
+                ).toList(),
+                store.getOperationInfo().getMemo()
         );
 
     }
 
     public record PartnerStoreDtoTeeBoxFee(
-        TeeBoxType teeBoxType,
-        int bookingWeekdayFee,
-        int bookingWeekendFee,
-        int usageWeekdayFee,
-        int usageWeekendFee,
-        int onSiteFee
+            TeeBoxType teeBoxType,
+            int bookingWeekdayFee,
+            int bookingWeekendFee,
+            int usageWeekdayFee,
+            int usageWeekendFee,
+            int onSiteFee
     ) {
 
 

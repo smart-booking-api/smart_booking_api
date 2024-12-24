@@ -8,6 +8,7 @@ import com.smart.booking.facade.partner.partner.GetPartnersFacade.GetPartnersReq
 import com.smart.booking.presentation.controller.endPoint.PartnerEndPoint;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "파트너 관리", description = "파트너 관리 컨트롤러")
 public class PartnerController {
 
     private final GetPartnerFacade getPartnerFacade;

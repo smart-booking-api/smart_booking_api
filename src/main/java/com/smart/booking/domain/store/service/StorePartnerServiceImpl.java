@@ -59,13 +59,10 @@ class StorePartnerServiceImpl extends StoreCommonServiceImpl implements StorePar
     }
 
     @Override
-    public @NonNull Store updateStore(@NonNull UpsertStoreDto upsertStoreDto) {
+    public @NonNull Store updateStore(@NonNull String storeId, @NonNull UpsertStoreDto upsertStoreDto) {
 
-        if (upsertStoreDto.id() == null) {
-            throw new CommonException(ResponseCode.NOT_FOUND_STORE);
-        }
 
-        final Store store = getStoreById(upsertStoreDto.id());
+        final Store store = getStoreById(storeId);
 
         final boolean isSameBusinessRegistration = store.getBusinessRegistration().equals(upsertStoreDto.businessRegistration());
         final boolean isDuplicateBusinessRegistration = storeRepository.existsByBusinessRegistration(upsertStoreDto.businessRegistration());

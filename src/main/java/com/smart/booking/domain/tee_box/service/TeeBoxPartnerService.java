@@ -7,9 +7,11 @@ import lombok.NonNull;
 
 public interface TeeBoxPartnerService extends TeeBoxCommonService {
 
-    @NonNull TeeBox createTeeBox(@NonNull CreateTeeBoxDto createTeeBoxDto);
+    @NonNull
+    TeeBox createTeeBox(@NonNull CreateTeeBoxDto createTeeBoxDto);
 
-    @NonNull TeeBox updateTeeBox(@NonNull UpdateTeeBoxDto updateTeeBoxDto);
+    @NonNull
+    TeeBox updateTeeBox(@NonNull String teeBoxId, @NonNull UpdateTeeBoxDto updateTeeBoxDto);
 
     void deleteTeeBox(@NonNull String id);
 }

@@ -12,7 +12,6 @@ import com.smart.booking.domain.tee_box.repositroy.TeeBoxRepository;
 import java.util.HashMap;
 import java.util.List;
 import lombok.NonNull;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,11 +40,11 @@ public class TeeBoxPartnerServiceImpl extends TeeBoxCommonServiceImpl implements
     }
 
     @Override
-    public @NonNull TeeBox updateTeeBox(@NonNull UpdateTeeBoxDto updateTeeBoxDto) {
+    public @NonNull TeeBox updateTeeBox(@NonNull String teeBoxId, @NonNull UpdateTeeBoxDto updateTeeBoxDto) {
         checkDuplicatedPartnerTypeThrow(updateTeeBoxDto.shares());
         checkShareSumThrow(updateTeeBoxDto.shares());
 
-        final TeeBox teeBox = teeBoxRepository.findById(updateTeeBoxDto.id())
+        final TeeBox teeBox = teeBoxRepository.findById(teeBoxId)
             .orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_TEE_BOX));
 
         teeBox.edit(updateTeeBoxDto);
