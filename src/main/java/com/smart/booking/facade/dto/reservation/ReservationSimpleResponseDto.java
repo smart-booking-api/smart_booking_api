@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
-public class ReservationSimpleResponse {
+public class ReservationSimpleResponseDto {
     private String reservationNo;
     private String reservationDate;
     private String startTimeId;

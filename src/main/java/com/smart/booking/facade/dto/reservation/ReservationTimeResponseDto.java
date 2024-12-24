@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
-public class ReservationTimeResponse {
+public class ReservationTimeResponseDto {
     private String id;
     private String timeName;
 }

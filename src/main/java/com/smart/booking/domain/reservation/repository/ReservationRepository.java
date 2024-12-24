@@ -13,6 +13,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, String
     List<Reservation> findAllByReservationMemberMemberAndReservationDateIsAfter(Member member, LocalDate reservationDate);
     List<Reservation> findAllByStoreAndReservationDate(Store store, LocalDate reservationDate);
     Optional<Reservation> findByReservationNo(int number);
-
-    List<Reservation> getReservationByTeeBoxAndReservationDate(TeeBox teeBox, LocalDate reservationDate);
+    List<Reservation> findReservationByTeeBoxAndReservationDate(TeeBox teeBox, LocalDate reservationDate);
 }
