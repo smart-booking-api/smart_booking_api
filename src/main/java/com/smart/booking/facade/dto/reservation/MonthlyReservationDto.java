@@ -6,11 +6,11 @@ import java.time.LocalDate;
 import lombok.Getter;
 
 @Getter
-public class MonthlyReservation {
+public class MonthlyReservationDto {
     private ReservationStatus reservationStatus;
     private LocalDate reservationDate;
 
-    public MonthlyReservation(Reservation reservation) {
+    public MonthlyReservationDto(Reservation reservation) {
         this.reservationStatus = reservation.getReservationStatus();
         this.reservationDate = reservation.getReservationDate();
     }
