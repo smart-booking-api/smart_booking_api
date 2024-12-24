@@ -1,10 +1,10 @@
 package com.smart.booking.domain.reservation.service;
 
 import com.smart.booking.domain.member.enums.MemberType;
+import com.smart.booking.domain.reservation.dto.PhoneReservationDto;
 import com.smart.booking.domain.reservation.dto.UpsertPhoneReservationDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.repository.ReservationRepository;
-import com.smart.booking.facade.dto.reservation.ReservationSimpleResponseDto;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +23,8 @@ public class PartnerReservationServiceImpl extends CommonReservationServiceImpl 
     }
 
     @Override
-    public List<ReservationSimpleResponseDto> getReservationList(String reservationUserName, String reservationNo) {
-        return null;
+    public List<PhoneReservationDto> getPhoneReservationList(String searchText, String memberId) {
+        return reservationRepository.findBySearchTextAndMemberId(searchText, memberId);
     }
 
     @Override

@@ -43,7 +43,7 @@ public class CommonReservationServiceImpl implements CommonReservationService {
      */
     @Override
     public List<Reservation> getReservationByTeeBoxAndReservationDate(TeeBox teeBox, LocalDate reservationDate) {
-        return reservationRepository.getReservationByTeeBoxAndReservationDate(teeBox, reservationDate);
+        return reservationRepository.findReservationByTeeBoxAndReservationDate(teeBox, reservationDate);
     }
 
     /**
