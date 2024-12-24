@@ -1,7 +1,7 @@
 package com.smart.booking.domain.reservation.service;
 
+import com.smart.booking.domain.reservation.dto.PhoneReservationDto;
 import com.smart.booking.domain.reservation.dto.UpsertPhoneReservationDto;
-import com.smart.booking.facade.dto.reservation.ReservationSimpleResponseDto;
 import java.util.List;
 
 public interface PartnerReservationService extends CommonReservationService {
@@ -17,11 +17,11 @@ public interface PartnerReservationService extends CommonReservationService {
 
     /**
      * 전화예약 목록 조회
-     * @param reservationUserName
-     * @param reservationNo
+     * @param searchText
+     * @param memberId
      * @return
      */
-    List<ReservationSimpleResponseDto> getReservationList(String reservationUserName, String reservationNo);
+    List<PhoneReservationDto> getPhoneReservationList(String searchText, String memberId);
 
     /**
      * 전화예약 생성
