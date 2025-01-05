@@ -22,9 +22,12 @@ public class ReservationListener {
         createReservationFacade.execute(completePaymentEventDto);
     }
 
+    // todo 제거
     @TransactionalEventListener
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void cancelReservation(RefundPaymentEventDto refundPaymentEventDto) throws Exception {
         refundReservationFacade.execute(refundPaymentEventDto);
     }
+
+    // todo 결제실패 - 락 제거
 }

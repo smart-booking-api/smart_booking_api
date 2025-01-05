@@ -5,11 +5,13 @@ import com.smart.booking.common.resolver.MemberContext;
 import com.smart.booking.facade.common.reservation.CreateReservationLockFacade;
 import com.smart.booking.facade.common.reservation.DeleteReservationLockFacade;
 import com.smart.booking.facade.common.reservation.GetEnableReservationTimeFacade;
+import com.smart.booking.facade.dto.reservation.CardReceiptDto;
 import com.smart.booking.facade.dto.reservation.CreateReservationLockDto;
 import com.smart.booking.facade.dto.reservation.GetReservationTime;
 import com.smart.booking.facade.dto.reservation.MonthlyReservationDto;
 import com.smart.booking.facade.dto.reservation.ReservationSimpleResponseDto;
 import com.smart.booking.facade.dto.reservation.ReservationTimeResponseDto;
+import com.smart.booking.facade.user.reservation.GetCardReceiptFacade;
 import com.smart.booking.facade.user.reservation.GetMonthlyReservationFacade;
 import com.smart.booking.facade.user.reservation.GetReservationFacade;
 import com.smart.booking.presentation.controller.endPoint.ReservationEndpoint;
@@ -29,12 +31,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "이용자 예약", description = "이용자 예약 컨트롤러")
-public class ReservationController {
+public class UserReservationController {
     private final CreateReservationLockFacade createReservationLockFacade;
     private final DeleteReservationLockFacade deleteReservationLockFacade;
     private final GetReservationFacade getReservationFacade;
     private final GetEnableReservationTimeFacade getEnableReservationTimeFacade;
     private final GetMonthlyReservationFacade getMonthlyReservationFacade;
+    private final GetCardReceiptFacade getCardReceiptFacade;
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "선점락 + firebase data 생성", description = "이용자 예약시 선점락 생성")
     @PostMapping(ReservationEndpoint.RESERVATION_LOCK)
@@ -52,7 +55,7 @@ public class ReservationController {
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "예약조회", description = "메인화면 - 내 예약을 조회한다.")
     @GetMapping(ReservationEndpoint.GET_MY_RESERVATION)
     public List<ReservationSimpleResponseDto> getMyReservations(@MemberContext MemberContextDto memberContextDto, @PathVariable String startDate) {
-        return getReservationFacade.getMyReservations(memberContextDto.getMemberId(), startDate);
+        return getReservationFacade.execute(memberContextDto.getMemberId(), startDate);
     }
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "시간조회", description = "예약이 가능하고 선점락이 걸려있지 않은 예약 가능 시간을 조회한다.")
@@ -65,5 +68,11 @@ public class ReservationController {
     @GetMapping(ReservationEndpoint.MONTHLY_RESERVATION_HISTORY)
     public List<MonthlyReservationDto> getMonthlyMyReservation(@PathVariable String year, @PathVariable String month, @MemberContext MemberContextDto memberContextDto) {
         return getMonthlyReservationFacade.execute(year, month, memberContextDto.getMemberId());
+    }
+
+    @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "신용카드 매출전표 조회", description = "신용카드 매출전표 조회")
+    @GetMapping(ReservationEndpoint.GET_CARD_RECEIPT)
+    public CardReceiptDto getCardReceipt(@PathVariable String reservationId, @MemberContext MemberContextDto memberContextDto) {
+        return getCardReceiptFacade.execute(reservationId);
     }
 }
