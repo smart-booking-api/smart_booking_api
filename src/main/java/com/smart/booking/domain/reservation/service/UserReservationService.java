@@ -41,4 +41,11 @@ public interface UserReservationService extends CommonReservationService {
      * @return
      */
     Reservation getReservationById(String reservationId);
+
+    /**
+     * 예약 번호로 예약조회
+     * @param reservationNo
+     * @return
+     */
+    Reservation getReservationByReservationNo(int reservationNo);
 }

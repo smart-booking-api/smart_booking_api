@@ -3,6 +3,7 @@ package com.smart.booking.domain.reservation.entity;
 import com.smart.booking.common.annotations.TsidGenerator;
 import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.reservation.enums.ReservationStatus;
+import com.smart.booking.domain.reservation.service.ReservationTimeService;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import jakarta.persistence.Column;
@@ -66,5 +67,13 @@ public class Reservation extends BaseEntity {
 
     public void updateReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
+    }
+
+    public String getStartTime(ReservationTimeService reservationTimeService) {
+        return reservationTimeService.getReservationTimeCodeById(this.getStartTimeId()).getTimeName();
+    }
+
+    public String getEndTime(ReservationTimeService reservationTimeService) {
+        return reservationTimeService.getReservationTimeCodeById(this.getEndTimeId()).getTimeName();
     }
 }

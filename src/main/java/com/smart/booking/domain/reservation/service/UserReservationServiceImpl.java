@@ -65,6 +65,11 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
     }
 
     @Override
+    public Reservation getReservationByReservationNo(int reservationNo) {
+        return reservationRepository.findByReservationNo(reservationNo).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION));
+    }
+
+    @Override
     public boolean validateCancelPermission(String reservationId, String memberId, MemberType memberType) {
         Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION));
         return reservation.getCreatedBy().equals(memberId);
