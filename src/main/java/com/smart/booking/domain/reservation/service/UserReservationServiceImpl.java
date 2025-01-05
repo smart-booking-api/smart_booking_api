@@ -1,17 +1,13 @@
 package com.smart.booking.domain.reservation.service;
 
-import com.smart.booking.common.dto.MemberContextDto;
 import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.common.util.CommonUtil;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.enums.MemberType;
 import com.smart.booking.domain.reservation.dto.UpsertReservationDto;
-import com.smart.booking.domain.reservation.dto.ReservationDateHistoryDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.repository.ReservationRepository;
-import com.smart.booking.domain.store.entity.Store;
-import com.smart.booking.domain.tee_box.entity.TeeBox;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -61,6 +57,11 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
     @Override
     public void startReservationStatus(String reservationId) {
 
+    }
+
+    @Override
+    public Reservation getReservationById(String reservationId) {
+        return reservationRepository.findById(reservationId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION));
     }
 
     @Override

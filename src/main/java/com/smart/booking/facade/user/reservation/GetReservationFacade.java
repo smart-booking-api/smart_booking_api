@@ -16,7 +16,7 @@ public class GetReservationFacade {
     private final MemberService memberService;
     private final UserReservationService userReservationService;
 
-    public List<ReservationSimpleResponseDto> getMyReservations(String memberId, String startDate) {
+    public List<ReservationSimpleResponseDto> execute(String memberId, String startDate) {
         Member member = memberService.getMemberById(memberId);
         List<Reservation> reservationList = userReservationService.getMyReservations(member, startDate);
         return ReservationMapper.INSTANCE.reservationsToDtoList(reservationList);
