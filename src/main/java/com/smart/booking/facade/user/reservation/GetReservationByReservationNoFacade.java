@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class GetReservationFacadeByReservationNo {
+public class GetReservationByReservationNoFacade {
     private final UserReservationService userReservationService;
     private final ReservationTimeService reservationTimeService;
 
