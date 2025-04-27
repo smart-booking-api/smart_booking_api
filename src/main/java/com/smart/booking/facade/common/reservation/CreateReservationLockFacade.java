@@ -30,7 +30,7 @@ public class CreateReservationLockFacade {
 
         // firebase data 생성
         firebaseComponent.updateDocument(COLLECTION_NAME, lockDto.trackingId(),
-            new ReservationFirebaseStatusDto(lockDto.trackingId(), memberId, PaymentStatus.PENDING));
+            new ReservationFirebaseStatusDto(lockDto.trackingId(), memberId, PaymentStatus.PENDING, 0));
     }
 
     private void createTimesLock(@NotNull CreateReservationLockDto lockDto, String memberId) {

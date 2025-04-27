@@ -33,6 +33,6 @@ public class RefundReservationFacade {
 
         // firebase 처리상태 업데이트
         firebaseComponent.updateDocument(COLLECTION_NAME, eventDto.trackingId(),
-            new ReservationFirebaseStatusDto(eventDto.trackingId(), eventDto.memberId(), PaymentStatus.REFUND));
+            new ReservationFirebaseStatusDto(eventDto.trackingId(), eventDto.memberId(), PaymentStatus.REFUND, 0));
     }
 }

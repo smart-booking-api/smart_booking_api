@@ -24,7 +24,7 @@ public class FirebaseComponent {
             log.info("Document written with ID: " + apiFuture.get().getUpdateTime());
             return apiFuture.get().getUpdateTime().toString();
         } catch (Exception e) {
-            log.error("firebaseError", e);
+            log.error("firebaseError::", e);
             throw new CommonException(ResponseCode.FIREBASE_ERROR, e);
         }
     }

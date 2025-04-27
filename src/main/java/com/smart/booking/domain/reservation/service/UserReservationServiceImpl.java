@@ -39,7 +39,7 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
      * @param upsertReservationDto
      */
     @Override
-    public void createReservation(UpsertReservationDto upsertReservationDto) {
+    public Reservation createReservation(UpsertReservationDto upsertReservationDto) {
         var randomNumber = CommonUtil.createRandomNumber();
 
         while(Objects.isNull(reservationRepository.findByReservationNo(randomNumber))) {
@@ -47,7 +47,7 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
         }
 
         Reservation reservation = upsertReservationDto.toEntity(randomNumber);
-        reservationRepository.save(reservation);
+        return reservationRepository.save(reservation);
     }
 
     @Override

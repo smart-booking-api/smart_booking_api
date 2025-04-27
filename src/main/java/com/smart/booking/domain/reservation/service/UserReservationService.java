@@ -18,8 +18,9 @@ public interface UserReservationService extends CommonReservationService {
     /**
      * 예약하기
      * @param upsertReservationDto
+     * @return 예약엔티티
      */
-    void createReservation(UpsertReservationDto upsertReservationDto);
+    Reservation createReservation(UpsertReservationDto upsertReservationDto);
 
     /**
      * 월별 내 예약이력
