@@ -36,7 +36,7 @@ public class PosReservationController {
         return getEnableReservationTimeFacade.execute(getReservationTime.teeBoxId(), getReservationTime.reservationDate());
     }
 
-    @Operation(summary = "선점락 + firebase data 생성", description = "바로 입장시 선점락 생성")
+    @Operation(summary = "선점락 + firebase data 생성", description = "바로 입장 및 당일예약시 선점락 생성")
     @PostMapping(PosReservationEndpoint.RESERVATION_LOCK)
     public void createReservationLock(@RequestBody @Valid CreateReservationLockDto lockDto) {
         createReservationLockFacade.execute(lockDto, lockDto.posId());
