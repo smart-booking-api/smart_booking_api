@@ -13,6 +13,6 @@ public class UpdateReservationGameFacade {
     public void execute(int reservationNo) {
         userReservationService.updateReservationStatus(reservationNo, ReservationStatus.COMPLETED);
 
-        // todo
+        // todo 게임시작 및 상태변경
     }
 }

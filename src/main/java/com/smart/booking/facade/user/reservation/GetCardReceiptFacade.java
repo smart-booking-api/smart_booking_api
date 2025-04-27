@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GetCardReceiptFacade {
     private final UserReservationService userReservationService;
+    // todo
     private final PaymentHistoryService paymentHistoryService;
     private final ReservationTimeService reservationTimeService;
 
@@ -22,7 +23,7 @@ public class GetCardReceiptFacade {
 
         return CardReceiptDto.builder()
             .reservationInfo(new CardReceiptDto.ReservationInfo(reservation, startTime, endTime))
-              // todo api 로 가져와야하는지?
+              // todo 매출전표 조회 payment에서 구현?
 //            .amountInfo()
 //            .paymentInfo()
 //            .sellerInfo()
