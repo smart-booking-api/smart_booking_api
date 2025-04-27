@@ -16,6 +16,8 @@ public interface ReservationMapper {
     @Named("E2R")
     @Mapping(target = "storeName", source = "store.name")
     @Mapping(target = "teeBoxNumber", source = "teeBox.number")
+    @Mapping(target = "startTime", ignore = true)
+    @Mapping(target = "endTime", ignore = true)
     ReservationSimpleResponseDto reservationToDto(Reservation reservation);
 
     @IterableMapping(qualifiedByName = "E2R")

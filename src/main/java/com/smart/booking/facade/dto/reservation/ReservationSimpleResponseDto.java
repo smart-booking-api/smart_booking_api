@@ -18,8 +18,12 @@ public class ReservationSimpleResponseDto {
     private int reservationNo;
     @Schema(description = "예약날짜")
     private LocalDate reservationDate;
+    @Schema(description = "예약시작시간ID")
+    private String startTimeId;
     @Schema(description = "예약시작시간")
     private String startTime;
+    @Schema(description = "예약종료시간ID")
+    private String endTimeId;
     @Schema(description = "예약종료시간")
     private String endTime;
     @Schema(description = "매장명")
