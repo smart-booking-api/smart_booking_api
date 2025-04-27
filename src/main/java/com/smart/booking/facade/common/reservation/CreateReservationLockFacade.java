@@ -24,7 +24,7 @@ public class CreateReservationLockFacade {
     private static final String COLLECTION_NAME = "booking";
 
     @Transactional
-    public void execute(@NonNull CreateReservationLockDto lockDto, String memberId) throws Exception {
+    public void execute(@NonNull CreateReservationLockDto lockDto, String memberId) {
         // 시간별 선점락 생성
         createTimesLock(lockDto, memberId);
 

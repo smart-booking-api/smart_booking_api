@@ -45,6 +45,12 @@ public enum ResponseCode implements EnumModel {
      * 장비
      */
     NOT_FOUND_DEVICE(901, "장비가 존재하지 않습니다."),
+
+    /**
+     * 1400
+     * common
+     */
+    FIREBASE_ERROR(1401, "Firebase 를 호출하는 도중 오류가 발생했습니다.")
     ;
 
     private final int code;

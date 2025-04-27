@@ -41,8 +41,7 @@ public class UserReservationController {
 
     @Operation(security = {@SecurityRequirement(name = "accessToken")}, summary = "선점락 + firebase data 생성", description = "이용자 예약시 선점락 생성")
     @PostMapping(ReservationEndpoint.RESERVATION_LOCK)
-    public void createReservationLock(@RequestBody @Valid CreateReservationLockDto lockDto, @MemberContext MemberContextDto memberContextDto)
-        throws Exception {
+    public void createReservationLock(@RequestBody @Valid CreateReservationLockDto lockDto, @MemberContext MemberContextDto memberContextDto) {
         createReservationLockFacade.execute(lockDto, memberContextDto.getMemberId());
     }
 
