@@ -24,5 +24,5 @@ public record CreateReservationLockDto(
     @Schema(description = "tracking ID")
     String trackingId,
     @Schema(description = "매장식별 ID")
-    String posId
+    String posId // 포스기 당일예약시 필요
 ) {}
