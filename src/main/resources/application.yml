@@ -57,6 +57,11 @@ springdoc:
 server:
   port: 8080
 
+secret:
+  key: ${SECRET_KEY:Kd7F3vP1mZxQoL28VnB9CgX4UtYeHbAi}
+  iv: ${SECRET_IV:WpX9UzQa7K1eDr0B}
+
+
 external:
   kakao-rest-api-key: '18aba9ac1f406cb303b93d2a03a5bbd3'
   openapi-rest-api-key: 'vFsA8BSDXJ%2FFR79%2By6MfZU9ejxyLYtruz9Ms%2F7dbjKXMuYbOFvi1Du0HsUWutw1VRgtEaSAD%2F8h9TFWANic3aw%3D%3D'

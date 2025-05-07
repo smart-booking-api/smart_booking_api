@@ -1,6 +1,8 @@
 package com.smart.booking.domain.user.entity;
 
 import com.smart.booking.common.annotations.TsidGenerator;
+import com.smart.booking.common.cipher.SecureString;
+import com.smart.booking.common.cipher.SecureStringEntityConverter;
 import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.store.entity.Store;
@@ -8,6 +10,7 @@ import com.smart.booking.domain.user.enums.UserStatus;
 import com.smart.booking.domain.user.value_object.UserPolicyAgreement;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -55,7 +58,8 @@ public class User extends BaseEntity {
     private String email;
 
     @Column(unique = true)
-    private String phone;
+    @Convert(converter = SecureStringEntityConverter.class)
+    private SecureString phone;
 
     @Embedded
     private UserPolicyAgreement policyAgreement;
@@ -63,8 +67,6 @@ public class User extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
-
-    private String name;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

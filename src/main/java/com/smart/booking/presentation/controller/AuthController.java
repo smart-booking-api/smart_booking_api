@@ -6,6 +6,8 @@ import com.smart.booking.facade.admin.auth.ThirdPartyLoginFacade;
 import com.smart.booking.facade.dto.auth.AdminLogin;
 import com.smart.booking.facade.dto.auth.RequestRefreshToken;
 import com.smart.booking.facade.dto.auth.ThirdPartyLogin;
+import com.smart.booking.facade.user.auth.UserAuthFacade;
+import com.smart.booking.facade.user.auth.UserAuthFacade.SignUpUserResponse;
 import com.smart.booking.facade.user.auth.UserPhoneAuthFacade;
 import com.smart.booking.presentation.controller.endPoint.AuthEndPoint;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,6 +26,7 @@ public class AuthController {
     private final ThirdPartyLoginFacade thirdPartyLoginFacade;
     private final RequestRefreshTokenFacade requestRefreshTokenFacade;
     private final UserPhoneAuthFacade userPhoneAuthFacade;
+    private final UserAuthFacade userAuthFacade;
 
     @PostMapping(AuthEndPoint.REFRESH_TOKEN)
     public RequestRefreshToken.responseToken refreshToken(@RequestBody RequestRefreshToken.requestToken requestToken) {
@@ -52,5 +55,13 @@ public class AuthController {
         @RequestBody @Valid UserPhoneAuthFacade.VerifyPhoneAuthCodeRequest request
     ) {
         return userPhoneAuthFacade.verifyPhoneAuthCode(request);
+    }
+
+
+    @PostMapping(AuthEndPoint.SIGN_UP)
+    public SignUpUserResponse signUp(
+        @RequestBody @Valid UserAuthFacade.SignUpUserRequest request
+    ) {
+        return userAuthFacade.signUp(request);
     }
 }

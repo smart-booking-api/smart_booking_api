@@ -19,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -32,6 +33,10 @@ public class SecurityConfig {
     private final UserUserService userUserService;
     private final PartnerService partnerService;
     private final AuthService authService;
+    private final RequestMatcher get = request -> {
+        String uri = request.getRequestURI();
+        return uri.matches("^/api/v\\d+/auth/.*");
+    };
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -54,13 +59,14 @@ public class SecurityConfig {
             // h2 console 사용을 위해 disable
             .headers((headerConfig) ->
                 headerConfig.frameOptions(FrameOptionsConfig::disable)
-            ).authorizeHttpRequests((auth) ->
-                auth.requestMatchers(PathRequest.toH2Console()).permitAll()
-                    .requestMatchers("/api/auth/**").permitAll()
-                    .requestMatchers("/api-docs/**", "/swagger-ui/**").permitAll()
-                    .requestMatchers("/api/partner/**").hasAnyRole("PARTNER")
-                    .requestMatchers("/api/user/**").hasAnyRole("USER")
-                    .anyRequest().authenticated()
+            ).authorizeHttpRequests((auth) -> {
+                    auth.requestMatchers(PathRequest.toH2Console()).permitAll()
+                        .requestMatchers(request -> request.getRequestURI().matches("^/api/v\\d+/auth/.*")).permitAll()
+                        .requestMatchers("/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/partner/**").hasAnyRole("PARTNER")
+                        .requestMatchers("/api/user/**").hasAnyRole("USER")
+                        .anyRequest().authenticated();
+                }
             );
 
         // login filter 적용 전에 jwtFilter 적용
