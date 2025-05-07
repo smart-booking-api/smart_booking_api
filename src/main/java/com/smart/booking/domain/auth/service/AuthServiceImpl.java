@@ -33,11 +33,10 @@ public class AuthServiceImpl implements AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final MemberService memberService;
     private final UserUserService userService;
+    private final UserPhoneAuthRepository userPhoneAuthRepository;
     private SecretKey secretKey;
     @Value("${spring.jwt.secret}")
     private String secretString;
-
-    private UserPhoneAuthRepository userPhoneAuthRepository;
 
     @PostConstruct
     public void init() {

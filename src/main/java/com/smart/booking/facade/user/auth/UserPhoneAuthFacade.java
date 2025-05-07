@@ -7,7 +7,6 @@ import com.smart.booking.domain.auth.service.AuthService;
 import com.smart.booking.domain.sms.service.SmsService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -45,7 +44,7 @@ public class UserPhoneAuthFacade {
 
     public static class SendPhoneAuthCodeRequest {
 
-        @NotBlank(message = "로그인 패스워드를 입력해주세요.")
+        @NotBlank(message = "전화번호를 입력해주세요.")
         @Schema(description = "전화번호")
         public String phoneNumber;
 
@@ -59,11 +58,11 @@ public class UserPhoneAuthFacade {
     public static class VerifyPhoneAuthCodeRequest {
 
 
-        @NotBlank(message = "로그인 패스워드를 입력해주세요.")
+        @NotBlank(message = "전화번호를 입력해주세요.")
         @Schema(description = "전화번호")
         public String phoneNumber;
 
-        @NotNull
+        @NotBlank(message = "인증번호를 입력해주세요.")
         @Schema(description = "인증번호")
         public String authCode;
 
