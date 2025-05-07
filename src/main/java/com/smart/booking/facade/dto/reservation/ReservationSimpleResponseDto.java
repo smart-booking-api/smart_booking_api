@@ -31,11 +31,11 @@ public class ReservationSimpleResponseDto {
     @Schema(description = "스크린번호")
     private String teeBoxNumber;
 
-    public ReservationSimpleResponseDto(Reservation reservation, ReservationTimeService reservationTimeService) {
+    public ReservationSimpleResponseDto(Reservation reservation, String startTime, String endTime) {
         this.reservationNo = reservation.getReservationNo();
         this.reservationDate = reservation.getReservationDate();
-        this.startTime = reservation.getStartTime(reservationTimeService);
-        this.endTime = reservation.getEndTime(reservationTimeService);;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.storeName = reservation.getStore().getName();
         this.teeBoxNumber = reservation.getTeeBox().getName();
     }
