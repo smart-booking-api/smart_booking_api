@@ -7,5 +7,8 @@ import lombok.NonNull;
 
 public interface UserAdminService extends UserCommonService {
 
-    @NonNull CursorResult<User> getUsers(@NonNull GetUsersDto getUsersDto);
+    @NonNull
+    CursorResult<User> getUsers(@NonNull GetUsersDto getUsersDto);
+
+    void deleteUser(@NonNull String userId);
 }

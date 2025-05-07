@@ -72,7 +72,7 @@ class UserUserServiceImpl extends UserCommonServiceImpl implements UserUserServi
     }
 
     @Override
-    public Optional<User> getByProviderUserIdAndProvider(String providerUserId, ThirdPartyAccountProvider provider) {
+    public Optional<User> getByProviderUserIdAndProvider(@NonNull String providerUserId, @NonNull ThirdPartyAccountProvider provider) {
         return userRepository.findByProviderUserIdAndProvider(providerUserId, provider);
     }
 

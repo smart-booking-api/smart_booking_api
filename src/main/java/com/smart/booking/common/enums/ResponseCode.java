@@ -45,6 +45,13 @@ public enum ResponseCode implements EnumModel {
      * 장비
      */
     NOT_FOUND_DEVICE(901, "장비가 존재하지 않습니다."),
+
+    /**
+     * 1000~
+     * 인증
+     */
+    NOT_FOUND_PHONE_AUTH_CODE(1001, "인증코드가 존재하지 않습니다."),
+    NOT_MATCHED_PHONE_AUTH_CODE(1002, "인증코드가 일치하지 않습니다."),
     ;
 
     private final int code;

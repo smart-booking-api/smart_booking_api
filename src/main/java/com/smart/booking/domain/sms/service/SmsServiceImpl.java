@@ -15,7 +15,7 @@ public class SmsServiceImpl implements SmsService {
     private final ExternalSmsService externalSmsService;
 
     @Override
-    public @NonNull Sms sendSms(String phoneNumber, String message) {
+    public @NonNull Sms sendSms(@NonNull String phoneNumber, @NonNull String message) {
         final Sms sms = Sms.builder()
             .phoneNumber(phoneNumber)
             .message(message)

@@ -20,11 +20,16 @@ class UserAdminServiceImpl extends UserCommonServiceImpl implements UserAdminSer
     @Override
     public @NonNull CursorResult<User> getUsers(@NonNull GetUsersDto getUsersDto) {
         return userRepository.findByNicknameAndStatusWithCursor(
-                getUsersDto.nickname(),
-                getUsersDto.status(),
-                getUsersDto.cursor(),
-                getUsersDto.pageSize()
+            getUsersDto.nickname(),
+            getUsersDto.status(),
+            getUsersDto.cursor(),
+            getUsersDto.pageSize()
         );
+    }
+
+    @Override
+    public void deleteUser(@NonNull String userId) {
+        userRepository.deleteById(userId);
     }
 
 
