@@ -31,7 +31,7 @@ public class UserPhoneAuthCacheRepository implements UserPhoneAuthRepository {
 
         return new UserPhoneAuth(
             phoneNumber,
-            redisTemplate.opsForValue().get(this.USER_PHONE_AUTH_PREFIX + phoneNumber),
+            authCode,
             OffsetDateTime.now().plusSeconds(redisTemplate.getExpire(this.USER_PHONE_AUTH_PREFIX + phoneNumber, TimeUnit.SECONDS))
         );
     }
