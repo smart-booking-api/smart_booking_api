@@ -2,6 +2,7 @@ package com.smart.booking.domain.auth.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.smart.booking.common.cipher.SecureString;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.enums.MemberType;
 import com.smart.booking.domain.member.repository.MemberRepository;
@@ -36,8 +37,18 @@ class AuthServiceTest {
         Member member = new Member(null, MemberType.USER);
         memberRepository.save(member);
 
-        User user = new User(null, null, null, "kkk@naver.com", "01033333333", null, null,
-            "홍길동", member, UserStatus.ACTIVE, OffsetDateTime.now(), OffsetDateTime.now());
+        User user = new User(
+            null,
+            null,
+            null,
+            "kkk@naver.com",
+            SecureString.of("01033333333"),
+            null, null,
+            member,
+            UserStatus.ACTIVE,
+            OffsetDateTime.now(),
+            OffsetDateTime.now()
+        );
 
         userRepository.save(user);
 
