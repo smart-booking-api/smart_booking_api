@@ -37,7 +37,7 @@ class AuthServiceTest {
         memberRepository.save(member);
 
         User user = new User(null, null, null, "kkk@naver.com", "01033333333", null, null,
-            "홍길동2", member, UserStatus.ACTIVE, OffsetDateTime.now(), OffsetDateTime.now());
+            "홍길동", member, UserStatus.ACTIVE, OffsetDateTime.now(), OffsetDateTime.now());
 
         userRepository.save(user);
 
