@@ -42,7 +42,7 @@ public class PosReservationController {
         createReservationLockFacade.execute(lockDto, lockDto.posId());
     }
 
-    @Operation(summary = "예약입장 - 예약번호로 예약 조회")
+    @Operation(summary = "예약입장 - 예약번호로 예약 조회, 현장금액이 있는지도 출력")
     @GetMapping(PosReservationEndpoint.GET_RESERVATION)
     public ReservationSimpleResponseDto getReservation(@PathVariable int reservationNo) {
         return getReservationByReservationNoFacade.execute(reservationNo);
