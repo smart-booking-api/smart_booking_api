@@ -1,39 +1,56 @@
 package com.smart.booking.presentation.controller;
 
-import com.smart.booking.domain.auth.service.AuthService;
 import com.smart.booking.facade.admin.auth.AdminLoginFacade;
 import com.smart.booking.facade.admin.auth.RequestRefreshTokenFacade;
 import com.smart.booking.facade.admin.auth.ThirdPartyLoginFacade;
 import com.smart.booking.facade.dto.auth.AdminLogin;
 import com.smart.booking.facade.dto.auth.RequestRefreshToken;
 import com.smart.booking.facade.dto.auth.ThirdPartyLogin;
+import com.smart.booking.facade.user.auth.UserPhoneAuthFacade;
+import com.smart.booking.presentation.controller.endPoint.AuthEndPoint;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@Tag(name = "인증", description = "인증 컨트롤러")
 public class AuthController {
+
     private final AdminLoginFacade adminLoginFacade;
     private final ThirdPartyLoginFacade thirdPartyLoginFacade;
     private final RequestRefreshTokenFacade requestRefreshTokenFacade;
+    private final UserPhoneAuthFacade userPhoneAuthFacade;
 
-    @PostMapping("/refresh")
+    @PostMapping(AuthEndPoint.REFRESH_TOKEN)
     public RequestRefreshToken.responseToken refreshToken(@RequestBody RequestRefreshToken.requestToken requestToken) {
         return requestRefreshTokenFacade.execute(requestToken);
     }
 
-    @PostMapping("/third-party")
+    @PostMapping(AuthEndPoint.THIRD_PARTY_LOGIN)
     public ThirdPartyLogin.thirdLoginResponse thirdPartyLogin(@RequestBody @Valid ThirdPartyLogin.thirdLoginRequest thirdLoginRequest) {
         return thirdPartyLoginFacade.execute(thirdLoginRequest);
     }
 
-    @PostMapping("/login")
+    @PostMapping(AuthEndPoint.LOGIN)
     public AdminLogin.loginResponse login(@RequestBody @Valid AdminLogin.loginRequest loginRequest) {
         return adminLoginFacade.execute(loginRequest);
+    }
+
+    @PostMapping(AuthEndPoint.PHONE_AUTH)
+    public UserPhoneAuthFacade.SendPhoneAuthCodeResponse phoneAuth(
+        @RequestBody @Valid UserPhoneAuthFacade.SendPhoneAuthCodeRequest request
+    ) {
+        return userPhoneAuthFacade.sendPhoneAuthCode(request);
+    }
+
+    @PostMapping(AuthEndPoint.PHONE_AUTH_VERIFY)
+    public UserPhoneAuthFacade.VerifyPhoneAuthCodeResponse phoneAuthVerify(
+        @RequestBody @Valid UserPhoneAuthFacade.VerifyPhoneAuthCodeRequest request
+    ) {
+        return userPhoneAuthFacade.verifyPhoneAuthCode(request);
     }
 }

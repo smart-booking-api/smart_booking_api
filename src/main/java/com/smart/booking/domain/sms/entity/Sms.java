@@ -28,7 +28,7 @@ public class Sms extends BaseEntity {
 
     private String errorMessage;
 
-    public boolean getIsSent() {
+    public boolean isSent() {
         return errorMessage == null;
     }
 

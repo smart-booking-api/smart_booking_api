@@ -4,6 +4,8 @@ import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.auth.entity.RefreshToken;
 import com.smart.booking.domain.auth.repository.RefreshTokenRepository;
+import com.smart.booking.domain.auth.repository.UserPhoneAuthRepository;
+import com.smart.booking.domain.auth.value_object.UserPhoneAuth;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.user.entity.User;
@@ -34,6 +36,8 @@ public class AuthServiceImpl implements AuthService {
     private SecretKey secretKey;
     @Value("${spring.jwt.secret}")
     private String secretString;
+
+    private UserPhoneAuthRepository userPhoneAuthRepository;
 
     @PostConstruct
     public void init() {
@@ -116,6 +120,26 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void deleteRefreshTokenByMember(@NonNull Member member) {
         refreshTokenRepository.deleteByMember(member);
+    }
+
+    @Override
+    public @NonNull UserPhoneAuth getPhoneAuthCode(@NonNull String phoneNumber) {
+        return userPhoneAuthRepository.findByPhoneNumberOrThrow(phoneNumber);
+    }
+
+    @Override
+    public @NonNull UserPhoneAuth createPhoneAuthCode(@NonNull String phoneNumber) {
+        final var randomCode = (int) (Math.random() * 1000000);
+
+        // 6자리로 패딩 (자릿수 부족시 0으로 채움)
+        final var code = String.format("%06d", randomCode);
+
+        return userPhoneAuthRepository.create(phoneNumber, code, 3);
+    }
+
+    @Override
+    public void deletePhoneAuthCode(@NonNull String phoneNumber) {
+        userPhoneAuthRepository.deleteByPhoneNumber(phoneNumber);
     }
 
 

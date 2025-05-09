@@ -5,6 +5,7 @@ import lombok.NonNull;
 
 public interface SmsService {
 
-    @NonNull Sms sendSms(String phoneNumber, String message);
+    @NonNull
+    Sms sendSms(@NonNull String phoneNumber, @NonNull String message);
 
 }

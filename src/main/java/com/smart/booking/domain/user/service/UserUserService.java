@@ -4,9 +4,8 @@ import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.user.entity.User;
 import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
 import com.smart.booking.domain.user.value_object.UserPolicyAgreement;
-import lombok.NonNull;
-
 import java.util.Optional;
+import lombok.NonNull;
 
 public interface UserUserService extends UserCommonService {
 
@@ -28,6 +27,6 @@ public interface UserUserService extends UserCommonService {
 
     void login(@NonNull String userId);
 
-    Optional<User> getByProviderUserIdAndProvider(String providerUserId, ThirdPartyAccountProvider provider);
+    Optional<User> getByProviderUserIdAndProvider(@NonNull String providerUserId, @NonNull ThirdPartyAccountProvider provider);
 
 }
