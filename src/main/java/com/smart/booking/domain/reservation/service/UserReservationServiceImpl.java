@@ -7,6 +7,7 @@ import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.enums.MemberType;
 import com.smart.booking.domain.reservation.dto.UpsertReservationDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
+import com.smart.booking.domain.reservation.enums.ReservationStatus;
 import com.smart.booking.domain.reservation.repository.ReservationRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -38,7 +39,7 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
      * @param upsertReservationDto
      */
     @Override
-    public void createReservation(UpsertReservationDto upsertReservationDto) {
+    public Reservation createReservation(UpsertReservationDto upsertReservationDto) {
         var randomNumber = CommonUtil.createRandomNumber();
 
         while(Objects.isNull(reservationRepository.findByReservationNo(randomNumber))) {
@@ -46,7 +47,7 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
         }
 
         Reservation reservation = upsertReservationDto.toEntity(randomNumber);
-        reservationRepository.save(reservation);
+        return reservationRepository.save(reservation);
     }
 
     @Override
@@ -62,6 +63,18 @@ public class UserReservationServiceImpl extends CommonReservationServiceImpl imp
     @Override
     public Reservation getReservationById(String reservationId) {
         return reservationRepository.findById(reservationId).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION));
+    }
+
+    @Override
+    public Reservation getReservationByReservationNo(int reservationNo) {
+        return reservationRepository.findByReservationNo(reservationNo).orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION));
+    }
+
+    @Override
+    public void updateReservationStatus(int reservationNo, ReservationStatus reservationStatus) {
+        Reservation reservation = reservationRepository.findByReservationNo(reservationNo)
+            .orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION));
+        reservation.updateReservationStatus(reservationStatus);
     }
 
     @Override

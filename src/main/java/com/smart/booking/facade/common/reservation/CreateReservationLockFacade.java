@@ -24,13 +24,13 @@ public class CreateReservationLockFacade {
     private static final String COLLECTION_NAME = "booking";
 
     @Transactional
-    public void execute(@NonNull CreateReservationLockDto lockDto, String memberId) throws Exception {
+    public void execute(@NonNull CreateReservationLockDto lockDto, String memberId) {
         // 시간별 선점락 생성
         createTimesLock(lockDto, memberId);
 
         // firebase data 생성
         firebaseComponent.updateDocument(COLLECTION_NAME, lockDto.trackingId(),
-            new ReservationFirebaseStatusDto(lockDto.trackingId(), memberId, PaymentStatus.PENDING));
+            new ReservationFirebaseStatusDto(lockDto.trackingId(), memberId, PaymentStatus.PENDING, 0));
     }
 
     private void createTimesLock(@NotNull CreateReservationLockDto lockDto, String memberId) {

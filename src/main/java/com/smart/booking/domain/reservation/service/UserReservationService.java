@@ -3,6 +3,7 @@ package com.smart.booking.domain.reservation.service;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.reservation.dto.UpsertReservationDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
+import com.smart.booking.domain.reservation.enums.ReservationStatus;
 import java.util.List;
 
 public interface UserReservationService extends CommonReservationService {
@@ -17,8 +18,9 @@ public interface UserReservationService extends CommonReservationService {
     /**
      * 예약하기
      * @param upsertReservationDto
+     * @return 예약엔티티
      */
-    void createReservation(UpsertReservationDto upsertReservationDto);
+    Reservation createReservation(UpsertReservationDto upsertReservationDto);
 
     /**
      * 월별 내 예약이력
@@ -41,4 +43,18 @@ public interface UserReservationService extends CommonReservationService {
      * @return
      */
     Reservation getReservationById(String reservationId);
+
+    /**
+     * 예약 번호로 예약조회
+     * @param reservationNo
+     * @return
+     */
+    Reservation getReservationByReservationNo(int reservationNo);
+
+    /**
+     * 예약상태로 조회
+     * @param reservationNo
+     * @param reservationStatus
+     */
+    void updateReservationStatus(int reservationNo, ReservationStatus reservationStatus);
 }

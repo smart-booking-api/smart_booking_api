@@ -5,6 +5,7 @@ import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.payment.entity.PaymentStatus;
 import com.smart.booking.domain.reservation.dto.UpsertReservationDto;
+import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.service.UserReservationService;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
@@ -34,11 +35,11 @@ public class CreateReservationFacade {
         // 예약
         TeeBox teeBox = teeBoxService.getTeeBoxById(eventDto.teeBoxId());
         Member member = memberService.getMemberById(eventDto.memberId());
-        userReservationService.createReservation(getCreateReservationDto(teeBox.getStore(), teeBox, member, eventDto));
+        Reservation reservation = userReservationService.createReservation(getCreateReservationDto(teeBox.getStore(), teeBox, member, eventDto));
 
         // firebase 처리상태 업데이트
         firebaseComponent.updateDocument(COLLECTION_NAME, eventDto.trackingId(),
-            new ReservationFirebaseStatusDto(eventDto.trackingId(), eventDto.memberId(), PaymentStatus.COMPLETE));
+            new ReservationFirebaseStatusDto(eventDto.trackingId(), eventDto.memberId(), PaymentStatus.COMPLETE, reservation.getReservationNo()));
     }
 
     private UpsertReservationDto getCreateReservationDto(Store store, TeeBox teeBox, Member member, CompletePaymentEventDto eventDto) {

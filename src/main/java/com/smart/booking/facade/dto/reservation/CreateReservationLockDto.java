@@ -22,5 +22,7 @@ public record CreateReservationLockDto(
     String endTimeId,
     @NotBlank(message = "trackingId가 누락되었습니다.")
     @Schema(description = "tracking ID")
-    String trackingId
+    String trackingId,
+    @Schema(description = "매장식별 ID")
+    String posId // 포스기 당일예약시 필요
 ) {}

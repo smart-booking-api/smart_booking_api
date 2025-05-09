@@ -52,6 +52,12 @@ public enum ResponseCode implements EnumModel {
      */
     NOT_FOUND_PHONE_AUTH_CODE(1001, "인증코드가 존재하지 않습니다."),
     NOT_MATCHED_PHONE_AUTH_CODE(1002, "인증코드가 일치하지 않습니다."),
+  
+    /**
+     * 1400
+     * common
+     */
+    FIREBASE_ERROR(1401, "Firebase 를 호출하는 도중 오류가 발생했습니다.")
     ;
 
     private final int code;

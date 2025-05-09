@@ -11,12 +11,10 @@ import com.smart.booking.domain.reservation.enums.ReservationStatus;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest
 class ReservationRepositoryTest {
@@ -40,6 +38,7 @@ class ReservationRepositoryTest {
     }
 
     @Test
+    @DisplayName("예약번호로_검색")
     void testFindByReservationNumber() {
         // 예약 번호로 검색
         Optional<Reservation> found = reservationRepository.findByReservationNo(12345678);

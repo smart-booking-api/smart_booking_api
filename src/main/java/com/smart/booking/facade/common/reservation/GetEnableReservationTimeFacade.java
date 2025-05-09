@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,7 +27,7 @@ public class GetEnableReservationTimeFacade {
     private final ReservationLockService reservationLockService;
 
     public GetEnableReservationTimeFacade(TeeBoxCommonService teeBoxCommonService, ReservationTimeService reservationTimeService,
-        CommonReservationServiceImpl commonReservationServiceImpl, ReservationLockService reservationLockService) {
+        @Qualifier("commonReservationServiceImpl") CommonReservationService commonReservationServiceImpl, ReservationLockService reservationLockService) {
         this.teeBoxCommonService = teeBoxCommonService;
         this.reservationTimeService = reservationTimeService;
         this.commonReservationService = commonReservationServiceImpl;
@@ -51,6 +52,7 @@ public class GetEnableReservationTimeFacade {
 
     private List<ReservationTimeCode> getTeeBoxOperationTimes(String teeBoxId) {
         TeeBox teeBox = teeBoxCommonService.getTeeBoxById(teeBoxId);
+        // todo 타석 서비스 구현 뒤 제거 예정
         String openTime = "06:00";
         String closeTime = "11:00";
 //        String openTime = teeBox.getStore().getOperationInfo().getOpenTime();
