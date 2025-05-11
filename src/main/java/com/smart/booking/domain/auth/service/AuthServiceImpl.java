@@ -15,6 +15,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Jwts.SIG;
 import jakarta.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,14 +31,14 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
 
     private static final long EXPIRATION_TIME_MS = 60 * 60 * 10 * 1000L;
+    private static final int PHONE_AUTH_CODE_EXPIRATION_MINUTES = 3;
     private final RefreshTokenRepository refreshTokenRepository;
     private final MemberService memberService;
     private final UserUserService userService;
+    private final UserPhoneAuthRepository userPhoneAuthRepository;
     private SecretKey secretKey;
     @Value("${spring.jwt.secret}")
     private String secretString;
-
-    private UserPhoneAuthRepository userPhoneAuthRepository;
 
     @PostConstruct
     public void init() {
@@ -129,12 +130,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public @NonNull UserPhoneAuth createPhoneAuthCode(@NonNull String phoneNumber) {
-        final var randomCode = (int) (Math.random() * 1000000);
+        final var secureRandom = new SecureRandom();
+        final var randomCode = secureRandom.nextInt(1000000);
 
         // 6자리로 패딩 (자릿수 부족시 0으로 채움)
         final var code = String.format("%06d", randomCode);
 
-        return userPhoneAuthRepository.create(phoneNumber, code, 3);
+        return userPhoneAuthRepository.create(phoneNumber, code, PHONE_AUTH_CODE_EXPIRATION_MINUTES);
     }
 
     @Override
