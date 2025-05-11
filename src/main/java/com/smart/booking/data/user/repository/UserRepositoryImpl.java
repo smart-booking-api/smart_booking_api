@@ -8,11 +8,9 @@ import com.smart.booking.domain.user.entity.QThirdPartyAccount;
 import com.smart.booking.domain.user.entity.QUser;
 import com.smart.booking.domain.user.entity.QUserProfile;
 import com.smart.booking.domain.user.entity.User;
-import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
 import com.smart.booking.domain.user.enums.UserStatus;
 import com.smart.booking.domain.user.repository.UserRepositoryCustom;
 import java.util.List;
-import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -56,15 +54,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         );
     }
 
-    @Override
-    public Optional<User> findByProviderUserIdAndProvider(String providerUserId, ThirdPartyAccountProvider provider) {
-        return Optional.ofNullable(queryFactory.select(qUser)
-            .from(qUser)
-            .innerJoin(qUser.thirdPartyAccount, qThirdPartyAccount)
-            .where(qThirdPartyAccount.providerUserId.eq(providerUserId).and(qThirdPartyAccount.provider.eq(provider)))
-            .fetchFirst());
-    }
-
+ 
     BooleanExpression idLessThan(String cursor) {
         return cursor == null ? null : qUser.id.lt(cursor);
     }

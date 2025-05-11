@@ -2,6 +2,7 @@ package com.smart.booking.domain.user.service;
 
 import static com.smart.booking.common.enums.ResponseCode.NOT_FOUND_THIRD_PARTY_ACCOUNT;
 
+import com.smart.booking.common.enums.ResponseCode;
 import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.user.dto.CreateUserDto;
@@ -66,17 +67,17 @@ class UserUserServiceImpl extends UserCommonServiceImpl implements UserUserServi
         return userRepository.findByEmail(email);
     }
 
-    @Override
-    public void login(@NonNull String userId) throws CommonException {
-//        final User user = getUserById(userId);
-//        user.login();
-//        userRepository.save(user);
-    }
 
     @Override
-    public Optional<User> getByProviderUserIdAndProvider(@NonNull String providerUserId, @NonNull ThirdPartyAccountProvider provider) {
-        return userRepository.findByProviderUserIdAndProvider(providerUserId, provider);
+    public User login(@NonNull ThirdPartyAccountProvider provider, @NonNull String providerUserId) {
+        final var user = userRepository.findByThirdPartyAccount_ProviderAndThirdPartyAccount_ProviderUserId(provider, providerUserId)
+            .orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_THIRD_PARTY_ACCOUNT));
+
+        user.login();
+
+        return this.userRepository.save(user);
     }
+
 
     @Override
     public @NonNull User createUser(@NonNull CreateUserDto dto) {

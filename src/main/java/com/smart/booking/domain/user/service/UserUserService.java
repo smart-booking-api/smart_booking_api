@@ -26,9 +26,11 @@ public interface UserUserService extends UserCommonService {
     @NonNull
     Optional<User> getUserByEmailId(@NonNull String email);
 
-    void login(@NonNull String userId);
-
-    Optional<User> getByProviderUserIdAndProvider(@NonNull String providerUserId, @NonNull ThirdPartyAccountProvider provider);
+    @NonNull
+    User login(
+        @NonNull ThirdPartyAccountProvider provider,
+        @NonNull String providerUserId
+    );
 
     @NonNull
     User createUser(@NonNull CreateUserDto createUserDto);

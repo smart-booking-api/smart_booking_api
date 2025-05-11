@@ -1,7 +1,5 @@
 package com.smart.booking.domain.auth.service;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import com.smart.booking.common.cipher.SecureString;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.enums.MemberType;
@@ -14,9 +12,7 @@ import com.smart.booking.domain.user.repository.ThirdPartyAccountRepository;
 import com.smart.booking.domain.user.repository.UserRepository;
 import com.smart.booking.domain.user.service.UserUserService;
 import java.time.OffsetDateTime;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -56,9 +52,4 @@ class AuthServiceTest {
         thirdPartyAccountRepository.save(thirdPartyAccount);
     }
 
-    @Test
-    void 서드파티_멤버조회() {
-        Optional<User> user = userService.getByProviderUserIdAndProvider("aaa777", ThirdPartyAccountProvider.KAKAO);
-        assertNotNull(user);
-    }
 }

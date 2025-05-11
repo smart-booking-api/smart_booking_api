@@ -5,7 +5,6 @@ import com.smart.booking.domain.auth.value_object.Token;
 import com.smart.booking.domain.auth.value_object.UserPhoneAuth;
 import com.smart.booking.domain.member.entity.Member;
 import com.smart.booking.domain.member.enums.MemberType;
-import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
 import lombok.NonNull;
 
 public interface AuthService {
@@ -26,7 +25,6 @@ public interface AuthService {
 
     RefreshToken findByRefreshToken(String refreshToken);
 
-    Member getMemberByProviderUserIdAndProvider(String providerUserId, ThirdPartyAccountProvider provider);
 
     void deleteRefreshTokenByMember(@NonNull Member member);
 

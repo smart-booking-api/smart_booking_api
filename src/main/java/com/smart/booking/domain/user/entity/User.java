@@ -97,6 +97,16 @@ public class User extends BaseEntity {
     public void changeStatus(@NonNull UserStatus userStatus) {
         this.status = userStatus;
     }
+
+
+    public void login() {
+        if (this.status == UserStatus.DORMANCY) {
+            this.status = UserStatus.ACTIVE;
+        }
+
+        this.accessedAt = OffsetDateTime.now();
+    }
+
 //    public UserStatus getUserStatus() {
 //        if (deletedAt != null) {
 //            return UserStatus.WITHDRAWAL;

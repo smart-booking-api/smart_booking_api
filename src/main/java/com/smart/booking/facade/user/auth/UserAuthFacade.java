@@ -12,6 +12,7 @@ import com.smart.booking.domain.user.service.UserUserService;
 import com.smart.booking.domain.user.value_object.UserPolicyAgreement;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class UserAuthFacade {
     private final UserUserService userService;
 
     @Transactional
-    public SignUpUserResponse signUp(@NonNull UserAuthFacade.SignUpUserRequest request) {
+    public SignUpUserResponse signUp(@NonNull SignUpUserRequest request) {
 
         final var member = this.memberService.createMember(MemberType.USER);
         final var user = this.userService.createUser(request.toCreateUserDto(member));
@@ -39,6 +40,14 @@ public class UserAuthFacade {
         return new SignUpUserResponse(token);
     }
 
+    @Transactional
+    public SignInUserResponse signIn(@NonNull SignInUserRequest request) {
+        final var user = this.userService.login(request.provider, request.providerUserId);
+
+        final var token = this.authService.generateToken(user.getMember().getId(), user.getMember().getType());
+
+        return new SignInUserResponse(token);
+    }
 
     @RequiredArgsConstructor
     public static class SignUpUserRequest {
@@ -89,6 +98,27 @@ public class UserAuthFacade {
     public static class SignUpUserResponse extends CommonResponse<Token> {
 
         public SignUpUserResponse(@NonNull Token token) {
+            super(token);
+        }
+
+    }
+
+
+    @RequiredArgsConstructor
+    public static class SignInUserRequest {
+
+        @NotBlank(message = "로그인 ID를 입력해주세요.")
+        @Schema(description = "로그인 ID")
+        private String providerUserId;
+
+        @NotBlank(message = "제공자를 입력해주세요")
+        @Schema(description = "provider")
+        private ThirdPartyAccountProvider provider;
+    }
+
+    public static class SignInUserResponse extends CommonResponse<Token> {
+
+        public SignInUserResponse(@NonNull Token token) {
             super(token);
         }
 
