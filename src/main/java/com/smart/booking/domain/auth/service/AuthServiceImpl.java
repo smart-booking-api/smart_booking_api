@@ -1,16 +1,13 @@
 package com.smart.booking.domain.auth.service;
 
-import com.smart.booking.common.enums.ResponseCode;
-import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.auth.entity.RefreshToken;
 import com.smart.booking.domain.auth.repository.RefreshTokenRepository;
 import com.smart.booking.domain.auth.repository.UserPhoneAuthRepository;
+import com.smart.booking.domain.auth.value_object.Token;
 import com.smart.booking.domain.auth.value_object.UserPhoneAuth;
 import com.smart.booking.domain.member.entity.Member;
+import com.smart.booking.domain.member.enums.MemberType;
 import com.smart.booking.domain.member.service.MemberService;
-import com.smart.booking.domain.user.entity.User;
-import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
-import com.smart.booking.domain.user.service.UserUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Jwts.SIG;
 import jakarta.annotation.PostConstruct;
@@ -34,11 +31,11 @@ public class AuthServiceImpl implements AuthService {
     private static final int PHONE_AUTH_CODE_EXPIRATION_MINUTES = 3;
     private final RefreshTokenRepository refreshTokenRepository;
     private final MemberService memberService;
-    private final UserUserService userService;
     private final UserPhoneAuthRepository userPhoneAuthRepository;
     private SecretKey secretKey;
     @Value("${spring.jwt.secret}")
     private String secretString;
+
 
     @PostConstruct
     public void init() {
@@ -75,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String createAccessToken(String memberId, String role) {
+    public @NonNull String createAccessToken(@NonNull String memberId, @NonNull String role) {
         Date now = new Date();
         return Jwts.builder()
             .claim("memberId", memberId)
@@ -111,12 +108,6 @@ public class AuthServiceImpl implements AuthService {
         return getRefreshTokenByRefreshToken(refreshToken);
     }
 
-    @Override
-    public Member getMemberByProviderUserIdAndProvider(String providerUserId, ThirdPartyAccountProvider provider) {
-        User user = userService.getByProviderUserIdAndProvider(providerUserId, provider)
-            .orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_THIRD_PARTY_ACCOUNT));
-        return user.getMember();
-    }
 
     @Override
     public void deleteRefreshTokenByMember(@NonNull Member member) {
@@ -142,6 +133,14 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void deletePhoneAuthCode(@NonNull String phoneNumber) {
         userPhoneAuthRepository.deleteByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public @NonNull Token generateToken(@NonNull String memberId, @NonNull MemberType role) {
+        return new Token(
+            this.createAccessToken(memberId, role.name()),
+            this.createRefreshToken(memberService.getMemberById(memberId)).getToken()
+        );
     }
 
 

@@ -1,9 +1,10 @@
 package com.smart.booking.domain.auth.service;
 
 import com.smart.booking.domain.auth.entity.RefreshToken;
+import com.smart.booking.domain.auth.value_object.Token;
 import com.smart.booking.domain.auth.value_object.UserPhoneAuth;
 import com.smart.booking.domain.member.entity.Member;
-import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
+import com.smart.booking.domain.member.enums.MemberType;
 import lombok.NonNull;
 
 public interface AuthService {
@@ -16,17 +17,17 @@ public interface AuthService {
 
     void updateRefreshToken(String memberId, String refreshToken);
 
-    String createAccessToken(String memberId, String role);
+    @NonNull
+    String createAccessToken(@NonNull String memberId, @NonNull String role);
 
     @NonNull
     RefreshToken createRefreshToken(@NonNull Member member);
 
     RefreshToken findByRefreshToken(String refreshToken);
 
-    Member getMemberByProviderUserIdAndProvider(String providerUserId, ThirdPartyAccountProvider provider);
 
     void deleteRefreshTokenByMember(@NonNull Member member);
-    
+
     @NonNull
     UserPhoneAuth getPhoneAuthCode(@NonNull String phoneNumber);
 
@@ -34,5 +35,8 @@ public interface AuthService {
     UserPhoneAuth createPhoneAuthCode(@NonNull String phoneNumber);
 
     void deletePhoneAuthCode(@NonNull String phoneNumber);
+
+    @NonNull
+    Token generateToken(@NonNull String memberId, @NonNull MemberType role);
 
 }

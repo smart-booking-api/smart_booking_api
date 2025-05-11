@@ -16,4 +16,6 @@ public class AuthEndPoint {
 
     public static final String PHONE_AUTH_VERIFY = V1 + "/phone-auth/verify";
 
+    public static final String SIGN_UP = V1 + "/sign-up";
+
 }
