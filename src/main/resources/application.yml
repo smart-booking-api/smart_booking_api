@@ -18,27 +18,30 @@ spring:
       port: 6379
 
   datasource:
-    driver-class-name: org.h2.Driver
-    url: 'jdbc:h2:mem:test'
-    username: sa
-    password: password
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      driver-class-name: org.postgresql.Driver
+      pool-name: HikariCP4Master
+      jdbc-url: jdbc:postgresql://${DB_JDBC_URL}/${DB_DATABASE}
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      #      maximum-pool-size: 20
+      #      connection-timeout: 5000 #5s
+      #      idle-timeout: 50000 #50s
+      #      max-lifetime: 50000 #50s
+      auto-commit: false
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         show_sql: true
   jwt:
-    secret: smartbookingsystem2024smartbookingsystem2024
+    secret: ${JWT_SECRET}
 
 springdoc:
   version: '@project.version@'
@@ -58,15 +61,15 @@ server:
   port: 8080
 
 secret:
-  key: ${SECRET_KEY:Kd7F3vP1mZxQoL28VnB9CgX4UtYeHbAi}
-  iv: ${SECRET_IV:WpX9UzQa7K1eDr0B}
+  key: ${AES_SECRET_KEY}
+  iv: ${AES_SECRET_IV}
 
 
 external:
-  kakao-rest-api-key: '18aba9ac1f406cb303b93d2a03a5bbd3'
-  openapi-rest-api-key: 'vFsA8BSDXJ%2FFR79%2By6MfZU9ejxyLYtruz9Ms%2F7dbjKXMuYbOFvi1Du0HsUWutw1VRgtEaSAD%2F8h9TFWANic3aw%3D%3D'
+  kakao-rest-api-key: ${EXTERNAL_KAKAO_API_KEY}
+  openapi-rest-api-key: ${EXTERNAL_OPENAPI_KEY}
   sms:
-    from: "1544-9971"
-    key: "NCSEQVFDLTFVMSIR"
-    secret: "LD6JAHNQG4XOXYIQ3YT1IDYVODITQNGA"
-    endpoint: "https://api.coolsms.co.kr"
+    from: ${EXTERNAL_SMS_FROM}
+    key: ${EXTERNAL_SMS_KEY}
+    secret: ${EXTERNAL_SMS_SECRET}
+    endpoint: ${EXTERNAL_SMS_ENDPOINT}

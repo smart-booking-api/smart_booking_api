@@ -56,6 +56,11 @@ dependencies {
     implementation "com.google.cloud:spring-cloud-gcp-starter-logging:3.3.0"
     implementation "com.google.cloud:spring-cloud-gcp-starter-trace:3.3.0"
 
+    implementation "org.postgresql:postgresql:42.7.1"
+    implementation "io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64"
+
+    implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+
 
 }
 

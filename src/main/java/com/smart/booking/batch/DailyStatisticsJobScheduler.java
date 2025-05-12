@@ -24,7 +24,7 @@ public class DailyStatisticsJobScheduler {
         this.simpleJob = simpleJob;
     }
 
-    @Scheduled(cron = "0/2 * * * * *")
+    @Scheduled(cron = "-")
     public void runSimpleJob() {
         try {
             JobParameters jobParameters = new JobParametersBuilder()
