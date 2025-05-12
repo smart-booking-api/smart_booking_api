@@ -65,6 +65,9 @@ public class Reservation extends BaseEntity {
     @Comment("결제 트래킹 ID")
     private String trackingId;
 
+    @Comment("결제 ID")
+    private String paymentId;
+
     public void updateReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
     }

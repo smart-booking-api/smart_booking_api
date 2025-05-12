@@ -1,9 +1,12 @@
 package com.smart.booking.facade.dto.reservation;
 
+import com.smart.booking.domain.payment.dto.PaymentResponseDto;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 public class CardReceiptDto {
@@ -65,11 +68,20 @@ public class CardReceiptDto {
         @Schema(description = "거래타입")
         private String payType;
         @Schema(description = "결제상태")
-        private PayStatus payStatus;
+        private String payStatus;
         @Schema(description = "승인번호")
         private String approvalNo;
         @Schema(description = "결제일시")
-        private String payDateTime;
+        private int payDateTime;
+
+        public PaymentInfo(PaymentResponseDto paymentResponseDto) {
+            this.cardCompany = paymentResponseDto.cardName();
+            this.cardNo = paymentResponseDto.cardNumber();
+            this.payType = paymentResponseDto.payMethod();
+            this.payStatus = paymentResponseDto.status();
+            this.approvalNo = paymentResponseDto.applyNum();
+            this.payDateTime = paymentResponseDto.paidAt();
+        }
     }
 
     public static class SellerInfo {
@@ -83,6 +95,14 @@ public class CardReceiptDto {
         private String telNo;
         @Schema(description = "사업장주소")
         private String businessAddress;
+
+        public SellerInfo(PaymentResponseDto paymentResponseDto) {
+            this.sellerName = "";
+            this.representativeName = "";
+            this.businessNo = "";
+            this.telNo = "";
+            this.businessAddress = "";
+        }
     }
 
     public static class StoreInfo {
@@ -96,16 +116,32 @@ public class CardReceiptDto {
         private String telNo;
         @Schema(description = "사업장주소")
         private String businessAddress;
+
+        public StoreInfo(PaymentResponseDto paymentResponseDto) {
+            this.storeName = paymentResponseDto.userAgent();
+            this.representativeName = "";
+            this.businessNo = "";
+            this.telNo = "";
+            this.businessAddress = "";
+        }
     }
 
+    @NoArgsConstructor
     public static class AmountInfo {
         @Schema(description = "공급가액")
-        private Long supplyAmount;
+        private BigDecimal supplyAmount;
         @Schema(description = "면세가액")
-        private Long dutyFreeAmount;
+        private BigDecimal dutyFreeAmount;
         @Schema(description = "부가세액")
-        private Long vatAmount;
+        private BigDecimal vatAmount;
         @Schema(description = "과세제외액")
-        private Long taxExceptionAmount;
+        private BigDecimal taxExceptionAmount;
+
+        public AmountInfo(PaymentResponseDto paymentResponseDto) {
+            this.supplyAmount = paymentResponseDto.amount();
+            this.dutyFreeAmount = BigDecimal.valueOf(0);
+            this.vatAmount = BigDecimal.valueOf(0);
+            this.taxExceptionAmount = BigDecimal.valueOf(0);
+        }
     }
 }
