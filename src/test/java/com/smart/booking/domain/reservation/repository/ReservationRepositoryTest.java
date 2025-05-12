@@ -15,9 +15,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class ReservationRepositoryTest {
+
     @Autowired
     private ReservationRepository reservationRepository;
 
@@ -27,18 +29,20 @@ class ReservationRepositoryTest {
     private Reservation reservation;
 
     @BeforeEach
+    @Transactional
     void setUp() {
         Member member = new Member(null, MemberType.USER);
         memberRepository.save(member);
 
         ReservationMember reservationMember = new ReservationMember(member, "테스트", "01036010559");
         // 테스트 전에 데이터 초기화
-        reservation = new Reservation("1", null, 12345678, null, LocalDate.now(), "01","02", ReservationStatus.RESERVED, reservationMember, "111");
+        reservation = new Reservation("1", null, 12345678, null, LocalDate.now(), "01", "02", ReservationStatus.RESERVED, reservationMember, "111");
         reservationRepository.save(reservation); // 데이터베이스에 예약 저장
     }
 
     @Test
     @DisplayName("예약번호로_검색")
+    @Transactional
     void testFindByReservationNumber() {
         // 예약 번호로 검색
         Optional<Reservation> found = reservationRepository.findByReservationNo(12345678);

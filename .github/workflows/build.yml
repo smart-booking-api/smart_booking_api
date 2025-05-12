@@ -15,6 +15,22 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    env:
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_JDBC_URL: ${{ secrets.DB_JDBC_URL }}
+      DB_DATABASE: ${{ secrets.DB_DATABASE }}
+      AES_SECRET_KEY: ${{ secrets.AES_SECRET_KEY }}
+      AES_SECRET_IV: ${{ secrets.AES_SECRET_IV }}
+      EXTERNAL_KAKAO_API_KEY: ${{ secrets.EXTERNAL_KAKAO_API_KEY }}
+      EXTERNAL_OPENAPI_KEY: ${{ secrets.EXTERNAL_OPENAPI_KEY }}
+      EXTERNAL_SMS_FROM: ${{ secrets.EXTERNAL_SMS_FROM }}
+      EXTERNAL_SMS_KEY: ${{ secrets.EXTERNAL_SMS_KEY }}
+      EXTERNAL_SMS_SECRET: ${{ secrets.EXTERNAL_SMS_SECRET }}
+      EXTERNAL_SMS_ENDPOINT: ${{ secrets.EXTERNAL_SMS_ENDPOINT }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
     permissions:
       contents: read
 
