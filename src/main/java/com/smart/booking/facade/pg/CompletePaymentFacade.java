@@ -94,6 +94,7 @@ public class CompletePaymentFacade {
         //5. 예약 생성 요청
         reservationSaveEventPublisher.publish(
             CompletePaymentEventDto.builder()
+                .paymentId(savedPayment.getPaymentId())
                 .memberId(paymentInfo.memberId())
                 .trackingId(paymentInfo.trackingId())
                 .teeBoxId(paymentInfo.teeBoxId())
