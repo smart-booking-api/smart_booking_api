@@ -8,7 +8,7 @@ import com.smart.booking.domain.user.value_object.UserPolicyAgreement;
 import java.util.Optional;
 import lombok.NonNull;
 
-public interface UserUserService extends UserCommonService {
+public interface UserService extends UserCommonService {
 
     @NonNull
     User getUserByThirdPartyAccountId(@NonNull String thirdPartyAccountId);

@@ -18,4 +18,6 @@ public class AuthEndPoint {
 
     public static final String SIGN_UP = V1 + "/sign-up";
 
+    public static final String SIGN_OUT = V1 + "/sign-out";
+
 }

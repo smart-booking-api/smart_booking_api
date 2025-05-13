@@ -3,7 +3,7 @@ package com.smart.booking.presentation.security.config;
 import com.smart.booking.domain.auth.service.AuthService;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.partner.service.PartnerService;
-import com.smart.booking.domain.user.service.UserUserService;
+import com.smart.booking.domain.user.service.UserService;
 import com.smart.booking.presentation.security.filter.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -30,7 +29,7 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final MemberService memberService;
-    private final UserUserService userUserService;
+    private final UserService userUserService;
     private final PartnerService partnerService;
     private final AuthService authService;
     private final RequestMatcher get = request -> {
