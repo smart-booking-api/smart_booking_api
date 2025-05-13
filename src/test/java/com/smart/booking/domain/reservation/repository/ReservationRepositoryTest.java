@@ -31,10 +31,14 @@ class ReservationRepositoryTest {
     @BeforeEach
     @Transactional
     void setUp() {
-        Member member = new Member(null, MemberType.USER);
+        final Member member = Member.builder()
+            .type(MemberType.USER)
+            .build();
+
+        // 테스트용 회원 데이터 생성
         memberRepository.save(member);
 
-        ReservationMember reservationMember = new ReservationMember(member, "테스트", "01036010559");
+        final ReservationMember reservationMember = new ReservationMember(member, "테스트", "01036010559");
         // 테스트 전에 데이터 초기화
         reservation = new Reservation("1", null, 12345678, null, LocalDate.now(), "01", "02", ReservationStatus.RESERVED, reservationMember, "111");
         reservationRepository.save(reservation); // 데이터베이스에 예약 저장

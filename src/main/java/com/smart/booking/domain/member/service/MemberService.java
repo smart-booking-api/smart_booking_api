@@ -6,11 +6,15 @@ import lombok.NonNull;
 
 public interface MemberService {
 
-    @NonNull Member createMember(@NonNull MemberType memberType);
+    @NonNull
+    Member createMember(@NonNull MemberType memberType);
 
     Member getMemberById(@NonNull String memberId);
 
-    @NonNull Member getMemberByIdOrThrow(@NonNull String memberId);
+    @NonNull
+    Member getMemberByIdOrThrow(@NonNull String memberId);
 
     void deleteMember(@NonNull Member member);
+
+    
 }

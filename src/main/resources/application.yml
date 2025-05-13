@@ -25,14 +25,15 @@ spring:
       jdbc-url: jdbc:postgresql://${DB_JDBC_URL}/${DB_DATABASE}
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
-      #      maximum-pool-size: 20
-      #      connection-timeout: 5000 #5s
-      #      idle-timeout: 50000 #50s
-      #      max-lifetime: 50000 #50s
       auto-commit: false
 
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0.0.0
+  
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: none
     properties:
@@ -42,6 +43,8 @@ spring:
         show_sql: true
   jwt:
     secret: ${JWT_SECRET}
+
+
 
 springdoc:
   version: '@project.version@'
@@ -73,3 +76,7 @@ external:
     key: ${EXTERNAL_SMS_KEY}
     secret: ${EXTERNAL_SMS_SECRET}
     endpoint: ${EXTERNAL_SMS_ENDPOINT}
+
+logging:
+  level:
+    org.flywaydb: DEBUG
