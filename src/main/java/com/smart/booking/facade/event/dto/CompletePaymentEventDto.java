@@ -5,6 +5,7 @@ import lombok.NonNull;
 
 @Builder
 public record CompletePaymentEventDto(
+    @NonNull String paymentId,
     @NonNull String memberId,
     @NonNull String trackingId,
     @NonNull String teeBoxId,
