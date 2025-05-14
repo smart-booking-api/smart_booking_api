@@ -1,6 +1,7 @@
 package com.smart.booking.domain.store.value_object;
 
 import jakarta.persistence.Embeddable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import lombok.AccessLevel;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Getter
 @Builder
@@ -18,10 +20,10 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class WeekdayWeekendFee {
 
-    private int weekdayFee;
-    private int weekendFee;
+    private BigDecimal weekdayFee;
+    private BigDecimal weekendFee;
 
-    public int calculateFee(OffsetDateTime date, int discountRate) {
+    public @NonNull BigDecimal calculateFee(OffsetDateTime date, int discountRate) {
 
         final var isWeekend = switch (LocalDateTime.from(date).getDayOfWeek()) {
             case SATURDAY, SUNDAY -> true;
@@ -29,7 +31,8 @@ public class WeekdayWeekendFee {
         };
 
         final var originFee = isWeekend ? weekendFee : weekdayFee;
+        final var discountAmount = originFee.multiply(BigDecimal.valueOf(discountRate / 100));
 
-        return originFee - (originFee * discountRate / 100);
+        return originFee.subtract(discountAmount);
     }
 }

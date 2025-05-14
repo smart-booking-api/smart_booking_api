@@ -2,9 +2,9 @@ package com.smart.booking.facade.common.auth;
 
 import com.smart.booking.common.dto.CommonEmptyResponse;
 import com.smart.booking.common.dto.MemberContextDto;
-import com.smart.booking.common.resolver.MemberContext;
 import com.smart.booking.domain.auth.service.AuthService;
 import com.smart.booking.domain.member.service.MemberService;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class SignOutFacade {
     private final MemberService memberService;
 
 
-    public SignOutResponse execute(@MemberContext MemberContextDto memberContextDto) {
+    public SignOutResponse execute(@NonNull MemberContextDto memberContextDto) {
 
         final var member = memberService.getMemberByIdOrThrow(memberContextDto.getMemberId());
 

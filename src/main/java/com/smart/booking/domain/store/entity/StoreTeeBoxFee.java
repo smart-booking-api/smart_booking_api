@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,6 +61,6 @@ public class StoreTeeBoxFee extends BaseEntity {
     })
     private WeekdayWeekendFee usageFee;
 
-    private int onSiteFee;
+    private BigDecimal onSiteFee;
 
 }
