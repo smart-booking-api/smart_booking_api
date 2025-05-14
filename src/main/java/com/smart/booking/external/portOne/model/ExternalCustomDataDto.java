@@ -1,11 +1,13 @@
 package com.smart.booking.external.portOne.model;
 
 
+import com.smart.booking.domain.payment.entity.PaymentStatus;
 import lombok.Builder;
 
 @Builder
 public record ExternalCustomDataDto(
 
+    PaymentStatus paymentStatus,
     String memberId,
     String trackingId,
     String teeBoxId,
@@ -26,4 +28,7 @@ public record ExternalCustomDataDto(
     int failedAt
 ) {
 
+    public PaymentStatus getPaymentStatus() {
+        return (failedAt != 0) ? PaymentStatus.CANCEL : PaymentStatus.COMPLETE;
+    }
 }

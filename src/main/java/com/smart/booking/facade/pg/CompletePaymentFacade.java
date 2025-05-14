@@ -46,6 +46,9 @@ public class CompletePaymentFacade {
         PaymentStatus.CANCEL, this::publishFailEvent
     );
 
+    private static final Consumer<ExternalCustomDataDto> NO_OP_CONSUMER = dto -> {
+    };
+
 
     /**
      * 결제 완료 프로세스
@@ -62,10 +65,6 @@ public class CompletePaymentFacade {
         }
 
         var paymentInfo = paymentInfoService.getExternalPaymentCustomData(dto.merchantUid());
-        // 실패 여부 판단
-        var paymentStatus = (paymentInfo.failedAt() != 0)
-            ? PaymentStatus.CANCEL
-            : PaymentStatus.COMPLETE;
 
         var trackingInfo = paymentTrackingInfoService.getTrackingInfo(paymentInfo.trackingId());
         if (trackingInfo == null) {
@@ -79,7 +78,7 @@ public class CompletePaymentFacade {
             dto.impUid(),
             dto.merchantUid(),
             paymentInfo.reservationFee(),
-            paymentStatus,
+            paymentInfo.getPaymentStatus(),
             teeBox
         );
         var savedPayment = paymentInfoService.savePaymentCompleteInfo(savePaymentDto);
@@ -111,8 +110,7 @@ public class CompletePaymentFacade {
 
         //5. 예약 생성 요청
         paymentStatusEventDispatcher
-            .getOrDefault(paymentStatus, pi -> {
-            })
+            .getOrDefault(savedPayment.getPaymentStatus(), NO_OP_CONSUMER)
             .accept(paymentInfo);
     }
 
