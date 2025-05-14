@@ -21,7 +21,9 @@ public record ExternalCustomDataDto(
     Integer useageFee,
     String bookerName,
     String bookerPhone,
-    String firebaseUid
+    String firebaseUid,
+    String failReason,
+    int failedAt
 ) {
 
 }
