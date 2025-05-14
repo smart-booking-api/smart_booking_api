@@ -40,7 +40,7 @@ class ReservationRepositoryTest {
 
         final ReservationMember reservationMember = new ReservationMember(member, "테스트", "01036010559");
         // 테스트 전에 데이터 초기화
-        reservation = new Reservation("1", null, 12345678, null, LocalDate.now(), "01", "02", ReservationStatus.RESERVED, reservationMember, "111");
+        reservation = new Reservation("1", null, 12345678, null, LocalDate.now(), "01", "02", ReservationStatus.RESERVED, reservationMember, "111", "A1");
         reservationRepository.save(reservation); // 데이터베이스에 예약 저장
     }
 
