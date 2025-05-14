@@ -30,10 +30,13 @@ class AuthServiceTest {
 
     @BeforeEach
     void setUp() {
-        Member member = new Member(null, MemberType.USER);
+        final Member member = Member.builder()
+            .type(MemberType.USER)
+            .build();
+
         memberRepository.save(member);
 
-        User user = new User(
+        final User user = new User(
             null,
             null,
             null,
@@ -48,7 +51,7 @@ class AuthServiceTest {
 
         userRepository.save(user);
 
-        ThirdPartyAccount thirdPartyAccount = new ThirdPartyAccount(null, user, ThirdPartyAccountProvider.KAKAO, "aaa777");
+        final ThirdPartyAccount thirdPartyAccount = new ThirdPartyAccount(null, user, ThirdPartyAccountProvider.KAKAO, "aaa777");
         thirdPartyAccountRepository.save(thirdPartyAccount);
     }
 
