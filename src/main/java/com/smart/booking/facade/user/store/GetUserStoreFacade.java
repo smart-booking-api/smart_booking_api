@@ -6,22 +6,21 @@ import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.store.entity.Store;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
 import com.smart.booking.domain.tee_box.service.TeeBoxUserService;
-import com.smart.booking.domain.user.service.UserUserService;
+import com.smart.booking.domain.user.service.UserService;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class GetUserStoreFacade {
 
     private final MemberService memberService;
-    private final UserUserService userService;
+    private final UserService userService;
     private final TeeBoxUserService teeBoxService;
 
     @NonNull
@@ -38,12 +37,12 @@ public class GetUserStoreFacade {
 
         final var teeBoxes = teeBoxService.getTeeBoxesByStoreId(store.getId());
 
-
         return new GetUserStoreResponse(new UserStoreDto(store, teeBoxes));
 
     }
 
     public static class GetUserStoreResponse extends CommonResponse<UserStoreDto> {
+
         public GetUserStoreResponse(UserStoreDto userStoreDto) {
             super(userStoreDto);
         }
@@ -52,6 +51,7 @@ public class GetUserStoreFacade {
     @Getter
     @RequiredArgsConstructor
     public static class UserStoreDto {
+
         @NotNull
         private final String id;
 
@@ -66,8 +66,8 @@ public class GetUserStoreFacade {
         private final int teeBoxCount;
 
         public UserStoreDto(
-                @NonNull Store store,
-                @NonNull List<TeeBox> teeBoxes
+            @NonNull Store store,
+            @NonNull List<TeeBox> teeBoxes
         ) {
             this.id = store.getId();
             this.teeBoxCount = teeBoxes.size();

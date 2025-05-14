@@ -10,7 +10,7 @@ import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
 import com.smart.booking.domain.user.enums.UserStatus;
 import com.smart.booking.domain.user.repository.ThirdPartyAccountRepository;
 import com.smart.booking.domain.user.repository.UserRepository;
-import com.smart.booking.domain.user.service.UserUserService;
+import com.smart.booking.domain.user.service.UserService;
 import java.time.OffsetDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class AuthServiceTest {
 
     @Autowired
-    private UserUserService userService;
+    private UserService userService;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired

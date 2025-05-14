@@ -1,7 +1,10 @@
 package com.smart.booking.presentation.controller;
 
+import com.smart.booking.common.dto.MemberContextDto;
+import com.smart.booking.common.resolver.MemberContext;
 import com.smart.booking.facade.admin.auth.AdminLoginFacade;
 import com.smart.booking.facade.admin.auth.RequestRefreshTokenFacade;
+import com.smart.booking.facade.common.auth.SignOutFacade;
 import com.smart.booking.facade.dto.auth.AdminLogin;
 import com.smart.booking.facade.dto.auth.RequestRefreshToken;
 import com.smart.booking.facade.user.auth.UserAuthFacade;
@@ -24,6 +27,7 @@ public class AuthController {
     private final RequestRefreshTokenFacade requestRefreshTokenFacade;
     private final UserPhoneAuthFacade userPhoneAuthFacade;
     private final UserAuthFacade userAuthFacade;
+    private final SignOutFacade signOutFacade;
 
 
     @PostMapping(AuthEndPoint.REFRESH_TOKEN)
@@ -55,11 +59,15 @@ public class AuthController {
         return userPhoneAuthFacade.verifyPhoneAuthCode(request);
     }
 
-
     @PostMapping(AuthEndPoint.SIGN_UP)
     public SignUpUserResponse signUp(
         @RequestBody @Valid UserAuthFacade.SignUpUserRequest request
     ) {
         return userAuthFacade.signUp(request);
+    }
+
+    @PostMapping(AuthEndPoint.SIGN_OUT)
+    public SignOutFacade.SignOutResponse signOut(@MemberContext MemberContextDto memberContextDto) {
+        return signOutFacade.execute(memberContextDto);
     }
 }

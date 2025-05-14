@@ -8,7 +8,7 @@ import com.smart.booking.domain.member.enums.MemberType;
 import com.smart.booking.domain.member.service.MemberService;
 import com.smart.booking.domain.user.dto.CreateUserDto;
 import com.smart.booking.domain.user.enums.ThirdPartyAccountProvider;
-import com.smart.booking.domain.user.service.UserUserService;
+import com.smart.booking.domain.user.service.UserService;
 import com.smart.booking.domain.user.value_object.UserPolicyAgreement;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.transaction.Transactional;
@@ -24,7 +24,7 @@ public class UserAuthFacade {
 
     private final AuthService authService;
     private final MemberService memberService;
-    private final UserUserService userService;
+    private final UserService userService;
 
     @Transactional
     public SignUpUserResponse signUp(@NonNull SignUpUserRequest request) {

@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-class UserUserServiceImpl extends UserCommonServiceImpl implements UserUserService {
+class UserServiceImpl extends UserCommonServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserUserServiceImpl(@NonNull UserRepository userRepository) {
+    public UserServiceImpl(@NonNull UserRepository userRepository) {
         super(userRepository);
         this.userRepository = userRepository;
     }

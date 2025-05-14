@@ -1,6 +1,6 @@
 package com.smart.booking.facade.user.user;
 
-import com.smart.booking.domain.user.service.UserUserService;
+import com.smart.booking.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UpdateUserAgreementFacade {
 
-    private final UserUserService userService;
+    private final UserService userService;
 
     public void execute() {
     }
