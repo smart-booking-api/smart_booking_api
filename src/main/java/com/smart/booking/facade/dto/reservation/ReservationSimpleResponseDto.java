@@ -3,6 +3,7 @@ package com.smart.booking.facade.dto.reservation;
 import com.smart.booking.domain.reservation.entity.Reservation;
 import com.smart.booking.domain.reservation.service.ReservationTimeService;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,8 @@ public class ReservationSimpleResponseDto {
     private String storeName;
     @Schema(description = "스크린번호")
     private String teeBoxNumber;
+    @Schema(description = "현장결제금액")
+    private BigDecimal onSiteFee;
 
     public ReservationSimpleResponseDto(Reservation reservation, String startTime, String endTime) {
         this.reservationNo = reservation.getReservationNo();
@@ -38,5 +41,6 @@ public class ReservationSimpleResponseDto {
         this.endTime = endTime;
         this.storeName = reservation.getStore().getName();
         this.teeBoxNumber = reservation.getTeeBox().getName();
+        this.onSiteFee = reservation.getOnSiteFee();
     }
 }

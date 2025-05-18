@@ -4,6 +4,7 @@ import com.smart.booking.domain.common.enums.TeeBoxType;
 import com.smart.booking.domain.store.value_object.WeekdayWeekendFee;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +28,7 @@ public class TeeBoxFeeDto {
 
 
     @Schema(description = "현장 요금")
-    private final int onSiteFee;
+    private final BigDecimal onSiteFee;
 
 
 }
