@@ -8,7 +8,9 @@ spring:
         project-id: screen-golf-5e7e4
         credentials:
           location: classpath:smart-booking-google.json
-
+  h2:
+    console:
+      enabled: true
   application:
     name: smart-booking-api
 
