@@ -40,6 +40,6 @@ public class PartnerReservationServiceImpl extends CommonReservationServiceImpl 
 
     @Override
     public boolean validateSearchPermission(String reservationId, String memberId) {
-        return false;
+        return true;
     }
 }

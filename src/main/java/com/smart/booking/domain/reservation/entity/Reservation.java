@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -72,11 +73,7 @@ public class Reservation extends BaseEntity {
         this.reservationStatus = reservationStatus;
     }
 
-    public String getStartTime(ReservationTimeService reservationTimeService) {
-        return reservationTimeService.getReservationTimeCodeById(this.getStartTimeId()).getTimeName();
-    }
-
-    public String getEndTime(ReservationTimeService reservationTimeService) {
-        return reservationTimeService.getReservationTimeCodeById(this.getEndTimeId()).getTimeName();
+    public String getReservationDateString() {
+        return this.reservationDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     }
 }

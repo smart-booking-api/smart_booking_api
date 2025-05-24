@@ -25,7 +25,7 @@ public class RefundReservationFacade {
      * 결제취소 처리
      * @param eventDto
      */
-    public void execute(@NonNull RefundPaymentEventDto eventDto) throws Exception {
+    public void execute(@NonNull RefundPaymentEventDto eventDto) {
         Member member = memberService.getMemberById(eventDto.memberId());
 
         // 예약취소
