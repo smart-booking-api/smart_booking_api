@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -76,4 +77,7 @@ public class Reservation extends BaseEntity {
         this.reservationStatus = reservationStatus;
     }
 
+    public String getReservationDateString() {
+        return this.reservationDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
 }

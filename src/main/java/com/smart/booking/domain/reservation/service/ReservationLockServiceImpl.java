@@ -26,7 +26,7 @@ public class ReservationLockServiceImpl implements ReservationLockService {
         validateReservationLock(lockDto);
 
         ReservationLock reservationLock = ReservationLock.builder()
-            .key(getKey(lockDto))
+            .key(lockDto.getKey())
             .memberId(lockDto.memberId())
             .build();
 
@@ -39,7 +39,7 @@ public class ReservationLockServiceImpl implements ReservationLockService {
         validateMyReservationLock(deleteDto);
 
         ReservationLock reservationLock = ReservationLock.builder()
-            .key(getKey(deleteDto))
+            .key(deleteDto.getKey())
             .memberId(deleteDto.memberId())
             .build();
 
@@ -48,7 +48,7 @@ public class ReservationLockServiceImpl implements ReservationLockService {
 
     @Override
     public ReservationLock getReservationLock(UpsertReservationLockDto upsertReservationLockDto) {
-        return getReservationLock(getKey(upsertReservationLockDto));
+        return getReservationLock(upsertReservationLockDto.getKey());
     }
 
     /**
@@ -56,7 +56,7 @@ public class ReservationLockServiceImpl implements ReservationLockService {
      * @param lockDto
      */
     private void validateReservationLock(UpsertReservationLockDto lockDto) {
-        ReservationLock reservationLock = getReservationLock(getKey(lockDto));
+        ReservationLock reservationLock = getReservationLock(lockDto.getKey());
 
         if (!Objects.isNull(reservationLock))
             throw new CommonException(ResponseCode.ALREADY_LOCK_RESERVATION);
@@ -67,7 +67,7 @@ public class ReservationLockServiceImpl implements ReservationLockService {
      * @param lockDto
      */
     private void validateMyReservationLock(UpsertReservationLockDto lockDto) {
-        ReservationLock reservationLock = getReservationLock(getKey(lockDto));
+        ReservationLock reservationLock = getReservationLock(lockDto.getKey());
 
         if (!reservationLock.getMemberId().equals(lockDto.memberId())) {
             throw new CommonException(ResponseCode.NOT_MY_RESERVATION_LOCK);
@@ -82,14 +82,5 @@ public class ReservationLockServiceImpl implements ReservationLockService {
     private ReservationLock getReservationLock(String key) {
         log.info("key::" + key);
         return reservationLockRepository.findById(key).orElse(null);
-    }
-
-    /**
-     * 선점락 키 생성
-     * @param lockDto
-     * @return
-     */
-    private String getKey(UpsertReservationLockDto lockDto) {
-        return lockDto.teeBoxId() + "-" + lockDto.date() + "-" +lockDto.lockTimeId();
     }
 }
