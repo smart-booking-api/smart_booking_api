@@ -5,6 +5,7 @@ import com.smart.booking.domain.common.entity.BaseEntity;
 import com.smart.booking.domain.common.entity.BusinessRegistration;
 import com.smart.booking.domain.common.enums.Region;
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -69,4 +70,7 @@ public class Store extends BaseEntity {
         this.businessRegistration = null;
     }
 
+    public List<StoreTeeBoxFee> getStoreTeeBoxFees() {
+        return this.operationInfo.getTeeBoxFees();
+    }
 }
