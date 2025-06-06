@@ -35,7 +35,7 @@ public class CreateReservationFacade {
      * 결제 완료 후 예약처리
      * @param eventDto
      */
-    public void execute(@NonNull CompletePaymentEventDto eventDto) throws Exception {
+    public void execute(@NonNull CompletePaymentEventDto eventDto) {
         // 예약
         TeeBox teeBox = teeBoxService.getTeeBoxById(eventDto.teeBoxId());
         Member member = memberService.getMemberById(eventDto.memberId());

@@ -82,16 +82,6 @@ public class CommonReservationServiceImpl implements CommonReservationService {
         return null;
     }
 
-    /**
-     * 타석에 대한 예약 가능 시간 조회
-     * @param storeId
-     * @param reservationDate
-     * @param teeBoxId
-     */
-    public List<String> getEnableTimes(String storeId, String reservationDate, String teeBoxId) {
-        return null;
-    }
-
     @Override
     public boolean validateCancelPermission(String reservationId, String memberId, MemberType memberType) {
         return true;
@@ -100,5 +90,11 @@ public class CommonReservationServiceImpl implements CommonReservationService {
     @Override
     public boolean validateSearchPermission(String reservationId, String memberId) {
         return true;
-    };
+    }
+
+    @Override
+    public Reservation getReservationByTrackingId(String trackingId) {
+        return reservationRepository.findReservationByTrackingId(trackingId)
+            .orElseThrow(() -> new CommonException(ResponseCode.NOT_FOUND_RESERVATION));
+    }
 }

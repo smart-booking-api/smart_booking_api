@@ -20,4 +20,6 @@ public interface CommonReservationService {
     boolean validateCancelPermission(String reservationId, String memberId, MemberType memberType);
 
     boolean validateSearchPermission(String reservationId, String memberId);
+
+    Reservation getReservationByTrackingId(String trackingId);
 }
