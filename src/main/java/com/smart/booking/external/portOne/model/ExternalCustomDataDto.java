@@ -3,6 +3,7 @@ package com.smart.booking.external.portOne.model;
 
 import com.smart.booking.domain.payment.entity.PaymentStatus;
 import lombok.Builder;
+import lombok.Setter;
 
 @Builder
 public record ExternalCustomDataDto(
