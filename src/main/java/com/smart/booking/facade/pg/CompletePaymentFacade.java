@@ -5,6 +5,7 @@ import com.smart.booking.common.exception.CommonException;
 import com.smart.booking.domain.payment.entity.PaymentPartnerShare;
 import com.smart.booking.domain.payment.service.PaymentPartnerShareService;
 import com.smart.booking.domain.tee_box.service.TeeBoxCommonService;
+import com.smart.booking.external.portOne.model.ExternalCustomDataDto;
 import com.smart.booking.facade.dto.payment.CompletePaymentRequestDto;
 import com.smart.booking.domain.payment.dto.SavePaymentDto;
 import com.smart.booking.domain.payment.dto.SavePaymentHistoryDto;
@@ -13,10 +14,15 @@ import com.smart.booking.domain.payment.service.PaymentService;
 import com.smart.booking.domain.payment.service.PaymentHistoryService;
 import com.smart.booking.domain.payment.service.PaymentTrackingHistoryService;
 import com.smart.booking.domain.tee_box.entity.TeeBox;
+import com.smart.booking.facade.dto.reservation.CardReceiptDto.PaymentInfo;
 import com.smart.booking.facade.event.dto.CompletePaymentEventDto;
+import com.smart.booking.facade.event.dto.FailPaymentEventDto;
 import com.smart.booking.facade.event.publisher.CompletePaymentEventPublisher;
+import com.smart.booking.facade.event.publisher.FailPaymentEventPublisher;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -31,7 +37,17 @@ public class CompletePaymentFacade {
     private final PaymentTrackingHistoryService paymentTrackingInfoService;
     private final PaymentHistoryService paymentLogService;
     private final CompletePaymentEventPublisher reservationSaveEventPublisher;
+    private final FailPaymentEventPublisher reservationFailPaymentEventPublisher;
     private final TeeBoxCommonService teeBoxCommonService;
+
+
+    private final Map<PaymentStatus, Consumer<ExternalCustomDataDto>> paymentStatusEventDispatcher = Map.of(
+        PaymentStatus.COMPLETE, this::publishSuccessEvent,
+        PaymentStatus.CANCEL, this::publishFailEvent
+    );
+
+    private static final Consumer<ExternalCustomDataDto> NO_OP_CONSUMER = dto -> {
+    };
 
 
     /**
@@ -49,6 +65,7 @@ public class CompletePaymentFacade {
         }
 
         var paymentInfo = paymentInfoService.getExternalPaymentCustomData(dto.merchantUid());
+
         var trackingInfo = paymentTrackingInfoService.getTrackingInfo(paymentInfo.trackingId());
         if (trackingInfo == null) {
             throw new CommonException(ResponseCode.NO_DATA_SAVED_PAYMENT_TRACKING_INFO);
@@ -61,7 +78,7 @@ public class CompletePaymentFacade {
             dto.impUid(),
             dto.merchantUid(),
             paymentInfo.reservationFee(),
-            PaymentStatus.COMPLETE,
+            paymentInfo.getPaymentStatus(),
             teeBox
         );
         var savedPayment = paymentInfoService.savePaymentCompleteInfo(savePaymentDto);
@@ -92,6 +109,12 @@ public class CompletePaymentFacade {
         paymentLogService.savePaymentHistoryLog(historyDto);
 
         //5. 예약 생성 요청
+        paymentStatusEventDispatcher
+            .getOrDefault(savedPayment.getPaymentStatus(), NO_OP_CONSUMER)
+            .accept(paymentInfo);
+    }
+
+    private void publishSuccessEvent(ExternalCustomDataDto paymentInfo) {
         reservationSaveEventPublisher.publish(
             CompletePaymentEventDto.builder()
                 .paymentId(savedPayment.getPaymentId())
@@ -104,4 +127,16 @@ public class CompletePaymentFacade {
                 .build()
         );
     }
+
+    private void publishFailEvent(ExternalCustomDataDto paymentInfo) {
+        reservationFailPaymentEventPublisher.publish(
+            FailPaymentEventDto.builder()
+                .memberId(paymentInfo.memberId())
+                .trackingId(paymentInfo.trackingId())
+                .failedAt(paymentInfo.failedAt())
+                .failReason(paymentInfo.failReason())
+                .build()
+        );
+    }
+
 }

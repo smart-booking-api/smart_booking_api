@@ -14,6 +14,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import lombok.AccessLevel;
@@ -69,10 +70,13 @@ public class Reservation extends BaseEntity {
     @Comment("결제 ID")
     private String paymentId;
 
+    @Comment("현장결제금액")
+    private BigDecimal onSiteFee;
+
     public void updateReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
     }
-
+     
     public String getReservationDateString() {
         return this.reservationDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     }

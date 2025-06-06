@@ -21,7 +21,7 @@ public class PaymentControllerTests {
     @Disabled
     public void paymentCompleteTest() {
 
-        var request = new CompletePaymentRequestDto("test", "0acd1e64-5fe3-47a1-8960-f1d48e2c790f");
+        var request = new CompletePaymentRequestDto("test", "384f0559-928f-4008-a73f-c71664517f79");
 
         completePaymentFacade.exceuete(request);
     }
