@@ -36,7 +36,7 @@ public class PaymentController {
     @PostMapping(PaymentEndPoint.PAYMENT_COMPLETE_URL)
     public void completePayment(
         @Valid @RequestBody CompletePaymentRequestDto request) {
-        completePaymentFacade.exceuete(request);
+        completePaymentFacade.execute(request);
     }
 
     /**

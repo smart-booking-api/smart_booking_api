@@ -23,6 +23,6 @@ public class PaymentControllerTests {
 
         var request = new CompletePaymentRequestDto("test", "384f0559-928f-4008-a73f-c71664517f79");
 
-        completePaymentFacade.exceuete(request);
+        completePaymentFacade.execute(request);
     }
 }
