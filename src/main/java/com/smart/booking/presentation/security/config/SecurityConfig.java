@@ -61,7 +61,7 @@ public class SecurityConfig {
             ).authorizeHttpRequests((auth) -> {
                     auth.requestMatchers(PathRequest.toH2Console()).permitAll()
                         .requestMatchers(request -> request.getRequestURI().matches("^/api/v\\d+/auth/.*")).permitAll()
-                        .requestMatchers("/api-docs/**", "/swagger-ui/**", "/actuator").permitAll()
+                        .requestMatchers("/api-docs/**", "/swagger-ui/**", "/actuator/**").permitAll()
                         .requestMatchers("/api/partner/**").hasAnyRole("PARTNER")
                         .requestMatchers("/api/user/**").hasAnyRole("USER")
                         .anyRequest().authenticated();
